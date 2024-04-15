@@ -11,7 +11,7 @@ import '@/App.css';
 
 export default  function Sidebar() {
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
+    <div style={{ position: 'fixed', top: 0, left: 0, height: '100vh', zIndex: 999 }}>
     <CDBSidebar textColor="#fff" backgroundColor="#82029b">
       <CDBSidebarHeader>
         <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}></a>
