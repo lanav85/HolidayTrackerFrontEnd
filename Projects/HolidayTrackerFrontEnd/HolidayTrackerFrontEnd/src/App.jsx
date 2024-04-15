@@ -1,9 +1,12 @@
-import Header from "./Header.jsx";
-
+import Sidebar from "./components/Sidebar.jsx";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter as Router } from 'react-router-dom';
 function App() {
   return (
-    <Header/>
-  );
+    <Router>
+      <Sidebar />
+  </Router>
+  )
 }
 
 export default App;
