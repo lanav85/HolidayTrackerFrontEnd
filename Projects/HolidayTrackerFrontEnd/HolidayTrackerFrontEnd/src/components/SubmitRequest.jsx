@@ -2,18 +2,21 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-//Imported Library from https://refine.dev/blog/react-date-picker/#using-two-separate-components
+// Imported Library from https://refine.dev/blog/react-date-picker/#using-two-separate-components
 
 function SubmitRequest() {
+  // State variables to hold the selected start and end dates
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
+  // Function to handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("Start Date:", formatDate(startDate));
     console.log("End Date:", formatDate(endDate));
   };
 
+  // Function to format date as dd/MM/yyyy
   const formatDate = (date) => {
     if (!date) return "";
 
@@ -24,10 +27,11 @@ function SubmitRequest() {
   };
 
   return (
+    // Form for submitting request
     <form
       onSubmit={handleSubmit}
       style={{
-        fontSize: "15px",
+        fontSize: "16px",
         marginLeft: "calc(25% + 60px)",
         marginRight: "10%",
         marginTop: "150px",
@@ -36,6 +40,7 @@ function SubmitRequest() {
         alignItems: "center",
       }}
     >
+      {/* Input for selecting start date */}
       <div style={{ marginBottom: "30px" }}>
         <label style={{ padding: "15px" }}>Select Start Date:</label>
         <DatePicker
@@ -49,6 +54,7 @@ function SubmitRequest() {
           dateFormat="dd/MM/yyyy"
         />
       </div>
+      {/* Input for selecting end date */}
       <div style={{ marginBottom: "20px" }}>
         <label style={{ padding: "15px" }}>Select End Date: </label>
         <DatePicker
@@ -63,11 +69,16 @@ function SubmitRequest() {
           dateFormat="dd/MM/yyyy"
         />
       </div>
+      {/* Submit button triggers form submission */}
       <button
         type="submit"
         class="btn btn-success btn-lg"
         color="primary"
-        style={{ backgroundColor: "purple", marginTop: "20px" }}
+        style={{
+          backgroundColor: "purple",
+          marginTop: "20px",
+          fontSize: "16px",
+        }}
       >
         Submit
       </button>

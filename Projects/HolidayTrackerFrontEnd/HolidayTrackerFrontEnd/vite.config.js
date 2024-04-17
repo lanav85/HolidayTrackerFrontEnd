@@ -4,11 +4,12 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/img/', // Specifies the base URL
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'), // Alias "@" to your "src" directory
-    },
+      '@': path.resolve(__dirname, 'src'), 
+      'img': path.resolve(__dirname, 'public/img'), 
   },
+},
 });
-
