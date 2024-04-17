@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "@/App.css";
 
 // Imported Library from https://refine.dev/blog/react-date-picker/#using-two-separate-components
 
@@ -28,6 +29,7 @@ function SubmitRequest() {
 
   return (
     // Form for submitting request
+
     <form
       onSubmit={handleSubmit}
       style={{
@@ -40,6 +42,8 @@ function SubmitRequest() {
         alignItems: "center",
       }}
     >
+      {" "}
+      <h2 style={{ padding: "25px" }}> Holiday Request </h2>
       {/* Input for selecting start date */}
       <div style={{ marginBottom: "30px" }}>
         <label style={{ padding: "15px" }}>Select Start Date:</label>
@@ -70,16 +74,7 @@ function SubmitRequest() {
         />
       </div>
       {/* Submit button triggers form submission */}
-      <button
-        type="submit"
-        class="btn btn-success btn-lg"
-        color="primary"
-        style={{
-          backgroundColor: "purple",
-          marginTop: "20px",
-          fontSize: "16px",
-        }}
-      >
+      <button type="submit" className="btn btn-success btn-lg submit-button">
         Submit
       </button>
     </form>

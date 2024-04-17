@@ -1,3 +1,17 @@
+body {
+  max-width: 100%; 
+   overflow-x: hidden;
+}
+
 .sidebar-menu-item:hover {
-  background-color: #640078; 
+  background-color: #640078;
+}
+.moveToRight-container {
+  margin-left: calc(25% + 60px);
+  margin-right: 10%;
+}
+.submit-button {
+  background-color: purple !important;
+  margin-top: 20px;
+  font-size: 16px;
 }
