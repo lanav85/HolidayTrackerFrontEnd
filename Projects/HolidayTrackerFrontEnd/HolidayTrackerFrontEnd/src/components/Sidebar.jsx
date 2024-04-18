@@ -8,45 +8,28 @@ import {
 } from "cdbreact";
 import { NavLink } from "react-router-dom";
 import "@/App.css";
+import "css/Sidebar.css";
+import logo from "img/logo.png";
 
 export default function Sidebar() {
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        height: "100vh",
-        zIndex: 2002,
-      }}
-    >
+    <div className="sidebar">
       <CDBSidebar textColor="#fff" backgroundColor="#82029b">
-        <CDBSidebarHeader>
-          <a
-            href="/"
-            className="text-decoration-none"
-            style={{ color: "inherit" }}
-          ></a>
+        <CDBSidebarHeader className="sidebar-header">
+          <img src={logo} alt="Logo" className="logo" />
+          <p className="title">Holiday Tracker</p>
         </CDBSidebarHeader>
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
             <NavLink exact to="/dashboard">
-              <CDBSidebarMenuItem
-                icon="columns"
-                className="sidebar-menu-item"
-                style={{ marginBottom: "30px" }}
-              >
+              <CDBSidebarMenuItem icon="columns" className="sidebar-menu-item">
                 Dashboard
               </CDBSidebarMenuItem>
             </NavLink>
 
             <NavLink exact to="/profile">
-              <CDBSidebarMenuItem
-                icon="user"
-                className="sidebar-menu-item"
-                style={{ marginBottom: "30px" }}
-              >
+              <CDBSidebarMenuItem icon="user" className="sidebar-menu-item">
                 Profile{" "}
               </CDBSidebarMenuItem>
             </NavLink>
@@ -55,18 +38,13 @@ export default function Sidebar() {
               <CDBSidebarMenuItem
                 icon="calendar-plus"
                 className="sidebar-menu-item"
-                style={{ marginBottom: "30px" }}
               >
                 Submit Holiday Request{" "}
               </CDBSidebarMenuItem>
             </NavLink>
 
             <NavLink exact to="/review-requests">
-              <CDBSidebarMenuItem
-                icon="calendar"
-                className="sidebar-menu-item"
-                style={{ marginBottom: "30px" }}
-              >
+              <CDBSidebarMenuItem icon="calendar" className="sidebar-menu-item">
                 Review Holiday Requests{" "}
               </CDBSidebarMenuItem>
             </NavLink>
@@ -79,14 +57,8 @@ export default function Sidebar() {
           </CDBSidebarMenu>
         </CDBSidebarContent>
 
-        <CDBSidebarFooter style={{ textAlign: "center", fontSize: "10px" }}>
-          <div
-            style={{
-              padding: "20px 5px",
-            }}
-          >
-            Version 1.0.0
-          </div>
+        <CDBSidebarFooter className="sidebar-footer">
+          <div style={{ padding: "20px 5px" }}>Version 1.0.0</div>
         </CDBSidebarFooter>
       </CDBSidebar>
     </div>

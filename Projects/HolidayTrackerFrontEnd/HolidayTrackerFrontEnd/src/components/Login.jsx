@@ -3,8 +3,12 @@ import Form from "react-bootstrap/Form";
 import logo from "img/logo.png";
 import background from "img/background.png";
 import "css/Login.css";
+import { Link } from "react-router-dom";
 
 function Login() {
+  //TODO
+  // Implement login logic here
+
   return (
     <div
       className="background"
@@ -28,9 +32,11 @@ function Login() {
         </Form.Group>
 
         <div className="section">
-          <Button type="submit" className="btn btn-success btn-lg btn-login">
-            Login
-          </Button>
+          <Link to="/dashboard">
+            <Button type="submit" className="btn btn-success btn-lg btn-login">
+              Login
+            </Button>
+          </Link>
         </div>
       </Form>
     </div>

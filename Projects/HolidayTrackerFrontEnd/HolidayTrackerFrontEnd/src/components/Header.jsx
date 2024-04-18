@@ -2,6 +2,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
@@ -13,7 +14,7 @@ function Header() {
       >
         <Nav className="ms-auto">
           <NavDropdown title="UserName" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Logout</NavDropdown.Item>
+            <Link to="/">Logout</Link>
           </NavDropdown>
         </Nav>
       </Container>

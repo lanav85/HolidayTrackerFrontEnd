@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "@/App.css";
+import Layout from "./Layout";
 
 // Imported Library from https://refine.dev/blog/react-date-picker/#using-two-separate-components
 
@@ -29,55 +30,56 @@ function SubmitRequest() {
 
   return (
     // Form for submitting request
-
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        fontSize: "16px",
-        marginLeft: "calc(25% + 60px)",
-        marginRight: "10%",
-        marginTop: "150px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      {" "}
-      <h2 style={{ padding: "25px" }}> Holiday Request </h2>
-      {/* Input for selecting start date */}
-      <div style={{ marginBottom: "30px" }}>
-        <label style={{ padding: "15px" }}>Select Start Date:</label>
-        <DatePicker
-          id="startDate"
-          selectsStart
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
-          startDate={startDate}
-          endDate={endDate}
-          placeholderText="dd/MM/yyyy"
-          dateFormat="dd/MM/yyyy"
-        />
-      </div>
-      {/* Input for selecting end date */}
-      <div style={{ marginBottom: "20px" }}>
-        <label style={{ padding: "15px" }}>Select End Date: </label>
-        <DatePicker
-          id="endDate"
-          selectsEnd
-          selected={endDate}
-          onChange={(date) => setEndDate(date)}
-          startDate={startDate}
-          endDate={endDate}
-          minDate={startDate}
-          placeholderText="dd/MM/yyyy"
-          dateFormat="dd/MM/yyyy"
-        />
-      </div>
-      {/* Submit button triggers form submission */}
-      <button type="submit" className="btn btn-success btn-lg submit-button">
-        Submit
-      </button>
-    </form>
+    <Layout>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          fontSize: "16px",
+          marginLeft: "calc(25% + 60px)",
+          marginRight: "10%",
+          marginTop: "150px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        {" "}
+        <h2 style={{ padding: "25px" }}> Holiday Request </h2>
+        {/* Input for selecting start date */}
+        <div style={{ marginBottom: "30px" }}>
+          <label style={{ padding: "15px" }}>Select Start Date:</label>
+          <DatePicker
+            id="startDate"
+            selectsStart
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            startDate={startDate}
+            endDate={endDate}
+            placeholderText="dd/MM/yyyy"
+            dateFormat="dd/MM/yyyy"
+          />
+        </div>
+        {/* Input for selecting end date */}
+        <div style={{ marginBottom: "20px" }}>
+          <label style={{ padding: "15px" }}>Select End Date: </label>
+          <DatePicker
+            id="endDate"
+            selectsEnd
+            selected={endDate}
+            onChange={(date) => setEndDate(date)}
+            startDate={startDate}
+            endDate={endDate}
+            minDate={startDate}
+            placeholderText="dd/MM/yyyy"
+            dateFormat="dd/MM/yyyy"
+          />
+        </div>
+        {/* Submit button triggers form submission */}
+        <button type="submit" className="btn btn-success btn-lg submit-button">
+          Submit
+        </button>
+      </form>
+    </Layout>
   );
 }
 
