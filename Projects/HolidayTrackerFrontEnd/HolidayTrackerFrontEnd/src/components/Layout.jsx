@@ -10,7 +10,9 @@ const Layout = ({ children }) => {
     <div>
       <Sidebar />
       <Header />
-      <Container fluid style={{ marginTop: "60px", paddingLeft: "250px" }}>
+      {/* Container for main content, children represents content passed to Layout */}
+
+      <Container fluid style={{ marginTop: "60px" }}>
         {children}
       </Container>
       <Footer />

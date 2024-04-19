@@ -34,9 +34,7 @@ function SubmitRequest() {
       <form
         onSubmit={handleSubmit}
         style={{
-          fontSize: "16px",
-          marginLeft: "calc(25% + 60px)",
-          marginRight: "10%",
+          fontSize: "18px",
           marginTop: "150px",
           display: "flex",
           flexDirection: "column",
@@ -55,8 +53,8 @@ function SubmitRequest() {
             onChange={(date) => setStartDate(date)}
             startDate={startDate}
             endDate={endDate}
-            placeholderText="dd/MM/yyyy"
-            dateFormat="dd/MM/yyyy"
+            placeholderText="dd/mm/yyyy"
+            dateFormat="dd/mm/yyyy"
           />
         </div>
         {/* Input for selecting end date */}
@@ -70,8 +68,8 @@ function SubmitRequest() {
             startDate={startDate}
             endDate={endDate}
             minDate={startDate}
-            placeholderText="dd/MM/yyyy"
-            dateFormat="dd/MM/yyyy"
+            placeholderText="dd/mm/yyyy"
+            dateFormat="dd/mm/yyyy"
           />
         </div>
         {/* Submit button triggers form submission */}
