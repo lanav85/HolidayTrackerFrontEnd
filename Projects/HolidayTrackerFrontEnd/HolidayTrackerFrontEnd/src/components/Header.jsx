@@ -5,6 +5,9 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
 
 function Header() {
+  const handleLogout = () => {
+    localStorage.removeItem("holiday-tracker-user");
+  };
   return (
     <Navbar className="bg-body-tertiary fixed-top">
       <Container
@@ -14,7 +17,9 @@ function Header() {
       >
         <Nav className="ms-auto">
           <NavDropdown title="UserName" id="basic-nav-dropdown">
-            <Link to="/">Logout</Link>
+            <Link to="/" onClick={handleLogout}>
+              Logout
+            </Link>
           </NavDropdown>
         </Nav>
       </Container>
