@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Layout from "./Layout";
-import getUserId from "./getUserId";
 
 function SubmitRequest() {
   // Retrieve user ID from localStorage
-  const userId = getUserId();
+  const userDataString = localStorage.getItem("holiday-tracker-user");
+  const userData = JSON.parse(userDataString);
+  const userId = userData ? userData.id : null;
+
   // State variables to hold the selected start and end dates
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -26,16 +28,13 @@ function SubmitRequest() {
 
     try {
       // Send request to backend API to submit holiday request
-      const response = await fetch(
-        "http://localhost:8080/CreateNewHolidayRequest",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestData),
-        }
-      );
+      const response = await fetch("http://localhost:8080/HolidayRequest", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      });
 
       if (response.ok) {
         // Holiday request submitted successfully
