@@ -1,10 +1,10 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Dashboard from "./components/Dashboard.jsx";
 import Profile from "./components/Profile.jsx";
 import SubmitRequest from "./components/SubmitRequest.jsx";
+import ReviewRequest from "./components/ReviewRequests.jsx";
 import Login from "./components/Login.jsx";
 import Layout from "./components/Layout.jsx";
 
@@ -18,7 +18,6 @@ function App() {
             path="/dashboard/*"
             element={
               <Layout>
-                {" "}
                 <Dashboard />
               </Layout>
             }
@@ -27,8 +26,7 @@ function App() {
             path="/profile/*"
             element={
               <Layout>
-                {" "}
-                <Profile />{" "}
+                <Profile />
               </Layout>
             }
           />
@@ -36,8 +34,15 @@ function App() {
             path="/submit-request/*"
             element={
               <Layout>
-                {" "}
-                <SubmitRequest />{" "}
+                <SubmitRequest />
+              </Layout>
+            }
+          />
+          <Route
+            path="/review-requests/*"
+            element={
+              <Layout>
+                <ReviewRequest />
               </Layout>
             }
           />

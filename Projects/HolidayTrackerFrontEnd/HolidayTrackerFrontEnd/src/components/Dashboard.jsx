@@ -8,18 +8,16 @@ function Dashboard() {
   const [pendingRequests, setPendingRequestsCount] = useState(0);
 
   useEffect(() => {
-    //useEffect is typically used when you need to perform side effects in a component, such as fetching data from an API
     // Retrieve user data from localStorage
     const userDataString = localStorage.getItem("holiday-tracker-user");
-    const userData = JSON.parse(userDataString);
-    setUserData(userData); //this syntax is to automatically update the data without reendering the page again
+    const user_json = JSON.parse(userDataString);
+    if (user_json) {
+      const userData = JSON.parse(user_json.data);
+      setUserData(userData);
 
-    // Fetch holiday entitlement using user ID
-    if (userData) {
-      //this syntax means: if userData isn't null
-
-      getHolidayEntitlement(userData.id);
-      getPendingHolidays(userData.id);
+      // Fetch holiday entitlement and pending requests using user ID
+      getHolidayEntitlement(user_json.userID);
+      getPendingHolidays(user_json.userID);
     }
   }, []);
 
@@ -27,31 +25,33 @@ function Dashboard() {
     try {
       const response = await fetch(
         `http://localhost:8080/users?userId=${userId}`
-      ); // Adjust API endpoint accordingly
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch holiday entitlement");
       }
-      const userData = await response.json(); //convert the fecthed data into json format
+      const userData = await response.json();
       setHolidayEntitlement(userData.holidayEntitlement);
     } catch (error) {
       console.error("Failed to fetch holiday entitlement:", error);
     }
   }
+
   async function getPendingHolidays(userId) {
     try {
       const response = await fetch(
         `http://localhost:8080/holidayRequests?userId=${userId}&status=Pending`
-      ); // Adjust API endpoint accordingly
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch pending requests");
       }
-      const pendingRequests = await response.json(); //convert the fecthed data into json format
+      const pendingRequests = await response.json();
       const pendingRequestsCount = pendingRequests.length;
       setPendingRequestsCount(pendingRequestsCount);
     } catch (error) {
       console.error("Failed to fetch pending requests:", error);
     }
   }
+
   return (
     <div className="moveToRight-container">
       <div style={{ marginTop: "100px", padding: "20px" }}>
@@ -68,15 +68,11 @@ function Dashboard() {
           Notifications
         </Card.Header>
         <Card.Body>
-          {holidayEntitlement !== null && (
-            <>
-              You have{" "}
-              <span style={{ color: "red", fontWeight: "bold" }}>
-                {holidayEntitlement}
-              </span>{" "}
-              vacation days left.
-            </>
-          )}
+          You have{" "}
+          <span style={{ color: "red", fontWeight: "bold" }}>
+            {holidayEntitlement}
+          </span>{" "}
+          vacation days left.
         </Card.Body>
         <Card.Body>
           You have{" "}

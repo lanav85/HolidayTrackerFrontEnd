@@ -9,10 +9,11 @@ function SubmitRequest() {
   const userData = JSON.parse(userDataString);
   const userId = userData ? userData.id : null;
 
-  // State variables to hold the selected start and end dates
+  // State variables to hold the selected start and end dates and total days
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [confirmationMessage, setConfirmationMessage] = useState("");
+  const [totalDays, setTotalDays] = useState(0);
 
   // Function to handle form submission
   const handleSubmit = async (event) => {
@@ -24,6 +25,7 @@ function SubmitRequest() {
       requestFrom: startDate,
       requestTo: endDate,
       status: "Pending", // Add status field with value "Pending"
+      totalDays: totalDays, // Include total days in the request data
     };
 
     try {
@@ -64,12 +66,25 @@ function SubmitRequest() {
   const handleStartDateChange = (date) => {
     console.log("Selected Start Date:", date);
     setStartDate(date);
+    calculateTotalDays(date, endDate);
   };
 
   // Function to handle date selection for end date
   const handleEndDateChange = (date) => {
     console.log("Selected End Date:", date);
     setEndDate(date);
+    calculateTotalDays(startDate, date);
+  };
+
+  // Function to calculate total days
+  const calculateTotalDays = (start, end) => {
+    if (start && end) {
+      const daysDifference =
+        Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
+      setTotalDays(daysDifference);
+    } else {
+      setTotalDays(0);
+    }
   };
 
   return (
@@ -115,6 +130,11 @@ function SubmitRequest() {
             placeholderText="dd/mm/yyyy"
             dateFormat="dd/MM/yyyy"
           />
+        </div>
+        {/* Total Days */}
+        <div style={{ marginBottom: "20px" }}>
+          <label style={{ padding: "15px" }}>Total Days: </label>
+          <span>{totalDays}</span>
         </div>
         {/* Submit button triggers form submission */}
         <button type="submit" className="btn btn-success btn-lg submit-button">

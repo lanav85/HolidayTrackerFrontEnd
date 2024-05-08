@@ -9,15 +9,20 @@ function Login() {
   function executeLogin() {
     //TODO Implement login API logic here. For now, hardcode user response data we will get from the endpoint:
     let user_data = {
-      id: 11,
-      name: "Jane Smith",
+      data: '{"age": 28, "name": "Jane Smith"}',
+      holidayEntitlement: 20,
+      departmentID: 2,
+      email: "jane.smith@example.com",
+      roleID: 2,
+      userID: 11,
     };
     localStorage.setItem("holiday-tracker-user", JSON.stringify(user_data));
 
     //Now you can get this data ANYWHERE in your app using localStorage, e.g.
     let user_string = localStorage.getItem("holiday-tracker-user");
     let user_json = JSON.parse(user_string);
-    alert("Hello " + user_json.name + "! Your user id is " + user_json.id);
+    let userData = JSON.parse(user_json.data);
+    alert("Hello " + userData.name + "! Your user ID is " + user_json.userID);
 
     //And whenever you want to logout the user in future, you would use this code to clear the data: localStorage.removeItem("holiday-tracker-user");
 
