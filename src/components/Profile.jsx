@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -6,162 +7,155 @@ import "@/App.css";
 import Layout from "./Layout";
 
 function Profile() {
+  const [userData, setUserData] = useState(null);
+  const [userJson, setUserJson] = useState(null);
+  const [managerName, setManagerName] = useState("");
+  const [roleName, setRoleName] = useState("");
+  const [departmentName, setDepartmentName] = useState("");
+
+  useEffect(() => {
+    // Retrieve user data from localStorage
+    const userString = localStorage.getItem("holiday-tracker-user");
+    const userJson = JSON.parse(userString);
+
+    if (userJson) {
+      const userData = JSON.parse(userJson.data);
+      setUserData(userData);
+      setUserJson(userJson);
+
+      getManager(userJson.departmentID);
+      getDepartmentName(userJson.departmentID);
+      getRole(userJson.roleID);
+    }
+  }, []);
+
+  async function getManager(departmentID) {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/Department?departmentID=${departmentID}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch department");
+      }
+      const data = await response.json();
+      setManagerName(data[0].userName);
+      data[0].DepartmentName;
+    } catch (error) {
+      console.error("Failed to fetch department:", error);
+    }
+  }
+  async function getDepartmentName(departmentID) {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/Department?departmentID=${departmentID}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch department");
+      }
+      const data = await response.json();
+      setDepartmentName(data[0].departmentName);
+    } catch (error) {
+      console.error("Failed to fetch department:", error);
+    }
+  }
+  async function getRole(roleId) {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/Role?roleId=${roleId}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch role");
+      }
+      const data = await response.json();
+      setRoleName(data[0].roleDescription);
+    } catch (error) {
+      console.error("Failed to fetch role:", error);
+    }
+  }
+
   return (
     <Layout>
-      <div>
-        <div className="moveToRight-container">
-          <div
-            style={{
-              marginTop: "50px",
-              padding: "2vw",
-            }}
-          >
-            <Form>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formHorizontalName"
-              >
-                <Form.Label column sm={3}>
-                  Name
-                </Form.Label>
-                <Col sm={8}>
-                  <Form.Control type="name" placeholder="Name" />
-                </Col>
-              </Form.Group>
-
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formHorizontalSurname"
-              >
-                <Form.Label column sm={3}>
-                  Surname
-                </Form.Label>
-                <Col sm={8}>
-                  <Form.Control type="surname" placeholder="Surname" />
-                </Col>
-              </Form.Group>
-
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formHorizontalEmail"
-              >
-                <Form.Label column sm={3}>
-                  Email
-                </Form.Label>
-                <Col sm={8}>
-                  <Form.Control type="email" placeholder="Email" />
-                </Col>
-              </Form.Group>
-
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formHorizontalManager"
-              >
-                <Form.Label column sm={3}>
-                  Manager
-                </Form.Label>
-                <Col sm={8}>
-                  <Form.Control type="manager" placeholder="Manager" />
-                </Col>
-              </Form.Group>
-
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formHorizontalRole"
-              >
-                <Form.Label column sm={3}>
-                  Role
-                </Form.Label>
-                <Col sm={8}>
-                  <Form.Control type="role" placeholder="Role" />
-                </Col>
-              </Form.Group>
-
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formHorizontalDepartment"
-              >
-                <Form.Label column sm={3}>
-                  Department
-                </Form.Label>
-                <Col sm={8}>
-                  <Form.Control type="department" placeholder="Department" />
-                </Col>
-              </Form.Group>
-
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formHorizontalHollidayAllowance"
-              >
-                <Form.Label column sm={3}>
-                  Holliday Allowance
-                </Form.Label>
-                <Col sm={8}>
-                  <Form.Control
-                    type="hollidayAllowance"
-                    placeholder="HollidayAllowance"
-                  />
-                </Col>
-              </Form.Group>
-
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formHorizontalStartDate"
-              >
-                <Form.Label column sm={3}>
-                  Start Date
-                </Form.Label>
-                <Col sm={8}>
-                  <Form.Control type="startDate" placeholder="Start Date" />
-                </Col>
-              </Form.Group>
-
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formHorizontalAddress"
-              >
-                <Form.Label column sm={3}>
-                  Address
-                </Form.Label>
-                <Col sm={8}>
-                  <Form.Control type="address" placeholder="Address" />
-                </Col>
-              </Form.Group>
-
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formHorizontalPhoneNumber"
-              >
-                <Form.Label column sm={3}>
-                  Phone Number
-                </Form.Label>
-                <Col sm={8}>
-                  <Form.Control type="phoneNumber" placeholder="Phone Number" />
-                </Col>
-              </Form.Group>
-
-              <Form.Group as={Row} className="mb-3">
-                <Col sm={{ span: 20, offset: 4 }}>
-                  <Button
-                    type="button"
-                    className="btn btn-success btn-lg submit-button"
-                  >
-                    Save Changes
-                  </Button>
-                </Col>
-              </Form.Group>
-            </Form>
-          </div>
+      <div className="moveToRight-container">
+        <div style={{ marginTop: "50px", padding: "2vw" }}>
+          <Form>
+            <Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="formHorizontalName"
+            >
+              <Form.Label column sm={3}>
+                Name
+              </Form.Label>
+              <Col sm={8}>
+                <Form.Control
+                  type="text"
+                  value={userData ? userData.name : ""}
+                />
+              </Col>
+            </Form.Group>
+            <Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="formHorizontalEmail"
+            >
+              <Form.Label column sm={3}>
+                Email
+              </Form.Label>
+              <Col sm={8}>
+                <Form.Control
+                  type="email"
+                  value={userJson ? userJson.email : ""}
+                  readOnly
+                />
+              </Col>
+            </Form.Group>
+            <Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="formHorizontalManager"
+            >
+              <Form.Label column sm={3}>
+                Manager
+              </Form.Label>
+              <Col sm={8}>
+                <Form.Control type="text" value={managerName} />
+              </Col>
+            </Form.Group>
+            <Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="formHorizontalRole"
+            >
+              <Form.Label column sm={3}>
+                Role
+              </Form.Label>
+              <Col sm={8}>
+                <Form.Control type="text" value={roleName} />
+              </Col>
+            </Form.Group>
+            <Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="formHorizontalDepartment"
+            >
+              <Form.Label column sm={3}>
+                Department
+              </Form.Label>
+              <Col sm={8}>
+                <Form.Control type="text" value={departmentName} />
+              </Col>
+            </Form.Group>
+            <Form.Group as={Row} className="mb-3">
+              <Col sm={{ span: 10, offset: 3 }}>
+                <Button
+                  type="button"
+                  className="btn btn-success btn-lg submit-button"
+                >
+                  Save Changes
+                </Button>
+              </Col>
+            </Form.Group>
+          </Form>
         </div>
       </div>
     </Layout>

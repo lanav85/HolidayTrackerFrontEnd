@@ -11,6 +11,7 @@ function Dashboard() {
     // Retrieve user data from localStorage
     const userDataString = localStorage.getItem("holiday-tracker-user");
     const user_json = JSON.parse(userDataString);
+
     if (user_json) {
       const userData = JSON.parse(user_json.data);
       setUserData(userData);
