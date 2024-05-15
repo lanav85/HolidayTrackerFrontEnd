@@ -67,7 +67,7 @@ function ReviewRequests() {
     });
     setFilteredHolidayRequests(updatedRequests);
   }
-  async function handleSubmit(requestID) {
+  async function handleSubmit(requestID, newStatus) {
     try {
       const specificRequest = holidayRequests.find(
         (request) => request.requestID === requestID
@@ -84,7 +84,7 @@ function ReviewRequests() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ ...specificRequest, status: "Rejected" }), // Update status to "Rejected"
+          body: JSON.stringify({ ...specificRequest, status: newStatus }),
         }
       );
 
@@ -194,7 +194,9 @@ function ReviewRequests() {
                   {request.status !== "Rejected" && (
                     <Button
                       variant="primary"
-                      onClick={() => handleSubmit(request.requestID)}
+                      onClick={() =>
+                        handleSubmit(request.requestID, request.status)
+                      }
                     >
                       Submit
                     </Button>
