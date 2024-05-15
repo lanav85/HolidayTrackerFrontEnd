@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Layout from "./Layout";
 
 function SubmitRequest() {
   // Retrieve user ID from localStorage
-  const userDataString = localStorage.getItem("holiday-tracker-user");
-  const userData = JSON.parse(userDataString);
-  const userId = userData ? userData.id : null;
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const userDataString = localStorage.getItem("holiday-tracker-user");
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+      setUserId(userData.userID); // Correctly access the userID field
+    }
+  }, []);
 
   // State variables to hold the selected start and end dates and total days
   const [startDate, setStartDate] = useState(null);
@@ -25,7 +31,6 @@ function SubmitRequest() {
       requestFrom: startDate,
       requestTo: endDate,
       status: "Pending", // Add status field with value "Pending"
-      totalDays: totalDays, // Include total days in the request data
     };
 
     try {
@@ -39,25 +44,21 @@ function SubmitRequest() {
       });
 
       if (response.ok) {
-        // Holiday request submitted successfully
         console.log("Holiday request submitted successfully");
         // Clear form fields
         setStartDate(null);
         setEndDate(null);
-        // Show confirmation message
         setConfirmationMessage("Holiday request submitted successfully");
       } else {
         // Error submitting holiday request
         const errorMessage = await response.text(); // Get error message from response body
         console.error("Error submitting holiday request:", errorMessage);
-        // Show error message
         setConfirmationMessage(
           "Error submitting holiday request: " + errorMessage
         );
       }
     } catch (error) {
       console.error("Error:", error);
-      // Show error message
       setConfirmationMessage("Error: " + error.message);
     }
   };
@@ -100,7 +101,6 @@ function SubmitRequest() {
           alignItems: "center",
         }}
       >
-        {" "}
         <h2 style={{ padding: "25px" }}> Holiday Request </h2>
         {/* Input for selecting start date */}
         <div style={{ marginBottom: "30px" }}>
@@ -136,7 +136,7 @@ function SubmitRequest() {
           <label style={{ padding: "15px" }}>Total Days: </label>
           <span>{totalDays}</span>
         </div>
-        {/* Submit button triggers form submission */}
+        {/* Submit button  form submission */}
         <button type="submit" className="btn btn-success btn-lg submit-button">
           Submit
         </button>

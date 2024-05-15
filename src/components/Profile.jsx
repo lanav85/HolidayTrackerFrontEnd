@@ -137,7 +137,7 @@ function Profile() {
                 Manager
               </Form.Label>
               <Col sm={8}>
-                <Form.Control type="text" value={managerName} />
+                <Form.Control type="text" value={managerName} readOnly />
               </Col>
             </Form.Group>
             <Form.Group
@@ -151,7 +151,7 @@ function Profile() {
               <Col sm={8}>
                 <Form.Select
                   value={roleName}
-                  onChange={(e) => setRoleName(e.target.value)}
+                  onChange={(e) => setRoleName(e.target.value)} //dropdown menu
                 >
                   <option value="Manager">Manager</option>
                   <option value="Supervisor">Supervisor</option>
@@ -170,15 +170,16 @@ function Profile() {
               <Col sm={8}>
                 <Form.Select
                   value={departmentName}
-                  onChange={(e) => setDepartmentName(e.target.value)}
+                  onChange={(e) => setDepartmentName(e.target.value)} // dropdpwn menu: Update the state when a new department is selected
                 >
                   {departments.map((department) => (
+                    // Map over the list of departments and create an option for each one
                     <option
-                      key={department.departmentID}
-                      value={department.departmentName}
+                      key={department.departmentID} // Unique key for each department option
+                      value={department.departmentName} // Set the value of the option to the department name
                     >
                       {department.departmentName}
-                    </option>
+                    </option> // Display the department name as the option text
                   ))}
                 </Form.Select>
               </Col>
