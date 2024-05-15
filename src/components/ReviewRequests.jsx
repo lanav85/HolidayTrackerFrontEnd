@@ -57,7 +57,16 @@ function ReviewRequests() {
     });
     setFilteredHolidayRequests(filteredRequests);
   }
-
+  // Update the status of a holiday request locally
+  function handleStatusChange(requestID, newStatus) {
+    const updatedRequests = filteredHolidayRequests.map((request) => {
+      if (request.requestID === requestID) {
+        return { ...request, status: newStatus };
+      }
+      return request;
+    });
+    setFilteredHolidayRequests(updatedRequests);
+  }
   async function handleSubmit(requestID) {
     try {
       const specificRequest = holidayRequests.find(
