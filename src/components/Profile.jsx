@@ -12,6 +12,7 @@ function Profile() {
   const [managerName, setManagerName] = useState("");
   const [roleName, setRoleName] = useState("");
   const [departmentName, setDepartmentName] = useState("");
+  const [departments, setDepartments] = useState([]); //  for storing list of departments
 
   useEffect(() => {
     // Retrieve user data from localStorage
@@ -27,6 +28,9 @@ function Profile() {
       getDepartmentName(userJson.departmentID);
       getRole(userJson.roleID);
     }
+
+    // Fetch all departments
+    getAllDepartments();
   }, []);
 
   async function getManager(departmentID) {
@@ -39,11 +43,11 @@ function Profile() {
       }
       const data = await response.json();
       setManagerName(data[0].userName);
-      data[0].DepartmentName;
     } catch (error) {
       console.error("Failed to fetch department:", error);
     }
   }
+
   async function getDepartmentName(departmentID) {
     try {
       const response = await fetch(
@@ -58,6 +62,7 @@ function Profile() {
       console.error("Failed to fetch department:", error);
     }
   }
+
   async function getRole(roleId) {
     try {
       const response = await fetch(
@@ -70,6 +75,20 @@ function Profile() {
       setRoleName(data[0].roleDescription);
     } catch (error) {
       console.error("Failed to fetch role:", error);
+    }
+  }
+
+  // Get List of all departments in the database
+  async function getAllDepartments() {
+    try {
+      const response = await fetch(`http://localhost:8080/Department`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch departments");
+      }
+      const data = await response.json();
+      setDepartments(data); // Store the fetched departments
+    } catch (error) {
+      console.error("Failed to fetch departments:", error);
     }
   }
 
@@ -130,7 +149,14 @@ function Profile() {
                 Role
               </Form.Label>
               <Col sm={8}>
-                <Form.Control type="text" value={roleName} />
+                <Form.Select
+                  value={roleName}
+                  onChange={(e) => setRoleName(e.target.value)}
+                >
+                  <option value="Manager">Manager</option>
+                  <option value="Supervisor">Supervisor</option>
+                  <option value="Employee">Employee</option>
+                </Form.Select>
               </Col>
             </Form.Group>
             <Form.Group
@@ -142,7 +168,19 @@ function Profile() {
                 Department
               </Form.Label>
               <Col sm={8}>
-                <Form.Control type="text" value={departmentName} />
+                <Form.Select
+                  value={departmentName}
+                  onChange={(e) => setDepartmentName(e.target.value)}
+                >
+                  {departments.map((department) => (
+                    <option
+                      key={department.departmentID}
+                      value={department.departmentName}
+                    >
+                      {department.departmentName}
+                    </option>
+                  ))}
+                </Form.Select>
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-3">
