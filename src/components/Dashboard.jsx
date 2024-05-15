@@ -113,11 +113,6 @@ function Dashboard() {
           vacation request{userPendingRequests !== 1 ? "s" : ""} awaiting for
           approval.
         </Card.Body>
-        <Card.Body>
-          Request holiday for{" "}
-          <span style={{ color: "red", fontWeight: "bold" }}>June 24th</span>{" "}
-          has been rejected by your manager.
-        </Card.Body>
       </Card>
     </div>
   );

@@ -98,7 +98,32 @@ function ReviewRequests() {
       console.error("Error submitting request:", error);
     }
   }
-
+  function getStatusOptions(currentStatus, requestID) {
+    if (currentStatus === "Rejected") {
+      return "Rejected";
+    } else if (currentStatus === "Approved") {
+      return (
+        <select
+          value={currentStatus}
+          onChange={(e) => handleStatusChange(requestID, e.target.value)}
+        >
+          <option value="Approved">Approved</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+      );
+    } else {
+      return (
+        <select
+          value={currentStatus}
+          onChange={(e) => handleStatusChange(requestID, e.target.value)}
+        >
+          <option value="Pending">Pending</option>
+          <option value="Approved">Approved</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+      );
+    }
+  }
   return (
     <div
       style={{
@@ -174,22 +199,7 @@ function ReviewRequests() {
                 <td>{request.userName}</td>
                 <td>{request.requestFrom}</td>
                 <td>{request.requestTo}</td>
-                <td>
-                  {request.status === "Rejected" ? (
-                    "Rejected"
-                  ) : (
-                    <select
-                      value={request.status}
-                      onChange={(e) =>
-                        handleStatusChange(request.requestID, e.target.value)
-                      }
-                    >
-                      <option value="Pending">Pending</option>
-                      <option value="Approved">Approved</option>
-                      <option value="Rejected">Rejected</option>
-                    </select>
-                  )}
-                </td>
+                <td>{getStatusOptions(request.status, request.requestId)}</td>
                 <td>
                   {request.status !== "Rejected" && (
                     <Button
