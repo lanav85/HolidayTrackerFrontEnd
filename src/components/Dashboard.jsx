@@ -6,6 +6,7 @@ function Dashboard() {
   const [userData, setUserData] = useState(null);
   const [holidayEntitlement, setHolidayEntitlement] = useState(null);
   const [pendingRequests, setPendingRequestsCount] = useState(0);
+  const [userPendingRequests, setUserPendingRequestsCount] = useState(0);
 
   useEffect(() => {
     // Retrieve user data from localStorage
@@ -18,7 +19,8 @@ function Dashboard() {
 
       // Fetch holiday entitlement and pending requests using user ID
       getHolidayEntitlement(user_json.userID);
-      getPendingHolidays(user_json.userID);
+      getPendingHolidays(user_json.departmentID);
+      getUserPendingHolidays(user_json.userID);
     }
   }, []);
 
@@ -36,8 +38,25 @@ function Dashboard() {
       console.error("Failed to fetch holiday entitlement:", error);
     }
   }
+  //Getting pending requests from the department
+  async function getPendingHolidays(departmentId) {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/holidayRequests?departmentId=${departmentId}&status=Pending`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch pending requests");
+      }
+      const pendingRequests = await response.json();
+      const pendingRequestsCount = pendingRequests.length;
+      setPendingRequestsCount(pendingRequestsCount);
+    } catch (error) {
+      console.error("Failed to fetch pending requests:", error);
+    }
+  }
 
-  async function getPendingHolidays(userId) {
+  //Getting pending requests from the user
+  async function getUserPendingHolidays(userId) {
     try {
       const response = await fetch(
         `http://localhost:8080/holidayRequests?userId=${userId}&status=Pending`
@@ -47,7 +66,7 @@ function Dashboard() {
       }
       const pendingRequests = await response.json();
       const pendingRequestsCount = pendingRequests.length;
-      setPendingRequestsCount(pendingRequestsCount);
+      setUserPendingRequestsCount(pendingRequestsCount);
     } catch (error) {
       console.error("Failed to fetch pending requests:", error);
     }
@@ -68,6 +87,7 @@ function Dashboard() {
         >
           Notifications
         </Card.Header>
+
         <Card.Body>
           You have{" "}
           <span style={{ color: "red", fontWeight: "bold" }}>
@@ -75,12 +95,22 @@ function Dashboard() {
           </span>{" "}
           vacation days left.
         </Card.Body>
+
         <Card.Body>
           You have{" "}
           <span style={{ color: "red", fontWeight: "bold" }}>
             {pendingRequests}
           </span>{" "}
-          submitted vacation request{pendingRequests !== 1 ? "s" : ""} pending
+          pending vacation request{pendingRequests !== 1 ? "s" : ""} awaiting
+          for your approval.
+        </Card.Body>
+
+        <Card.Body>
+          You have{" "}
+          <span style={{ color: "red", fontWeight: "bold" }}>
+            {userPendingRequests}
+          </span>{" "}
+          vacation request{userPendingRequests !== 1 ? "s" : ""} awaiting for
           approval.
         </Card.Body>
         <Card.Body>

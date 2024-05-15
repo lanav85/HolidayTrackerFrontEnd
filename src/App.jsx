@@ -7,6 +7,7 @@ import SubmitRequest from "./components/SubmitRequest.jsx";
 import ReviewRequest from "./components/ReviewRequests.jsx";
 import Login from "./components/Login.jsx";
 import Layout from "./components/Layout.jsx";
+import ManageEmployees from "./components/ManageEmployees.jsx";
 
 function App() {
   return (
@@ -43,6 +44,14 @@ function App() {
             element={
               <Layout>
                 <ReviewRequest />
+              </Layout>
+            }
+          />
+          <Route
+            path="/manage-employees/*"
+            element={
+              <Layout>
+                <ManageEmployees />
               </Layout>
             }
           />
