@@ -19,7 +19,6 @@ function SubmitRequest() {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [confirmationMessage, setConfirmationMessage] = useState("");
-  const [totalDays, setTotalDays] = useState(0);
 
   // Function to handle form submission
   const handleSubmit = async (event) => {
@@ -77,17 +76,6 @@ function SubmitRequest() {
     calculateTotalDays(startDate, date);
   };
 
-  // Function to calculate total days
-  const calculateTotalDays = (start, end) => {
-    if (start && end) {
-      const daysDifference =
-        Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
-      setTotalDays(daysDifference);
-    } else {
-      setTotalDays(0);
-    }
-  };
-
   return (
     // Form for submitting request
     <Layout>
@@ -131,11 +119,7 @@ function SubmitRequest() {
             dateFormat="dd/MM/yyyy"
           />
         </div>
-        {/* Total Days */}
-        <div style={{ marginBottom: "20px" }}>
-          <label style={{ padding: "15px" }}>Total Days: </label>
-          <span>{totalDays}</span>
-        </div>
+
         {/* Submit button  form submission */}
         <button type="submit" className="btn btn-success btn-lg submit-button">
           Submit
