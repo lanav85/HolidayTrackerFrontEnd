@@ -12,6 +12,12 @@ import "css/Sidebar.css";
 import logo from "img/logo.png";
 
 export default function Sidebar() {
+  function getLoggedInUserId() {
+    const userDataString = localStorage.getItem("holiday-tracker-user");
+    const userData = JSON.parse(userDataString);
+    return userData.userID;
+  }
+
   return (
     <div className="sidebar">
       <CDBSidebar textColor="#fff" backgroundColor="#82029b">
@@ -28,7 +34,7 @@ export default function Sidebar() {
               </CDBSidebarMenuItem>
             </NavLink>
 
-            <NavLink exact to="/profile">
+            <NavLink exact to={"/profile/" + getLoggedInUserId()}>
               <CDBSidebarMenuItem icon="user" className="sidebar-menu-item">
                 Profile{" "}
               </CDBSidebarMenuItem>

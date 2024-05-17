@@ -8,6 +8,8 @@ import ReviewRequest from "./components/ReviewRequests.jsx";
 import Login from "./components/Login.jsx";
 import Layout from "./components/Layout.jsx";
 import ManageEmployees from "./components/ManageEmployees.jsx";
+import ManageDepartments from "./components/ManageDepartments.jsx";
+import ViewDepartment from "./components/ViewDepartment.jsx";
 
 function App() {
   return (
@@ -24,7 +26,7 @@ function App() {
             }
           />
           <Route
-            path="/profile/*"
+            path="/profile/:user_id"
             element={
               <Layout>
                 <Profile />
@@ -52,6 +54,22 @@ function App() {
             element={
               <Layout>
                 <ManageEmployees />
+              </Layout>
+            }
+          />
+          <Route
+            path="/manage-departments/*"
+            element={
+              <Layout>
+                <ManageDepartments />
+              </Layout>
+            }
+          />
+          <Route
+            path="/view-department/:departmentID" // added route for department ID
+            element={
+              <Layout>
+                <ViewDepartment />
               </Layout>
             }
           />

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import "@/App.css";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 
 function ManageEmployees() {
   const [sortBy, setSortBy] = useState(null); // State to track the currently selected sort option
@@ -66,10 +67,6 @@ function ManageEmployees() {
     }
   });
 
-  function handleView(userID) {
-    alert("Request to view userID : " + userID);
-  }
-
   return (
     <Table
       striped
@@ -93,9 +90,7 @@ function ManageEmployees() {
             <td>{row.name}</td>
             <td>{row.email}</td>
             <td>
-              <Button variant="primary" onClick={() => handleView(row.userID)}>
-                View
-              </Button>
+              <Link to={"/profile/" + row.userID}>View</Link>
             </td>
           </tr>
         ))}

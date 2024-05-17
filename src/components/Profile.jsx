@@ -16,27 +16,39 @@ function Profile() {
   const [departments, setDepartments] = useState([]); //  for storing list of departments
 
   useEffect(() => {
+    let urlParams = window.location.pathname.split("/");
+    // Profile ID requested
+    let profileUserId = Number(urlParams[urlParams.length - 1]);
     // Retrieve user data from localStorage
     const userString = localStorage.getItem("holiday-tracker-user");
     const userJson = JSON.parse(userString);
 
-    if (userJson) {
-      const userData = JSON.parse(userJson.data);
-      setUserData(userData);
-      setUserJson(userJson);
-
-      api.getDepartment(userJson.departmentID, (result) => {
-        setManagerName(result.userName);
-        setDepartmentName(result.departmentName);
-      });
-      api.getRole(userJson.roleID, (result) => {
-        setRoleName(result.roleDescription);
+    if (!profileUserId || userJson.userID === profileUserId) {
+      //Logged in user, cached data is used
+      loadUser(userJson);
+    } else {
+      //DB call to load profile data
+      api.getUser(profileUserId, (result) => {
+        loadUser(result);
       });
     }
 
     // Fetch all departments
     getAllDepartments();
   }, []);
+
+  function loadUser(userJson) {
+    const userData = JSON.parse(userJson.data);
+    setUserData(userData);
+    setUserJson(userJson);
+    api.getDepartment(userJson.departmentID, (result) => {
+      setManagerName(result.userName);
+      setDepartmentName(result.departmentName);
+    });
+    api.getRole(userJson.roleID, (result) => {
+      setRoleName(result.roleDescription);
+    });
+  }
 
   // Get List of all departments in the database
   async function getAllDepartments() {
