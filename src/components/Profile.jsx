@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import "@/App.css";
 import Layout from "./Layout";
+import * as api from "../api/ApiRequests";
 
 function Profile() {
   const [userData, setUserData] = useState(null);
@@ -24,59 +25,18 @@ function Profile() {
       setUserData(userData);
       setUserJson(userJson);
 
-      getManager(userJson.departmentID);
-      getDepartmentName(userJson.departmentID);
-      getRole(userJson.roleID);
+      api.getDepartment(userJson.departmentID, (result) => {
+        setManagerName(result.userName);
+        setDepartmentName(result.departmentName);
+      });
+      api.getRole(userJson.roleID, (result) => {
+        setRoleName(result.roleDescription);
+      });
     }
 
     // Fetch all departments
     getAllDepartments();
   }, []);
-
-  async function getManager(departmentID) {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/Department?departmentID=${departmentID}`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch department");
-      }
-      const data = await response.json();
-      setManagerName(data[0].userName);
-    } catch (error) {
-      console.error("Failed to fetch department:", error);
-    }
-  }
-
-  async function getDepartmentName(departmentID) {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/Department?departmentID=${departmentID}`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch department");
-      }
-      const data = await response.json();
-      setDepartmentName(data[0].departmentName);
-    } catch (error) {
-      console.error("Failed to fetch department:", error);
-    }
-  }
-
-  async function getRole(roleId) {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/Role?roleId=${roleId}`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch role");
-      }
-      const data = await response.json();
-      setRoleName(data[0].roleDescription);
-    } catch (error) {
-      console.error("Failed to fetch role:", error);
-    }
-  }
 
   // Get List of all departments in the database
   async function getAllDepartments() {
