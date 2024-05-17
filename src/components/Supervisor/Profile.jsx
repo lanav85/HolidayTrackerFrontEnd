@@ -4,8 +4,8 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import "@/App.css";
-import Layout from "./Layout";
-import * as api from "../api/ApiRequests";
+import Layout from "../PageLayout/Layout";
+import * as api from "../../api/ApiRequests";
 
 function Profile() {
   const [userData, setUserData] = useState(null);

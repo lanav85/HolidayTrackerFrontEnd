@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Layout from "./Layout";
+import Layout from "./PageLayout/Layout";
 
 function SubmitRequest() {
   // Retrieve user ID from localStorage
