@@ -60,6 +60,12 @@ export default function Sidebar() {
                 Manage Employees{" "}
               </CDBSidebarMenuItem>
             </NavLink>
+
+            <NavLink exact to="/manage-departments">
+              <CDBSidebarMenuItem icon="users" className="sidebar-menu-item">
+                Manage Departments{" "}
+              </CDBSidebarMenuItem>
+            </NavLink>
           </CDBSidebarMenu>
         </CDBSidebarContent>
 

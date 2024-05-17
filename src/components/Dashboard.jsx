@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "@/App.css";
 import Card from "react-bootstrap/Card";
 
 function Dashboard() {
