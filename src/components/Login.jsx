@@ -4,33 +4,29 @@ import logo from "img/logo.png";
 import background from "img/background.png";
 import "css/Login.css";
 import { Link } from "react-router-dom";
+import * as api from "../api/ApiRequests";
 
 function Login() {
   function executeLogin() {
+    let profileUserId = 11;
     //TODO Implement login API logic here. For now, hardcode user response data we will get from the endpoint:
-    let user_data = {
-      data: '{"age": 28, "name": "Jane Smith"}',
-      holidayEntitlement: 20,
-      departmentID: 2,
-      email: "jane.smith@example.com",
-      roleID: 2,
-      userID: 11,
-    };
-    localStorage.setItem("holiday-tracker-user", JSON.stringify(user_data));
+    api.getUser(profileUserId, (result) => {
+      localStorage.setItem("holiday-tracker-user", JSON.stringify(result));
 
-    //Now you can get this data ANYWHERE in your app using localStorage, e.g.
-    let user_string = localStorage.getItem("holiday-tracker-user");
-    let user_json = JSON.parse(user_string);
-    let userData = JSON.parse(user_json.data);
-    alert("Hello " + userData.name + "! Your user ID is " + user_json.userID);
+      //Now you can get this data ANYWHERE in your app using localStorage, e.g.
+      let user_string = localStorage.getItem("holiday-tracker-user");
+      let user_json = JSON.parse(user_string);
+      let userData = JSON.parse(user_json.data);
+      alert("Hello " + userData.name + "! Your user ID is " + user_json.userID);
 
-    //And whenever you want to logout the user in future, you would use this code to clear the data: localStorage.removeItem("holiday-tracker-user");
+      //And whenever you want to logout the user in future, you would use this code to clear the data: localStorage.removeItem("holiday-tracker-user");
 
-    //localStorage is very easy way to store data in the browser, you can store any string.
-    //You need to supply a key e.g. "holiday-tracker-user"
-    //               and a string value (note i don't think number, json etc. works)
-    //Thats why you see when i store the user json data, i turn it into a string.
-    // and then when i retrieve it, i turn the string back into json.
+      //localStorage is very easy way to store data in the browser, you can store any string.
+      //You need to supply a key e.g. "holiday-tracker-user"
+      //               and a string value (note i don't think number, json etc. works)
+      //Thats why you see when i store the user json data, i turn it into a string.
+      // and then when i retrieve it, i turn the string back into json.
+    });
   }
 
   return (
