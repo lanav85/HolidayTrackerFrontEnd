@@ -6,14 +6,24 @@ import Row from "react-bootstrap/Row";
 import "@/App.css";
 import Layout from "../PageLayout/Layout";
 import * as api from "../../api/ApiRequests";
+import isEqual from "lodash.isequal";
+import cloneDeep from "lodash/cloneDeep";
 
 function Profile() {
   const [userData, setUserData] = useState(null);
   const [userJson, setUserJson] = useState(null);
+  const [updatedUserData, setUpdatedUserData] = useState(null);
+  const [updatedUserJson, setUpdatedUserJson] = useState(null);
+  const [isLoggedInUser, setIsLoggedInUser] = useState(null);
   const [managerName, setManagerName] = useState("");
   const [roleName, setRoleName] = useState("");
   const [departmentName, setDepartmentName] = useState("");
   const [departments, setDepartments] = useState([]); //  for storing list of departments
+  const roles = [
+    { roleid: 1, roledescription: "Manager" },
+    { roleid: 2, roledescription: "Supervisor" },
+    { roleid: 3, roledescription: "Employee" },
+  ];
 
   useEffect(() => {
     let urlParams = window.location.pathname.split("/");
@@ -22,8 +32,8 @@ function Profile() {
     // Retrieve user data from localStorage
     const userString = localStorage.getItem("holiday-tracker-user");
     const userJson = JSON.parse(userString);
-
-    if (!profileUserId || userJson.userID === profileUserId) {
+    setIsLoggedInUser(userJson.userID === profileUserId);
+    if (isLoggedInUser) {
       //Logged in user, cached data is used
       loadUser(userJson);
     } else {
@@ -39,8 +49,11 @@ function Profile() {
 
   function loadUser(userJson) {
     const userData = JSON.parse(userJson.data);
-    setUserData(userData);
+    userJson.data = JSON.stringify(userData);
+    setUserData(userData); //The initial user data
     setUserJson(userJson);
+    setUpdatedUserData(cloneDeep(userData)); //The updated user data (as the form fields are being modified)
+    setUpdatedUserJson(cloneDeep(userJson)); //This is a clone, as we don't want to update the initial object
     api.getDepartment(userJson.departmentID, (result) => {
       setManagerName(result.userName);
       setDepartmentName(result.departmentName);
@@ -64,11 +77,48 @@ function Profile() {
     }
   }
 
+  function handleSave(event) {
+    event.preventDefault();
+
+    let ud = updatedUserData;
+    ud.name = event.target.username.value;
+    setUpdatedUserData(ud);
+
+    let uj = updatedUserJson;
+    uj.departmentID = departments.find(
+      (e) => e.departmentName === event.target.department.value
+    ).departmentID;
+    uj.roleID = roles.find(
+      (e) => e.roledescription === event.target.role.value
+    ).roleid;
+    uj.data = JSON.stringify(ud);
+    setUpdatedUserJson(uj);
+
+    if (
+      isEqual(userData, updatedUserData) &&
+      isEqual(userJson, updatedUserJson)
+    ) {
+      alert("No changes to save!");
+    } else {
+      alert("Saving...");
+      api.putUser(userJson.userID, uj, (result) => {
+        alert(result);
+      });
+      if (isLoggedInUser) {
+        //save changes to logged in user in cache
+        localStorage.setItem("holiday-tracker-user", JSON.stringify(uj));
+        //refresh page
+        window.location.reload();
+        alert("User updated successfully!");
+      }
+    }
+  }
+
   return (
     <Layout>
       <div className="moveToRight-container">
         <div style={{ marginTop: "50px", padding: "2vw" }}>
-          <Form>
+          <Form onSubmit={handleSave}>
             <Form.Group
               as={Row}
               className="mb-3"
@@ -80,6 +130,7 @@ function Profile() {
               <Col sm={8}>
                 <Form.Control
                   type="text"
+                  name="username"
                   value={userData ? userData.name : ""}
                 />
               </Col>
@@ -95,6 +146,7 @@ function Profile() {
               <Col sm={8}>
                 <Form.Control
                   type="email"
+                  name="email"
                   value={userJson ? userJson.email : ""}
                   readOnly
                 />
@@ -109,7 +161,12 @@ function Profile() {
                 Manager
               </Form.Label>
               <Col sm={8}>
-                <Form.Control type="text" value={managerName} readOnly />
+                <Form.Control
+                  type="text"
+                  name="manager"
+                  value={managerName}
+                  readOnly
+                />
               </Col>
             </Form.Group>
             <Form.Group
@@ -123,11 +180,14 @@ function Profile() {
               <Col sm={8}>
                 <Form.Select
                   value={roleName}
+                  name="role"
                   onChange={(e) => setRoleName(e.target.value)} //dropdown menu
                 >
-                  <option value="Manager">Manager</option>
-                  <option value="Supervisor">Supervisor</option>
-                  <option value="Employee">Employee</option>
+                  {roles.map((role) => (
+                    <option key={role.roleid} value={role.roledescription}>
+                      {role.roledescription}
+                    </option>
+                  ))}
                 </Form.Select>
               </Col>
             </Form.Group>
@@ -142,6 +202,7 @@ function Profile() {
               <Col sm={8}>
                 <Form.Select
                   value={departmentName}
+                  name="department"
                   onChange={(e) => setDepartmentName(e.target.value)} // dropdpwn menu: Update the state when a new department is selected
                 >
                   {departments.map((department) => (
@@ -159,7 +220,7 @@ function Profile() {
             <Form.Group as={Row} className="mb-3">
               <Col sm={{ span: 10, offset: 3 }}>
                 <Button
-                  type="button"
+                  type="submit"
                   className="btn btn-success btn-lg submit-button"
                 >
                   Save Changes

@@ -10,7 +10,25 @@ export function getUser(userId, onSuccess) {
         onSuccess(data);
       });
   } catch (error) {
-    console.error("Failed to fetch department:", error);
+    console.error("Failed to get user:", error);
+  }
+}
+
+export function putUser(userId, user, onSuccess) {
+  try {
+    fetch(url_host + `/users/${userId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        onSuccess(result);
+      });
+  } catch (error) {
+    console.error("Failed to update user:", error);
   }
 }
 

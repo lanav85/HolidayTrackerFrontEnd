@@ -5,21 +5,22 @@ import "@/App.css";
 function ViewDepartment() {
   const [managerName, setManagerName] = useState("");
   const [departmentName, setDepartmentName] = useState("");
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    // Extract departmentID from URL path
     let urlParams = window.location.pathname.split("/");
     let departmentID = Number(urlParams[urlParams.length - 1]);
 
     api.getDepartment(departmentID, (departmentData) => {
-      loadDepartment(departmentData);
+      setDepartmentName(departmentData.departmentName);
+      setManagerName(departmentData.userName);
+
+      // Fetch users in the same department
+      api.getUsersInDepartment(departmentID, (usersData) => {
+        setUsers(usersData);
+      });
     });
   }, []);
-
-  function loadDepartment(departmentData) {
-    setDepartmentName(departmentData.departmentName);
-    setManagerName(departmentData.userName);
-  }
 
   return (
     <div className="moveToRight-container">
@@ -35,7 +36,24 @@ function ViewDepartment() {
       </div>
       <div>
         <h3>Users in Department</h3>
-        {/* Add logic to display users in the department */}
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user.userID}>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>{user.role}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
