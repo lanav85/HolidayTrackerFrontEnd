@@ -1,9 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
+import "@/App.css";
+import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 
-function ManageEmplyees() {
+function ManageEmployees() {
   const [sortBy, setSortBy] = useState(null); // State to track the currently selected sort option
   const [sortDirection, setSortDirection] = useState("asc"); // State to track the sort direction
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const userString = localStorage.getItem("holiday-tracker-user");
+    const userJson = JSON.parse(userString);
+    if (users.length === 0) {
+      getUsersByDepartmentId(userJson.departmentID);
+    }
+  });
+
+  async function getUsersByDepartmentId(departmentID) {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/users?departmentId=${departmentID}`
+      );
+      if (!response.ok) {
+        throw new Error(
+          "Failed to fetch users for departmentId " + departmentID
+        );
+      }
+      const data = await response.json();
+      const formattedData = data.map((item) => {
+        const userData = JSON.parse(item.data);
+        return {
+          name: userData.name,
+          userID: item.userID,
+          email: item.email,
+        };
+      });
+      setUsers(formattedData);
+    } catch (error) {
+      console.error(
+        "Failed to fetch users for departmentId " + departmentID,
+        error
+      );
+    }
+  }
 
   // Function to handle sorting
   const handleSort = (sortByValue) => {
@@ -17,15 +57,8 @@ function ManageEmplyees() {
     }
   };
 
-  // Data for the table
-  const tableData = [
-    { id: 1, name: "Mark", department: "Sales", email: "@mdo" },
-    { id: 2, name: "Jacob", department: "IT", email: "@fat" },
-    { id: 3, name: "Larry the Bird", department: "HR", email: "@twitter" },
-  ];
-
   // Function to sort the data based on the currently selected sort option and direction
-  const sortedData = tableData.sort((a, b) => {
+  const sortedData = users.sort((a, b) => {
     if (!sortBy) return 0; // If no sort option is selected, maintain the original order
     if (sortDirection === "asc") {
       return a[sortBy].localeCompare(b[sortBy]);
@@ -37,18 +70,15 @@ function ManageEmplyees() {
   return (
     <Table
       striped
+      className="moveToRight-container"
       style={{
-        marginLeft: "calc(35% + 60px)",
-        marginRight: "30%",
-        marginTop: "70px",
-        padding: "3vw",
+        width: "calc(60%)",
       }}
     >
       <thead>
         <tr>
           <th>#</th>
           <th onClick={() => handleSort("name")}>Name</th>
-          <th onClick={() => handleSort("department")}>Department</th>
           <th>Email</th>
           <th></th>
         </tr>
@@ -58,9 +88,10 @@ function ManageEmplyees() {
           <tr key={row.id}>
             <td>{index + 1}</td>
             <td>{row.name}</td>
-            <td>{row.department}</td>
             <td>{row.email}</td>
-            <td></td>
+            <td>
+              <Link to={"/profile/" + row.userID}>View</Link>
+            </td>
           </tr>
         ))}
       </tbody>
@@ -68,4 +99,4 @@ function ManageEmplyees() {
   );
 }
 
-export default ManageEmplyees;
+export default ManageEmployees;
