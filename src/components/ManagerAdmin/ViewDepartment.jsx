@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as api from "../../api/ApiRequests";
-import "@/App.css";
+import Table from "react-bootstrap/Table";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 function ViewDepartment() {
   const [managerName, setManagerName] = useState("");
@@ -11,49 +12,61 @@ function ViewDepartment() {
     let urlParams = window.location.pathname.split("/");
     let departmentID = Number(urlParams[urlParams.length - 1]);
 
+    // Fetch department details
     api.getDepartment(departmentID, (departmentData) => {
       setDepartmentName(departmentData.departmentName);
       setManagerName(departmentData.userName);
 
-      // Fetch users in the same department
-      api.getUsersInDepartment(departmentID, (usersData) => {
-        setUsers(usersData);
-      });
+      // Fetch users in the department
+      fetch(`http://localhost:8080/users?departmentId=${departmentID}`)
+        .then((response) => response.json())
+        .then((data) => {
+          // Extract the name from JSON
+          const updatedUsers = data.map((user) => ({
+            ...user,
+            name: JSON.parse(user.data).name,
+          }));
+          setUsers(updatedUsers);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch users:", error);
+        });
     });
   }, []);
 
   return (
     <div className="moveToRight-container">
-      <h2>View Department</h2>
       <div>
-        <h3>Department Details</h3>
         <p>
-          <strong>Department Name:</strong> {departmentName}
+          <strong>Department :</strong> {departmentName}
         </p>
         <p>
-          <strong>Manager Name:</strong> {managerName}
+          <strong>Supervisor :</strong> {managerName}
         </p>
       </div>
       <div>
         <h3>Users in Department</h3>
-        <table>
+        <Table>
           <thead>
             <tr>
               <th>Name</th>
               <th>Email</th>
-              <th>Role</th>
+              <th>Role Description</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
-              <tr key={user.userID}>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.role}</td>
+            {users.map((row, index) => (
+              <tr key={row.userID}>
+                <td>{row.name}</td>
+                <td>{row.email}</td>
+                <td>{row.roleDescription}</td>
+                <td>
+                  <Link to={"/profile/" + row.userID}>View</Link>
+                </td>
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
     </div>
   );

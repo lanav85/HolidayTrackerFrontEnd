@@ -158,7 +158,7 @@ function Profile() {
               controlId="formHorizontalManager"
             >
               <Form.Label column sm={3}>
-                Manager
+                Supervisor
               </Form.Label>
               <Col sm={8}>
                 <Form.Control
