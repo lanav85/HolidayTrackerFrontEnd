@@ -14,8 +14,15 @@ function ViewDepartment() {
 
     // Fetch department details
     api.getDepartment(departmentID, (departmentData) => {
-      setDepartmentName(departmentData.departmentName);
-      setManagerName(departmentData.userName);
+      if (departmentData) {
+        setDepartmentName(
+          departmentData.departmentName || "Department Name Not Found"
+        );
+        setManagerName(departmentData.userName || "No Manager Assigned");
+      } else {
+        setDepartmentName("Department Not Found");
+        setManagerName("No Manager Assigned");
+      }
 
       // Fetch users in the department
       fetch(`http://localhost:8080/users?departmentId=${departmentID}`)
