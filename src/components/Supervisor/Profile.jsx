@@ -18,7 +18,7 @@ function Profile() {
   const [managerName, setManagerName] = useState("");
   const [roleName, setRoleName] = useState("");
   const [departmentName, setDepartmentName] = useState("");
-  const [departments, setDepartments] = useState([]); //  for storing list of departments
+  const [departments, setDepartments] = useState([]); // for storing list of departments
   const roles = [
     { roleid: 1, roledescription: "Manager" },
     { roleid: 2, roledescription: "Supervisor" },
@@ -34,10 +34,10 @@ function Profile() {
     const userJson = JSON.parse(userString);
     setIsLoggedInUser(userJson.userID === profileUserId);
     if (isLoggedInUser) {
-      //Logged in user, cached data is used
+      // Logged in user, cached data is used
       loadUser(userJson);
     } else {
-      //DB call to load profile data
+      // DB call to load profile data
       api.getUser(profileUserId, (result) => {
         loadUser(result);
       });
@@ -45,15 +45,15 @@ function Profile() {
 
     // Fetch all departments
     getAllDepartments();
-  }, []);
+  }, [isLoggedInUser]);
 
   function loadUser(userJson) {
     const userData = JSON.parse(userJson.data);
     userJson.data = JSON.stringify(userData);
-    setUserData(userData); //The initial user data
+    setUserData(userData); // The initial user data
     setUserJson(userJson);
-    setUpdatedUserData(cloneDeep(userData)); //The updated user data (as the form fields are being modified)
-    setUpdatedUserJson(cloneDeep(userJson)); //This is a clone, as we don't want to update the initial object
+    setUpdatedUserData(cloneDeep(userData)); // The updated user data (as the form fields are being modified)
+    setUpdatedUserJson(cloneDeep(userJson)); // This is a clone, as we don't want to update the initial object
     api.getDepartment(userJson.departmentID, (result) => {
       setManagerName(result.userName);
       setDepartmentName(result.departmentName);
@@ -105,35 +105,24 @@ function Profile() {
         alert(result);
       });
       if (isLoggedInUser) {
-        //save changes to logged in user in cache
+        // Save changes to logged in user in cache
         localStorage.setItem("holiday-tracker-user", JSON.stringify(uj));
-        //refresh page
+        // Refresh page
         window.location.reload();
         alert("User updated successfully!");
       }
     }
   }
 
-  async function handleDelete() {
+  function handleDelete() {
     if (window.confirm("Are you sure you want to delete this user?")) {
-      try {
-        const response = await fetch(
-          `http://localhost:8080/user/${profileUserId}`,
-          {
-            method: "DELETE",
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Failed to delete user");
-        }
-        const result = await response.text();
+      const profileUserId = userJson.userID;
+      const previousUrl = sessionStorage.getItem("previousUrl"); // Get the previous URL
+      api.deleteUser(profileUserId, (result) => {
         alert(result);
-        // Redirect or update UI after deletion
-        window.location.href = "/"; // Redirect to home or another appropriate page
-      } catch (error) {
-        console.error("Failed to delete user:", error);
-        alert("Error deleting user");
-      }
+        // Redirect to the previous URL after deletion
+        window.location.href = previousUrl || "/"; // If there's no previous URL, redirect to '/'
+      });
     }
   }
 

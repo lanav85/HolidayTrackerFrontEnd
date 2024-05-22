@@ -13,7 +13,27 @@ export function getUser(userId, onSuccess) {
     console.error("Failed to get user:", error);
   }
 }
-
+export function deleteUser(userId, onSuccess) {
+  try {
+    fetch(url_host + `/users/${userId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete user");
+        }
+        return response.text();
+      })
+      .then((result) => {
+        onSuccess(result);
+      });
+  } catch (error) {
+    console.error("Failed to delete user:", error);
+  }
+}
 export function putUser(userId, user, onSuccess) {
   try {
     fetch(url_host + `/users/${userId}`, {
