@@ -59,3 +59,28 @@ export function getRole(roleId, onSuccess) {
     console.error("Failed to fetch role:", error);
   }
 }
+
+export function getUsersByDepartmentId(departmentID, onSuccess) {
+  try {
+    fetch(url_host + `/users?departmentId=${departmentID}`)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        const formattedData = data.map((item) => {
+          const userData = JSON.parse(item.data);
+          return {
+            name: userData.name,
+            userID: item.userID,
+            email: item.email,
+          };
+        });
+        onSuccess(formattedData);
+      });
+  } catch (error) {
+    console.error(
+      "Failed to fetch users for departmentId " + departmentID,
+      error
+    );
+  }
+}

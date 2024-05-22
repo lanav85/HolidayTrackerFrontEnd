@@ -114,6 +114,29 @@ function Profile() {
     }
   }
 
+  async function handleDelete() {
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/user/${profileUserId}`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to delete user");
+        }
+        const result = await response.text();
+        alert(result);
+        // Redirect or update UI after deletion
+        window.location.href = "/"; // Redirect to home or another appropriate page
+      } catch (error) {
+        console.error("Failed to delete user:", error);
+        alert("Error deleting user");
+      }
+    }
+  }
+
   return (
     <Layout>
       <div className="moveToRight-container">
@@ -228,6 +251,12 @@ function Profile() {
               </Col>
             </Form.Group>
           </Form>
+          <Button
+            onClick={handleDelete}
+            className="btn btn-danger btn-lg delete-button"
+          >
+            Delete User
+          </Button>
         </div>
       </div>
     </Layout>

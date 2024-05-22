@@ -3,6 +3,7 @@ import Table from "react-bootstrap/Table";
 import "@/App.css";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import * as api from "../../api/ApiRequests";
 
 function ManageEmployees() {
   const [sortBy, setSortBy] = useState(null); // State to track the currently selected sort option
@@ -13,37 +14,14 @@ function ManageEmployees() {
     const userString = localStorage.getItem("holiday-tracker-user");
     const userJson = JSON.parse(userString);
     if (users.length === 0) {
-      getUsersByDepartmentId(userJson.departmentID);
-    }
-  });
-
-  async function getUsersByDepartmentId(departmentID) {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/users?departmentId=${departmentID}`
-      );
-      if (!response.ok) {
-        throw new Error(
-          "Failed to fetch users for departmentId " + departmentID
+      api.getUsersByDepartmentId(userJson.departmentID, setUsers, (error) => {
+        console.error(
+          "Failed to fetch users for departmentId " + userJson.departmentID,
+          error
         );
-      }
-      const data = await response.json();
-      const formattedData = data.map((item) => {
-        const userData = JSON.parse(item.data);
-        return {
-          name: userData.name,
-          userID: item.userID,
-          email: item.email,
-        };
       });
-      setUsers(formattedData);
-    } catch (error) {
-      console.error(
-        "Failed to fetch users for departmentId " + departmentID,
-        error
-      );
     }
-  }
+  }, [users]);
 
   // Function to handle sorting
   const handleSort = (sortByValue) => {
