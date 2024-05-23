@@ -26,6 +26,9 @@ function ManageDepartments() {
     <div className="moveToRight-container">
       <h2>Manage Departments</h2>
       <div>
+        <Link to="/create-department">
+          <button>Create New Department</button>
+        </Link>
         <h3>All Departments</h3>
         <table>
           <thead>

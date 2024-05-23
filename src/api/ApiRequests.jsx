@@ -52,20 +52,6 @@ export function putUser(userId, user, onSuccess) {
   }
 }
 
-export function getDepartment(departmentID, onSuccess) {
-  try {
-    fetch(url_host + `/Department?departmentID=${departmentID}`)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        onSuccess(data[0]);
-      });
-  } catch (error) {
-    console.error("Failed to fetch department:", error);
-  }
-}
-
 export function getRole(roleId, onSuccess) {
   try {
     fetch(url_host + `/Role?roleId=${roleId}`)
@@ -79,7 +65,19 @@ export function getRole(roleId, onSuccess) {
     console.error("Failed to fetch role:", error);
   }
 }
-
+export function getDepartment(departmentID, onSuccess) {
+  try {
+    fetch(url_host + `/Department?departmentID=${departmentID}`)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        onSuccess(data[0]);
+      });
+  } catch (error) {
+    console.error("Failed to fetch department:", error);
+  }
+}
 export function getUsersByDepartmentId(departmentID, onSuccess) {
   try {
     fetch(url_host + `/users?departmentId=${departmentID}`)
@@ -102,5 +100,48 @@ export function getUsersByDepartmentId(departmentID, onSuccess) {
       "Failed to fetch users for departmentId " + departmentID,
       error
     );
+  }
+}
+export function deleteDepartment(departmentID, onSuccess) {
+  try {
+    fetch(url_host + `/DeleteDepartment/${departmentID}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete department");
+        }
+        return response.text();
+      })
+      .then((result) => {
+        onSuccess(result);
+      });
+  } catch (error) {
+    console.error("Failed to delete department:", error);
+  }
+}
+export function createDepartment(department, onSuccess) {
+  try {
+    fetch(url_host + `/CreateNewDepartment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(department),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to create department");
+        }
+        return response.json();
+      })
+      .then((result) => {
+        onSuccess(result);
+      });
+  } catch (error) {
+    console.error("Failed to create department:", error);
   }
 }

@@ -10,6 +10,7 @@ import Layout from "./components/PageLayout/Layout.jsx";
 import ManageEmployees from "./components/Supervisor/ManageEmployees.jsx";
 import ManageDepartments from "./components/ManagerAdmin/ManageDepartments.jsx";
 import ViewDepartment from "./components/ManagerAdmin/ViewDepartment.jsx";
+import CreateDepartment from "./components/ManagerAdmin/CreateDepartment"; // Import the CreateDepartment component
 
 function App() {
   return (
@@ -73,6 +74,14 @@ function App() {
               </Layout>
             }
           />
+          <Route
+            path="/create-department"
+            element={
+              <Layout>
+                <CreateDepartment />
+              </Layout>
+            }
+          />{" "}
         </Routes>
       </BrowserRouter>
     </div>
