@@ -42,7 +42,7 @@ function App() {
             }
           />
           <Route
-            path="/review-requests/*"
+            path="/reviewRequests/:departmentID"
             element={
               <Layout>
                 <ReviewRequest />
@@ -66,7 +66,7 @@ function App() {
             }
           />
           <Route
-            path="/view-department/:departmentID" // added route for department ID
+            path="/view-department/:departmentID"
             element={
               <Layout>
                 <ViewDepartment />

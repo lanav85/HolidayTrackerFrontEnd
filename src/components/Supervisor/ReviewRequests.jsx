@@ -1,29 +1,36 @@
 import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import * as api from "../../api/ApiRequests";
 
 function ReviewRequests() {
   const [departmentID, setDepartmentID] = useState(null);
   const [holidayRequests, setHolidayRequests] = useState([]);
+  const [filteredHolidayRequests, setFilteredHolidayRequests] = useState([]);
   const [nameFilter, setNameFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("Pending");
   const [yearFilter, setYearFilter] = useState(new Date().getFullYear());
-  const [filteredHolidayRequests, setFilteredHolidayRequests] = useState([]);
 
   useEffect(() => {
-    const userDataString = localStorage.getItem("holiday-tracker-user");
-    const userData = JSON.parse(userDataString);
-    if (userData) {
-      setDepartmentID(userData.departmentID);
-      getHolidayRequests(userData.departmentID);
-    }
+    const fetchUserData = async () => {
+      const userDataString = localStorage.getItem("holiday-tracker-user");
+      if (userDataString) {
+        const userData = JSON.parse(userDataString);
+        if (userData && userData.departmentId) {
+          setDepartmentID(userData.departmentId);
+          await getHolidayRequests(userData.departmentId);
+        }
+      }
+    };
+
+    fetchUserData();
   }, []);
 
   useEffect(() => {
     filterRequests();
   }, [nameFilter, statusFilter, yearFilter, holidayRequests]);
 
-  async function getHolidayRequests(departmentID) {
+  const getHolidayRequests = async (departmentID) => {
     try {
       const response = await fetch(
         `http://localhost:8080/holidayRequests?departmentId=${departmentID}`
@@ -36,38 +43,32 @@ function ReviewRequests() {
     } catch (error) {
       console.error("Failed to fetch holiday requests:", error);
     }
-  }
+  };
 
-  function filterRequests() {
-    let filteredRequests = holidayRequests.filter((request) => {
-      if (
-        nameFilter &&
-        !request.userName.toLowerCase().includes(nameFilter.toLowerCase())
-      ) {
-        return false;
-      }
-      if (statusFilter !== "All" && request.status !== statusFilter) {
-        return false;
-      }
+  const filterRequests = () => {
+    const filteredRequests = holidayRequests.filter((request) => {
       const requestYear = new Date(request.requestFrom).getFullYear();
-      if (yearFilter && requestYear !== yearFilter) {
-        return false;
-      }
-      return true;
+      return (
+        (!nameFilter ||
+          request.userName.toLowerCase().includes(nameFilter.toLowerCase())) &&
+        (statusFilter === "All" || request.status === statusFilter) &&
+        requestYear === yearFilter
+      );
     });
     setFilteredHolidayRequests(filteredRequests);
-  }
-  // Update the status of a holiday request locally
-  function handleStatusChange(requestID, newStatus) {
-    const updatedRequests = filteredHolidayRequests.map((request) => {
-      if (request.requestID === requestID) {
-        return { ...request, status: newStatus };
-      }
-      return request;
-    });
-    setFilteredHolidayRequests(updatedRequests);
-  }
-  async function handleSubmit(requestID, newStatus) {
+  };
+
+  const handleStatusChange = (requestID, newStatus) => {
+    setFilteredHolidayRequests((prevRequests) =>
+      prevRequests.map((request) =>
+        request.requestID === requestID
+          ? { ...request, status: newStatus }
+          : request
+      )
+    );
+  };
+
+  const handleSubmit = async (requestID, newStatus) => {
     try {
       const specificRequest = holidayRequests.find(
         (request) => request.requestID === requestID
@@ -93,12 +94,13 @@ function ReviewRequests() {
       }
 
       console.log(`Request with ID ${requestID} submitted`);
-      getHolidayRequests(departmentID);
+      await getHolidayRequests(departmentID);
     } catch (error) {
       console.error("Error submitting request:", error);
     }
-  }
-  function getStatusOptions(currentStatus, requestID) {
+  };
+
+  const getStatusOptions = (currentStatus, requestID) => {
     if (currentStatus === "Rejected") {
       return "Rejected";
     } else if (currentStatus === "Approved") {
@@ -123,7 +125,8 @@ function ReviewRequests() {
         </select>
       );
     }
-  }
+  };
+
   return (
     <div
       style={{
@@ -158,7 +161,6 @@ function ReviewRequests() {
           <option value="All">All</option>
         </select>
       </div>
-
       <div>
         <label htmlFor="yearFilter">Filter by Year:</label>
         <select
@@ -199,7 +201,7 @@ function ReviewRequests() {
                 <td>{request.userName}</td>
                 <td>{request.requestFrom}</td>
                 <td>{request.requestTo}</td>
-                <td>{getStatusOptions(request.status, request.requestId)}</td>
+                <td>{getStatusOptions(request.status, request.requestID)}</td>
                 <td>
                   {request.status !== "Rejected" && (
                     <Button
