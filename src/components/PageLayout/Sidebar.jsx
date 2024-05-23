@@ -66,6 +66,11 @@ export default function Sidebar() {
                 Manage Departments{" "}
               </CDBSidebarMenuItem>
             </NavLink>
+            <NavLink exact to="/create-user">
+              <CDBSidebarMenuItem icon="users" className="sidebar-menu-item">
+                Add User
+              </CDBSidebarMenuItem>
+            </NavLink>
           </CDBSidebarMenu>
         </CDBSidebarContent>
 

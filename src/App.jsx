@@ -11,6 +11,7 @@ import ManageEmployees from "./components/Supervisor/ManageEmployees.jsx";
 import ManageDepartments from "./components/ManagerAdmin/ManageDepartments.jsx";
 import ViewDepartment from "./components/ManagerAdmin/ViewDepartment.jsx";
 import CreateDepartment from "./components/ManagerAdmin/CreateDepartment"; // Import the CreateDepartment component
+import CreateUser from "./components/ManagerAdmin/CreateUser.jsx";
 
 function App() {
   return (
@@ -81,7 +82,15 @@ function App() {
                 <CreateDepartment />
               </Layout>
             }
-          />{" "}
+          />
+          <Route
+            path="/create-user"
+            element={
+              <Layout>
+                <CreateUser />
+              </Layout>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>
