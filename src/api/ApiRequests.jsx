@@ -1,5 +1,5 @@
 const url_host = "http://localhost:8080";
-
+//USER ENDPOINTS
 export function getUser(userId, onSuccess) {
   try {
     fetch(url_host + `/users?userId=${userId}`)
@@ -51,6 +51,7 @@ export function putUser(userId, user, onSuccess) {
     console.error("Failed to update user:", error);
   }
 }
+//ROLE ENDPOINTS
 
 export function getRole(roleId, onSuccess) {
   try {
@@ -65,6 +66,8 @@ export function getRole(roleId, onSuccess) {
     console.error("Failed to fetch role:", error);
   }
 }
+//DEPARTMENT ENDPOINTS
+
 export function getDepartment(departmentID, onSuccess) {
   try {
     fetch(url_host + `/Department?departmentID=${departmentID}`)
@@ -143,5 +146,17 @@ export function createDepartment(department, onSuccess) {
       });
   } catch (error) {
     console.error("Failed to create department:", error);
+  }
+}
+export function getApprovedHolidayRequests() {
+  try {
+    fetch(url_host + `/holidayRequests?status=Approved`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch approved holiday requests");
+    }
+    return response.json();
+  } catch (error) {
+    console.error("Failed to fetch approved holiday requests:", error);
+    throw error;
   }
 }
