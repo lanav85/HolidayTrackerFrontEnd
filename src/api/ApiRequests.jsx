@@ -148,15 +148,3 @@ export function createDepartment(department, onSuccess) {
     console.error("Failed to create department:", error);
   }
 }
-export function getApprovedHolidayRequests() {
-  try {
-    fetch(url_host + `/holidayRequests?status=Approved`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch approved holiday requests");
-    }
-    return response.json();
-  } catch (error) {
-    console.error("Failed to fetch approved holiday requests:", error);
-    throw error;
-  }
-}
