@@ -16,9 +16,9 @@ function ReviewRequests() {
       const userDataString = localStorage.getItem("holiday-tracker-user");
       if (userDataString) {
         const userData = JSON.parse(userDataString);
-        if (userData && userData.departmentId) {
-          setDepartmentID(userData.departmentId);
-          await getHolidayRequests(userData.departmentId);
+        if (userData && userData.departmentID) {
+          setDepartmentID(userData.departmentID);
+          await getHolidayRequests(userData.departmentID);
         }
       }
     };

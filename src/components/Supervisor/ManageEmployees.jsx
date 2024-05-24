@@ -63,7 +63,7 @@ function ManageEmployees() {
       </thead>
       <tbody>
         {sortedData.map((row, index) => (
-          <tr key={row.id}>
+          <tr>
             <td>{index + 1}</td>
             <td>{row.name}</td>
             <td>{row.email}</td>

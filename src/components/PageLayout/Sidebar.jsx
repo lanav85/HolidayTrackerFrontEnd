@@ -17,7 +17,11 @@ export default function Sidebar() {
     const userData = JSON.parse(userDataString);
     return userData.userID;
   }
-
+  function getLoggedInUserDepartmentId() {
+    const userDataString = localStorage.getItem("holiday-tracker-user");
+    const userData = JSON.parse(userDataString);
+    return userData.departmentID;
+  }
   return (
     <div className="sidebar">
       <CDBSidebar textColor="#fff" backgroundColor="#82029b">
@@ -49,7 +53,10 @@ export default function Sidebar() {
               </CDBSidebarMenuItem>
             </NavLink>
 
-            <NavLink exact to="/review-requests">
+            <NavLink
+              exact
+              to={"/reviewRequests/" + getLoggedInUserDepartmentId()}
+            >
               <CDBSidebarMenuItem icon="calendar" className="sidebar-menu-item">
                 Review Holiday Requests{" "}
               </CDBSidebarMenuItem>
