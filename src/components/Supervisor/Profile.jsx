@@ -8,8 +8,10 @@ import Layout from "../PageLayout/Layout";
 import * as api from "../../api/ApiRequests";
 import isEqual from "lodash.isequal";
 import cloneDeep from "lodash/cloneDeep";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
   const [userJson, setUserJson] = useState(null);
   const [updatedUserData, setUpdatedUserData] = useState(null);
@@ -101,7 +103,10 @@ function Profile() {
       alert("No changes to save!");
     } else {
       alert("Saving...");
-      api.putUser(userJson.userID, uj, (result) => {
+      api.putUser(userJson.userID, uj, (result, httpCode) => {
+        if (httpCode === 200) {
+          window.location.reload(); //Refresh the page when the user is saved
+        }
         alert(result);
       });
       if (isLoggedInUser) {
@@ -120,8 +125,15 @@ function Profile() {
       const previousUrl = sessionStorage.getItem("previousUrl"); // Get the previous URL
       api.deleteUser(profileUserId, (result) => {
         alert(result);
-        // Redirect to the previous URL after deletion
-        window.location.href = previousUrl || "/"; // If there's no previous URL, redirect to '/'
+        // Redirect to the previous URL after deletion: https://stackoverflow.com/a/71647428
+        if (
+          (window.history?.length && window.history.length > 1) ||
+          window.history.state?.idx
+        ) {
+          navigate(-1);
+        } else {
+          navigate("/", { replace: true });
+        }
       });
     }
   }

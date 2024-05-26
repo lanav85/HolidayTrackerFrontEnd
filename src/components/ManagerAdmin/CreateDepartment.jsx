@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import * as api from "../../api/ApiRequests";
 import "@/App.css";
+import { useNavigate } from "react-router-dom";
 
 const CreateDepartment = () => {
+  const navigate = useNavigate();
   const [departmentName, setDepartmentName] = useState("");
 
   const handleCreateDepartment = () => {
@@ -13,6 +15,7 @@ const CreateDepartment = () => {
 
     const newDepartment = {
       departmentName: departmentName,
+      userID: 24,
     };
 
     // Call the API to create the department

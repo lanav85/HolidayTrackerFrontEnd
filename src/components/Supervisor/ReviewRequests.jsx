@@ -12,18 +12,10 @@ function ReviewRequests() {
   const [yearFilter, setYearFilter] = useState(new Date().getFullYear());
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      const userDataString = localStorage.getItem("holiday-tracker-user");
-      if (userDataString) {
-        const userData = JSON.parse(userDataString);
-        if (userData && userData.departmentID) {
-          setDepartmentID(userData.departmentID);
-          await getHolidayRequests(userData.departmentID);
-        }
-      }
-    };
-
-    fetchUserData();
+    let urlParams = window.location.pathname.split("/");
+    let deptID = Number(urlParams[urlParams.length - 1]);
+    setDepartmentID(deptID);
+    getHolidayRequests(deptID);
   }, []);
 
   useEffect(() => {
@@ -51,7 +43,8 @@ function ReviewRequests() {
       return (
         (!nameFilter ||
           request.userName.toLowerCase().includes(nameFilter.toLowerCase())) &&
-        (statusFilter === "All" || request.status === statusFilter) &&
+        (statusFilter === "All" ||
+          request.status.toLowerCase() === statusFilter.toLowerCase()) &&
         requestYear === yearFilter
       );
     });

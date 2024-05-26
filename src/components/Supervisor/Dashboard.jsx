@@ -110,7 +110,7 @@ function Dashboard() {
             {userPendingRequests}
           </span>{" "}
           vacation request{userPendingRequests !== 1 ? "s" : ""} awaiting for
-          approval.
+          your supervisor approval.
         </Card.Body>
       </Card>
     </div>
