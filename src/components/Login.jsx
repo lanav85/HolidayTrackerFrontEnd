@@ -5,6 +5,11 @@ import background from "img/background.png";
 import "css/Login.css";
 import { Link } from "react-router-dom";
 
+const handleClear = () => {
+  setUsername("");
+  setPassword("");
+};
+
 function Login() {
   function executeLogin() {
     //TODO Implement login API logic here. For now, hardcode user response data we will get from the endpoint:
@@ -64,6 +69,13 @@ function Login() {
             >
               Login
             </Button>
+            <button
+          type="button"
+          onClick={handleClear}
+          style={{ marginRight: "10px" }}
+        >
+          Clear
+        </button>
           </Link>
         </div>
       </Form>
