@@ -18,6 +18,7 @@ function SubmitRequest() {
   // State variables to hold the selected start and end dates and total days
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [totalDays, setTotalDays] = useState(null);
   const [confirmationMessage, setConfirmationMessage] = useState("");
 
   // Function to handle form submission
@@ -47,6 +48,7 @@ function SubmitRequest() {
         // Clear form fields
         setStartDate(null);
         setEndDate(null);
+        setTotalDays(null);
         setConfirmationMessage("Holiday request submitted successfully");
       } else {
         // Error submitting holiday request
@@ -76,6 +78,16 @@ function SubmitRequest() {
     calculateTotalDays(startDate, date);
   };
 
+  const calculateTotalDays = (start, end) => {
+    if (start && end) {
+      const timeDifference = end.getTime() - start.getTime();
+      const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24)) + 1; // Including start and end date
+      setTotalDays(daysDifference);
+    } else {
+      setTotalDays(null);
+    }
+  };
+// To be deleted
   return (
     // Form for submitting request
     <Layout>
@@ -89,7 +101,7 @@ function SubmitRequest() {
           alignItems: "center",
         }}
       >
-        <h2 style={{ padding: "25px" }}> Holiday Request </h2>
+        <h2 style={{ padding: "25px" }}>Holiday Request</h2>
         {/* Input for selecting start date */}
         <div style={{ marginBottom: "30px" }}>
           <label style={{ padding: "15px" }}>Select Start Date:</label>
@@ -106,7 +118,7 @@ function SubmitRequest() {
         </div>
         {/* Input for selecting end date */}
         <div style={{ marginBottom: "20px" }}>
-          <label style={{ padding: "15px" }}>Select End Date: </label>
+          <label style={{ padding: "15px" }}>Select End Date:</label>
           <DatePicker
             id="endDate"
             selectsEnd
@@ -120,7 +132,24 @@ function SubmitRequest() {
           />
         </div>
 
-        {/* Submit button  form submission */}
+        {/* Total days display */}
+        <div style={{ marginBottom: "20px" }}>
+          <label style={{ padding: "15px" }}>Total Days:</label>
+          <input
+            type="text"
+            value={totalDays !== null ? totalDays : ""}
+            readOnly
+            style={{
+              padding: "10px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+              width: "100px",
+              textAlign: "center",
+            }}
+          />
+        </div>
+
+        {/* Submit button for form submission */}
         <button type="submit" className="btn btn-success btn-lg submit-button">
           Submit
         </button>
