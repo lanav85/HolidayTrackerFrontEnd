@@ -87,7 +87,7 @@ function SubmitRequest() {
       setTotalDays(null);
     }
   };
-// To be deleted
+
   return (
     // Form for submitting request
     <Layout>
