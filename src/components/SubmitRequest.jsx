@@ -90,7 +90,6 @@ function SubmitRequest() {
       setTotalDays(null);
     }
   };
-<<<<<<< HEAD
 // To be deleted
 =======
   // To be deleted
