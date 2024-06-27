@@ -90,10 +90,7 @@ function SubmitRequest() {
       setTotalDays(null);
     }
   };
-// To be deleted
-=======
   // To be deleted
->>>>>>> f87b2f0 (Updates to fit aws)
   return (
     // Form for submitting request
     <Layout>
