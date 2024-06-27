@@ -9,7 +9,9 @@ function ViewHolidayRequests() {
     async function fetchHolidayRequests() {
       try {
         const response = await fetch(
-          "http://localhost:8080/holidayRequests?status=Approved"
+          `${
+            import.meta.env.VITE_APP_API_BASE_URL
+          }/holidayRequests?status=Approved`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch approved holiday requests");

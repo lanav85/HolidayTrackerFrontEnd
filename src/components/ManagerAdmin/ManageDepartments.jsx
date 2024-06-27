@@ -8,7 +8,9 @@ function ManageDepartments() {
   useEffect(() => {
     async function getAllDepartments() {
       try {
-        const response = await fetch(`http://localhost:8080/Department`);
+        const response = await fetch(
+          `${import.meta.env.VITE_APP_API_BASE_URL}/Department`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch departments");
         }

@@ -35,13 +35,16 @@ function SubmitRequest() {
 
     try {
       // Send request to backend API to submit holiday request
-      const response = await fetch("http://localhost:8080/HolidayRequest", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestData),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_APP_API_BASE_URL}/HolidayRequest`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestData),
+        }
+      );
 
       if (response.ok) {
         console.log("Holiday request submitted successfully");
@@ -87,7 +90,11 @@ function SubmitRequest() {
       setTotalDays(null);
     }
   };
+<<<<<<< HEAD
 // To be deleted
+=======
+  // To be deleted
+>>>>>>> f87b2f0 (Updates to fit aws)
   return (
     // Form for submitting request
     <Layout>

@@ -25,7 +25,9 @@ function ReviewRequests() {
   const getHolidayRequests = async (departmentID) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/holidayRequests?departmentId=${departmentID}`
+        `${
+          import.meta.env.VITE_APP_API_BASE_URL
+        }/holidayRequests?departmentId=${departmentID}`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch holiday requests");
@@ -72,7 +74,7 @@ function ReviewRequests() {
       }
 
       const response = await fetch(
-        `http://localhost:8080/HolidayRequest/${requestID}`,
+        `${import.meta.env.VITE_APP_API_BASE_URL}/HolidayRequest/${requestID}`,
         {
           method: "PUT",
           headers: {
