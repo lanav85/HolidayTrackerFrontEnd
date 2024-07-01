@@ -12,4 +12,13 @@ export default defineConfig({
       'css': path.resolve(__dirname, 'src/css'),
     },
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://holidaytracker-public-env.eba-nzhgperb.us-east-1.elasticbeanstalk.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
 });

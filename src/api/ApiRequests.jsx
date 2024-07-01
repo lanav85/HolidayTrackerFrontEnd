@@ -1,7 +1,7 @@
 //USER ENDPOINTS
 export function getUser(userId, onSuccess) {
   try {
-    fetch(`${import.meta.env.VITE_APP_API_BASE_URL}/users?userId=${userId}`)
+    fetch(`/api/users?userId=${userId}`)
       .then(function (response) {
         return response.json();
       })
@@ -14,7 +14,7 @@ export function getUser(userId, onSuccess) {
 }
 export function deleteUser(userId, onSuccess) {
   try {
-    fetch(`${import.meta.env.VITE_APP_API_BASE_URL}/users/${userId}`, {
+    fetch(`/api/users/${userId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export function deleteUser(userId, onSuccess) {
 export function putUser(userId, user, onResult) {
   try {
     let httpCode;
-    fetch(`${import.meta.env.VITE_APP_API_BASE_URL}/users/${userId}`, {
+    fetch(`/api/users/${userId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -58,7 +58,7 @@ export function putUser(userId, user, onResult) {
 
 export function getRole(roleId, onSuccess) {
   try {
-    fetch(`${import.meta.env.VITE_APP_API_BASE_URL}/Role?roleId=${roleId}`)
+    fetch(`/api/Role?roleId=${roleId}`)
       .then(function (response) {
         return response.json();
       })
@@ -73,11 +73,7 @@ export function getRole(roleId, onSuccess) {
 
 export function getDepartment(departmentID, onSuccess) {
   try {
-    fetch(
-      `${
-        import.meta.env.VITE_APP_API_BASE_URL
-      }/Department?departmentID=${departmentID}`
-    )
+    fetch(`/api/Department?departmentID=${departmentID}`)
       .then(function (response) {
         return response.json();
       })
@@ -90,11 +86,7 @@ export function getDepartment(departmentID, onSuccess) {
 }
 export function getUsersByDepartmentId(departmentID, onSuccess) {
   try {
-    fetch(
-      `${
-        import.meta.env.VITE_APP_API_BASE_URL
-      }/users?departmentId=${departmentID}`
-    )
+    fetch(`/api/users?departmentId=${departmentID}`)
       .then(function (response) {
         return response.json();
       })
@@ -118,17 +110,12 @@ export function getUsersByDepartmentId(departmentID, onSuccess) {
 }
 export function deleteDepartment(departmentID, onSuccess) {
   try {
-    fetch(
-      `${
-        import.meta.env.VITE_APP_API_BASE_URL
-      }/DeleteDepartment/${departmentID}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch(`/api/DeleteDepartment/${departmentID}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to delete department");
@@ -144,7 +131,7 @@ export function deleteDepartment(departmentID, onSuccess) {
 }
 export function createDepartment(department, onSuccess) {
   try {
-    fetch(`${import.meta.env.VITE_APP_API_BASE_URL}/CreateNewDepartment`, {
+    fetch(`/api/CreateNewDepartment`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -166,9 +153,7 @@ export function createDepartment(department, onSuccess) {
 }
 export function getApprovedHolidayRequests() {
   try {
-    fetch(
-      `${import.meta.env.VITE_APP_API_BASE_URL}/holidayRequests?status=Approved`
-    );
+    fetch(`/api/holidayRequests?status=Approved`);
     if (!response.ok) {
       throw new Error("Failed to fetch approved holiday requests");
     }

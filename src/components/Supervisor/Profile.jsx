@@ -68,9 +68,7 @@ function Profile() {
   // Get List of all departments in the database
   async function getAllDepartments() {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_APP_API_BASE_URL}/Department`
-      );
+      const response = await fetch(`/api/Department`);
       if (!response.ok) {
         throw new Error("Failed to fetch departments");
       }

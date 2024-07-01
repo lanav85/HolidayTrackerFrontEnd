@@ -25,9 +25,7 @@ function ReviewRequests() {
   const getHolidayRequests = async (departmentID) => {
     try {
       const response = await fetch(
-        `${
-          import.meta.env.VITE_APP_API_BASE_URL
-        }/holidayRequests?departmentId=${departmentID}`
+        `api/holidayRequests?departmentId=${departmentID}`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch holiday requests");
@@ -73,16 +71,13 @@ function ReviewRequests() {
         throw new Error(`Holiday request with ID ${requestID} not found.`);
       }
 
-      const response = await fetch(
-        `${import.meta.env.VITE_APP_API_BASE_URL}/HolidayRequest/${requestID}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ ...specificRequest, status: newStatus }),
-        }
-      );
+      const response = await fetch(`/api/HolidayRequest/${requestID}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...specificRequest, status: newStatus }),
+      });
 
       if (!response.ok) {
         throw new Error("Failed to submit request");

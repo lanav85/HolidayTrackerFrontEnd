@@ -25,9 +25,7 @@ function Dashboard() {
 
   async function getHolidayEntitlement(userId) {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_APP_API_BASE_URL}/users?userId=${userId}`
-      );
+      const response = await fetch(`/api/users?userId=${userId}`);
       if (!response.ok) {
         throw new Error("Failed to fetch holiday entitlement");
       }
@@ -41,9 +39,7 @@ function Dashboard() {
   async function getPendingHolidays(departmentId) {
     try {
       const response = await fetch(
-        `${
-          import.meta.env.VITE_APP_API_BASE_URL
-        }/holidayRequests?departmentId=${departmentId}&status=Pending`
+        `/api/holidayRequests?departmentId=${departmentId}&status=Pending`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch pending requests");
@@ -60,9 +56,7 @@ function Dashboard() {
   async function getUserPendingHolidays(userId) {
     try {
       const response = await fetch(
-        `${
-          import.meta.env.VITE_APP_API_BASE_URL
-        }/holidayRequests?userId=${userId}&status=Pending`
+        `/api/holidayRequests?userId=${userId}&status=Pending`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch pending requests");

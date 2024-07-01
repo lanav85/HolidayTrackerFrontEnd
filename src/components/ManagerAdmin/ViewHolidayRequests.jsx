@@ -8,11 +8,7 @@ function ViewHolidayRequests() {
   useEffect(() => {
     async function fetchHolidayRequests() {
       try {
-        const response = await fetch(
-          `${
-            import.meta.env.VITE_APP_API_BASE_URL
-          }/holidayRequests?status=Approved`
-        );
+        const response = await fetch(`/api/holidayRequests?status=Approved`);
         if (!response.ok) {
           throw new Error("Failed to fetch approved holiday requests");
         }
