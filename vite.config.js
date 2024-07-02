@@ -17,7 +17,7 @@ export default defineConfig({
       '/api': {
         target: 'http://holidaytracker-public-env.eba-nzhgperb.us-east-1.elasticbeanstalk.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+      //  rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },

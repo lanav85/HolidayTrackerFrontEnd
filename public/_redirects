@@ -1,2 +1,5 @@
-/api/* http://holidaytracker-public-env.eba-nzhgperb.us-east-1.elasticbeanstalk.com/:splat 200
-/* /index.html 200
+# Redirect all routes to index.html for client-side routing
+/*    /index.html   200
+
+# Redirect API calls to the backend
+/api/*    http://holidaytracker-public-env.eba-nzhgperb.us-east-1.elasticbeanstalk.com/:splat   200
