@@ -1,0 +1,11 @@
+[[redirects]]
+  from = "/api/*"
+  to = "http://holidaytracker-public-env.eba-nzhgperb.us-east-1.elasticbeanstalk.com/:splat"
+  status = 200
+  force = true
+  headers = { "Access-Control-Allow-Origin" = "*" }
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
