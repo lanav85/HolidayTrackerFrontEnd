@@ -13,12 +13,12 @@ export default defineConfig({
     },
   },
   server: {
-    proxy: {
-      '/api': {
-        target: 'http://holidaytracker-public-env.eba-nzhgperb.us-east-1.elasticbeanstalk.com',
-        changeOrigin: true,
-      //  rewrite: (path) => path.replace(/^\/api/, ''),
-      },
+  proxy: {
+    '/api': {
+      target: 'http://holidaytracker-public-env.eba-nzhgperb.us-east-1.elasticbeanstalk.com',
+      changeOrigin: true,
+      rewrite: (path) => path.replace(/^\/api/, ''),
     },
   },
+},
 });
