@@ -21,6 +21,27 @@ async function handlePostRequest(url, data) {
   }
 }
 
+// Function to handle PUT request
+async function handlePutRequest(url, data) {
+  try {
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (response.ok) {
+      const result = await response.json();
+      return result;
+    } else {
+      throw new Error(response.statusText);
+    }
+  } catch (error) {
+    console.error("Fetch PUT Error:", error);
+  }
+}
+
 // Function to handle DELETE request
 async function handleDeleteRequest(url) {
   try {
@@ -73,6 +94,13 @@ export function getRole(roleId, onSuccess) {
 
 // DEPARTMENT ENDPOINTS
 
+export function getAllDepartments(onSuccess) {
+  fetch(`/api/Department`)
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => console.error("Failed to fetch departments:", error));
+}
+
 export function getDepartment(departmentID, onSuccess) {
   fetch(`/api/Department?departmentID=${departmentID}`)
     .then((response) => response.json())
@@ -114,6 +142,8 @@ export function createDepartment(department, onSuccess) {
     .catch((error) => console.error("Failed to create department:", error));
 }
 
+//HOLIDAY REQUESTS
+
 export function getApprovedHolidayRequests(onSuccess) {
   fetch(`/api/holidayRequests?status=Approved`)
     .then((response) => {
@@ -125,4 +155,71 @@ export function getApprovedHolidayRequests(onSuccess) {
     .catch((error) =>
       console.error("Failed to fetch approved holiday requests:", error)
     );
+}
+
+export function getHolidayRequestsByDepartmentId(departmentID, onSuccess) {
+  fetch(`/api/holidayRequests?departmentId=${departmentID}`)
+    .then((response) => {
+      if (!response.ok)
+        throw new Error("Failed to fetch holiday requests by department Id");
+      return response.json();
+    })
+    .then((data) => onSuccess(data))
+    .catch((error) =>
+      console.error("Failed to fetch holiday requests by department Id", error)
+    );
+}
+
+export function getPendingHolidayRequestsByDepartmentId(
+  departmentID,
+  onSuccess
+) {
+  fetch(`/api/holidayRequests?departmentId=${departmentID}&status=Pending`)
+    .then((response) => {
+      if (!response.ok)
+        throw new Error(
+          "Failed to fetch pending holiday requests by department Id"
+        );
+      return response.json();
+    })
+    .then((data) => onSuccess(data))
+    .catch((error) =>
+      console.error(
+        "Failed to fetch pending holiday requests by department Id",
+        error
+      )
+    );
+}
+
+export function getPendingHolidayRequestsByUserId(userId, onSuccess) {
+  fetch(`/api/holidayRequests?userId=${userId}&status=Pending`)
+    .then((response) => {
+      if (!response.ok)
+        throw new Error("Failed to fetch pending holiday requests by user Id");
+      return response.json();
+    })
+    .then((data) => onSuccess(data))
+    .catch((error) =>
+      console.error(
+        "Failed to fetch pending holiday requests by user Id",
+        error
+      )
+    );
+}
+
+export function createHolidayRequest(requestData, onSuccess, onError) {
+  handlePostRequest(`/api/HolidayRequest`, requestData)
+    .then((result) => onSuccess(result))
+    .catch((error) => onError(error));
+}
+
+export function updateHolidayRequest(
+  requestId,
+  requestData,
+  onSuccess,
+  onError
+) {
+  handlePutRequest(`/api/HolidayRequest/${requestID}`, requestData)
+    .then((result) => onSuccess(result))
+    .catch((error) => onError(error));
 }

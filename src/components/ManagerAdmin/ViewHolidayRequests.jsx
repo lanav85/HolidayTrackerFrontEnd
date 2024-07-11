@@ -1,25 +1,15 @@
 import React, { useState, useEffect } from "react";
 import XLSX from "xlsx/dist/xlsx.full.min"; // Import specific functions or objects from XLSX library
 import "@/App.css";
+import * as api from "../../api/ApiRequests";
 
 function ViewHolidayRequests() {
   const [holidayRequests, setHolidayRequests] = useState([]);
 
   useEffect(() => {
-    async function fetchHolidayRequests() {
-      try {
-        const response = await fetch(`/api/holidayRequests?status=Approved`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch approved holiday requests");
-        }
-        const data = await response.json();
-        setHolidayRequests(data);
-      } catch (error) {
-        console.error("Error fetching holiday requests:", error);
-      }
-    }
-
-    fetchHolidayRequests();
+    api.getApprovedHolidayRequests((data) => {
+      setHolidayRequests(data);
+    });
   }, []);
 
   // Function to handle Excel file download

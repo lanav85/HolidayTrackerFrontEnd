@@ -15,27 +15,14 @@ function ReviewRequests() {
     let urlParams = window.location.pathname.split("/");
     let deptID = Number(urlParams[urlParams.length - 1]);
     setDepartmentID(deptID);
-    getHolidayRequests(deptID);
+    api.getHolidayRequestsByDepartmentId(deptID, (data) => {
+      setHolidayRequests(data);
+    });
   }, []);
 
   useEffect(() => {
     filterRequests();
   }, [nameFilter, statusFilter, yearFilter, holidayRequests]);
-
-  const getHolidayRequests = async (departmentID) => {
-    try {
-      const response = await fetch(
-        `api/holidayRequests?departmentId=${departmentID}`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch holiday requests");
-      }
-      const data = await response.json();
-      setHolidayRequests(data);
-    } catch (error) {
-      console.error("Failed to fetch holiday requests:", error);
-    }
-  };
 
   const filterRequests = () => {
     const filteredRequests = holidayRequests.filter((request) => {
@@ -71,20 +58,23 @@ function ReviewRequests() {
         throw new Error(`Holiday request with ID ${requestID} not found.`);
       }
 
-      const response = await fetch(`/api/HolidayRequest/${requestID}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
+      api.updateHolidayRequest(
+        requestID,
+        { ...specificRequest, status: newStatus },
+        () => {
+          console.log(`Request with ID ${requestID} submitted`);
+          api.getHolidayRequestsByDepartmentId(departmentID, (data) => {
+            setHolidayRequests(data);
+          });
         },
-        body: JSON.stringify({ ...specificRequest, status: newStatus }),
-      });
+        () => {
+          throw new Error("Failed to submit request");
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to submit request");
       }
-
-      console.log(`Request with ID ${requestID} submitted`);
-      await getHolidayRequests(departmentID);
     } catch (error) {
       console.error("Error submitting request:", error);
     }

@@ -45,8 +45,9 @@ function Profile() {
       });
     }
 
-    // Fetch all departments
-    getAllDepartments();
+    api.getAllDepartments((data) => {
+      setDepartments(data);
+    });
   }, [isLoggedInUser]);
 
   function loadUser(userJson) {
@@ -63,20 +64,6 @@ function Profile() {
     api.getRole(userJson.roleID, (result) => {
       setRoleName(result.roleDescription);
     });
-  }
-
-  // Get List of all departments in the database
-  async function getAllDepartments() {
-    try {
-      const response = await fetch(`/api/Department`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch departments");
-      }
-      const data = await response.json();
-      setDepartments(data); // Store the fetched departments
-    } catch (error) {
-      console.error("Failed to fetch departments:", error);
-    }
   }
 
   function handleSave(event) {

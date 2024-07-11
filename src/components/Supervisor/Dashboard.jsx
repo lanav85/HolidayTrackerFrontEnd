@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
+import * as api from "../../api/ApiRequests";
 
 function Dashboard() {
   const [userData, setUserData] = useState(null);
@@ -25,12 +26,9 @@ function Dashboard() {
 
   async function getHolidayEntitlement(userId) {
     try {
-      const response = await fetch(`/api/users?userId=${userId}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch holiday entitlement");
-      }
-      const userData = await response.json();
-      setHolidayEntitlement(userData.holidayEntitlement);
+      api.getUser(userId, (userData) => {
+        setHolidayEntitlement(userData.holidayEntitlement);
+      });
     } catch (error) {
       console.error("Failed to fetch holiday entitlement:", error);
     }
@@ -38,15 +36,13 @@ function Dashboard() {
   //Getting pending requests from the department
   async function getPendingHolidays(departmentId) {
     try {
-      const response = await fetch(
-        `/api/holidayRequests?departmentId=${departmentId}&status=Pending`
+      api.getPendingHolidayRequestsByDepartmentId(
+        departmentId,
+        (pendingRequests) => {
+          const pendingRequestsCount = pendingRequests.length;
+          setPendingRequestsCount(pendingRequestsCount);
+        }
       );
-      if (!response.ok) {
-        throw new Error("Failed to fetch pending requests");
-      }
-      const pendingRequests = await response.json();
-      const pendingRequestsCount = pendingRequests.length;
-      setPendingRequestsCount(pendingRequestsCount);
     } catch (error) {
       console.error("Failed to fetch pending requests:", error);
     }
@@ -55,15 +51,10 @@ function Dashboard() {
   //Getting pending requests from the user
   async function getUserPendingHolidays(userId) {
     try {
-      const response = await fetch(
-        `/api/holidayRequests?userId=${userId}&status=Pending`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch pending requests");
-      }
-      const pendingRequests = await response.json();
-      const pendingRequestsCount = pendingRequests.length;
-      setUserPendingRequestsCount(pendingRequestsCount);
+      api.getPendingHolidayRequestsByUserId(userId, (pendingRequests) => {
+        const pendingRequestsCount = pendingRequests.length;
+        setUserPendingRequestsCount(pendingRequestsCount);
+      });
     } catch (error) {
       console.error("Failed to fetch pending requests:", error);
     }

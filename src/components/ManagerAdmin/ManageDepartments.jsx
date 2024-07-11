@@ -1,25 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "@/App.css";
+import * as api from "../../api/ApiRequests";
 
 function ManageDepartments() {
   const [departments, setDepartments] = useState([]);
 
   useEffect(() => {
-    async function getAllDepartments() {
-      try {
-        const response = await fetch(`/api/Department`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch departments");
-        }
-        const data = await response.json();
-        setDepartments(data); // Store the fetched departments
-      } catch (error) {
-        console.error("Failed to fetch departments:", error);
-      }
-    }
-
-    getAllDepartments();
+    api.getAllDepartments((data) => {
+      setDepartments(data);
+    });
   }, []);
 
   return (

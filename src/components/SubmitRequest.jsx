@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Layout from "./PageLayout/Layout";
+import * as api from "../api/ApiRequests";
 
 function SubmitRequest() {
   // Retrieve user ID from localStorage
@@ -35,29 +36,23 @@ function SubmitRequest() {
 
     try {
       // Send request to backend API to submit holiday request
-      const response = await fetch(`/api/HolidayRequest`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestData),
-      });
 
-      if (response.ok) {
-        console.log("Holiday request submitted successfully");
-        // Clear form fields
-        setStartDate(null);
-        setEndDate(null);
-        setTotalDays(null);
-        setConfirmationMessage("Holiday request submitted successfully");
-      } else {
-        // Error submitting holiday request
-        const errorMessage = await response.text(); // Get error message from response body
-        console.error("Error submitting holiday request:", errorMessage);
-        setConfirmationMessage(
-          "Error submitting holiday request: " + errorMessage
-        );
-      }
+      // Call the API to create the department
+      api.createHolidayRequest(
+        requestData,
+        (data) => {
+          console.log("Holiday request submitted successfully");
+          // Clear form fields
+          setStartDate(null);
+          setEndDate(null);
+          setTotalDays(null);
+          setConfirmationMessage("Holiday request submitted successfully");
+        },
+        (error) => {
+          console.error("Error submitting holiday request:", error);
+          setConfirmationMessage("Error submitting holiday request: " + error);
+        }
+      );
     } catch (error) {
       console.error("Error:", error);
       setConfirmationMessage("Error: " + error.message);
