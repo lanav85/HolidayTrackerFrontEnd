@@ -7,6 +7,9 @@ import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authenticate } from "../services/authenticate";
+import { CognitoUserAttribute } from "amazon-cognito-identity-js";
+import userpool from "../userpool";
+import * as api from "../api/ApiRequests";
 
 const Login = () => {
   const Navigate = useNavigate();
@@ -47,28 +50,38 @@ const Login = () => {
     });
   };
 
-  const handleLoginClicked = () => {
+  const handleLoginClicked = (event) => {
+    event.preventDefault();
     validation()
       .then(
         (res) => {
           if (res.email === "" && res.password === "") {
-            authenticate(email, password)
-              .then(
-                (data) => {
-                  alert("Login successful!");
+            let loginRequest = {
+              email: email,
+              password: password,
+            };
+            api.login(
+              loginRequest,
+              (data) => {
+                if (data) {
+                  localStorage.setItem(
+                    "holiday-tracker-user",
+                    JSON.stringify(data)
+                  );
                   Navigate("/dashboard");
-                },
-                (err) => {
-                  alert("Login error: " + err);
-                  console.log(err);
+                } else {
+                  alert("error logging in!");
                 }
-              )
-              .catch((err) => console.log(err));
+              },
+              (err) => {
+                alert(JSON.stringify(err));
+              }
+            );
           }
         },
-        (err) => console.log(err)
+        (err) => alert(err)
       )
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err));
   };
 
   const handleClear = () => {
@@ -76,43 +89,12 @@ const Login = () => {
     setPassword("");
   };
 
-  /**
-function Login() {
-  function executeLogin() {
-    //TODO Implement login API logic here. For now, hardcode user response data we will get from the endpoint:
-    let user_data = {
-      data: '{"age": 28, "name": "Jane Smith"}',
-      holidayEntitlement: 20,
-      departmentID: 2,
-      email: "jane.smith@example.com",
-      roleID: 2,
-      userID: 11,
-    };
-    localStorage.setItem("holiday-tracker-user", JSON.stringify(user_data));
-
-    //Now you can get this data ANYWHERE in your app using localStorage, e.g.
-    let user_string = localStorage.getItem("holiday-tracker-user");
-    let user_json = JSON.parse(user_string);
-    let userData = JSON.parse(user_json.data);
-    alert("Hello " + userData.name + "! Your user ID is " + user_json.userID);
-
-    //And whenever you want to logout the user in future, you would use this code to clear the data: localStorage.removeItem("holiday-tracker-user");
-
-    //localStorage is very easy way to store data in the browser, you can store any string.
-    //You need to supply a key e.g. "holiday-tracker-user"
-    //               and a string value (note i don't think number, json etc. works)
-    //Thats why you see when i store the user json data, i turn it into a string.
-    // and then when i retrieve it, i turn the string back into json.
-  }
-*/
-
-  //TODO: New AWS Cognito login
   return (
     <div
       className="background"
       style={{ backgroundImage: `url(${background})` }}
     >
-      <Form className="form">
+      <Form onSubmit={handleLoginClicked} className="form">
         <div className="section">
           <img src={logo} alt="Logo" className="logo" />
           <h1 className="title">Holiday Tracker</h1>
@@ -143,11 +125,7 @@ function Login() {
         </Form.Group>
 
         <div className="section">
-          <Button
-            type="submit"
-            className="btn btn-success btn-lg btn-login"
-            onClick={() => handleLoginClicked()}
-          >
+          <Button type="submit" className="btn btn-success btn-lg btn-login">
             Login
           </Button>
 
