@@ -22,6 +22,11 @@ export default function Sidebar() {
     const userData = JSON.parse(userDataString);
     return userData.departmentID;
   }
+  function getLoggedInUserRoleId() {
+    const userDataString = localStorage.getItem("holiday-tracker-user");
+    const userData = JSON.parse(userDataString);
+    return userData.roleID;
+  }
   return (
     <div className="sidebar">
       <CDBSidebar textColor="#fff" backgroundColor="#82029b">
@@ -53,36 +58,54 @@ export default function Sidebar() {
               </CDBSidebarMenuItem>
             </NavLink>
 
-            <NavLink
-              exact
-              to={"/reviewRequests/" + getLoggedInUserDepartmentId()}
-            >
-              <CDBSidebarMenuItem icon="calendar" className="sidebar-menu-item">
-                Review Holiday Requests{" "}
-              </CDBSidebarMenuItem>
-            </NavLink>
+            {getLoggedInUserRoleId() < 3 ? (
+              <>
+                <NavLink
+                  exact
+                  to={"/reviewRequests/" + getLoggedInUserDepartmentId()}
+                >
+                  <CDBSidebarMenuItem
+                    icon="calendar"
+                    className="sidebar-menu-item"
+                  >
+                    Review Holiday Requests{" "}
+                  </CDBSidebarMenuItem>
+                </NavLink>
+                <NavLink exact to="/manage-employees">
+                  <CDBSidebarMenuItem
+                    icon="users"
+                    className="sidebar-menu-item"
+                  >
+                    Manage Employees{" "}
+                  </CDBSidebarMenuItem>
+                </NavLink>
+              </>
+            ) : (
+              <div />
+            )}
 
-            <NavLink exact to="/manage-employees">
-              <CDBSidebarMenuItem icon="users" className="sidebar-menu-item">
-                Manage Employees{" "}
-              </CDBSidebarMenuItem>
-            </NavLink>
-
-            <NavLink exact to="/manage-departments">
-              <CDBSidebarMenuItem icon="users" className="sidebar-menu-item">
-                Manage Departments{" "}
-              </CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/create-user">
-              <CDBSidebarMenuItem icon="users" className="sidebar-menu-item">
-                Add User
-              </CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/view-holiday-requests">
-              <CDBSidebarMenuItem icon="users" className="sidebar-menu-item">
-                Report
-              </CDBSidebarMenuItem>
-            </NavLink>
+            {getLoggedInUserRoleId() < 2 ? (
+              <>
+                <NavLink exact to="/manage-departments">
+                  <CDBSidebarMenuItem
+                    icon="users"
+                    className="sidebar-menu-item"
+                  >
+                    Manage Departments{" "}
+                  </CDBSidebarMenuItem>
+                </NavLink>
+                <NavLink exact to="/create-user">
+                  <CDBSidebarMenuItem
+                    icon="users"
+                    className="sidebar-menu-item"
+                  >
+                    Add User
+                  </CDBSidebarMenuItem>
+                </NavLink>
+              </>
+            ) : (
+              <div />
+            )}
           </CDBSidebarMenu>
         </CDBSidebarContent>
 
