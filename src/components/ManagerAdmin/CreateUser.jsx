@@ -6,7 +6,11 @@ import Row from "react-bootstrap/Row";
 import * as api from "../../api/ApiRequests";
 import { CognitoUserAttribute } from "amazon-cognito-identity-js";
 import userpool from "../../userpool";
-import * as AWS from "aws-sdk";
+import {
+  AdminCreateUserCommand,
+  AdminSetUserPasswordCommand,
+  CognitoIdentityProviderClient,
+} from "@aws-sdk/client-cognito-identity-provider";
 
 function CreateUser() {
   const [roleName, setRoleName] = useState("");
@@ -95,12 +99,6 @@ function CreateUser() {
   };
 
   const sendInvitationLink = (email, password, onError) => {
-    AWS.config.update({
-      region: import.meta.env.VITE_REACT_APP_REGION,
-      accessKeyId: import.meta.env.VITE_REACT_AWS_IAM_ACCESS_KEY,
-      secretAccessKey: import.meta.env.VITE_REACT_AWS_IAM_SECRET_KEY,
-    });
-
     const params = {
       UserPoolId: import.meta.env.VITE_REACT_APP_USER_POOL_ID,
       Username: email,
@@ -119,24 +117,32 @@ function CreateUser() {
       TemporaryPassword: password,
     };
 
-    const cognitoIdentityServiceProvider =
-      new AWS.CognitoIdentityServiceProvider();
+    let client = new CognitoIdentityProviderClient({
+      region: import.meta.env.VITE_REACT_APP_REGION,
+      credentials: {
+        accessKeyId: import.meta.env.VITE_REACT_AWS_IAM_ACCESS_KEY,
+        secretAccessKey: import.meta.env.VITE_REACT_AWS_IAM_SECRET_KEY,
+      },
+    });
+
+    let createUserCommand = new AdminCreateUserCommand(params);
 
     try {
-      cognitoIdentityServiceProvider
-        .adminCreateUser(params)
-        .promise()
-        .then((res) => {
+      client
+        .send(createUserCommand)
+        .then((r) => {
           const setPasswordParams = {
             UserPoolId: import.meta.env.VITE_REACT_APP_USER_POOL_ID,
             Username: email,
             Password: password,
             Permanent: true,
           };
-          cognitoIdentityServiceProvider
-            .adminSetUserPassword(setPasswordParams)
-            .promise()
-            .then(() => {
+          let setUserPasswordCommand = new AdminSetUserPasswordCommand(
+            setPasswordParams
+          );
+          client
+            .send(setUserPasswordCommand)
+            .then((r) => {
               alert(
                 "User " +
                   email +
