@@ -102,6 +102,14 @@ export default function Sidebar() {
                     Add User
                   </CDBSidebarMenuItem>
                 </NavLink>
+                <NavLink exact to="/view-holiday-requests">
+                  <CDBSidebarMenuItem
+                    icon="users"
+                    className="sidebar-menu-item"
+                  >
+                    Report
+                  </CDBSidebarMenuItem>
+                </NavLink>
               </>
             ) : (
               <div />
