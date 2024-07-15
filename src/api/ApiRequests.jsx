@@ -1,7 +1,7 @@
 // API.js
 
 // Function to handle POST request
-async function handlePostRequest(url, data) {
+async function handlePostRequest(url, data, onError, responseFormat) {
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -11,13 +11,16 @@ async function handlePostRequest(url, data) {
       body: JSON.stringify(data),
     });
     if (response.ok) {
-      const result = await response.json();
-      return result;
+      if (responseFormat && responseFormat === "text") {
+        return await response.text();
+      } else {
+        return await response.json();
+      }
     } else {
-      throw new Error(response.statusText);
+      onError(response);
     }
   } catch (error) {
-    console.error("Fetch POST Error:", error);
+    onError(error);
   }
 }
 
@@ -64,6 +67,12 @@ async function handleDeleteRequest(url) {
 
 // USER ENDPOINTS
 
+export function login(loginRequest, onSuccess, onError) {
+  handlePostRequest(`/api/login`, loginRequest, onError)
+    .then((result) => onSuccess(result))
+    .catch((error) => console.error("Failed to login:", error));
+}
+
 export function getUser(userId, onSuccess) {
   fetch(`/api/users?userId=${userId}`)
     .then((response) => response.json())
@@ -81,6 +90,12 @@ export function putUser(userId, user, onResult) {
   handlePostRequest(`/api/users/${userId}`, user)
     .then((result) => onResult(result))
     .catch((error) => console.error("Failed to update user:", error));
+}
+
+export function createUser(user, onResult, onError) {
+  handlePostRequest(`/api/users`, user, onError, "text")
+    .then((result) => onResult(result))
+    .catch((error) => console.error("Failed to create user:", error));
 }
 
 // ROLE ENDPOINTS
