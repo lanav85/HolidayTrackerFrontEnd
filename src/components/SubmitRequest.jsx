@@ -3,6 +3,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Layout from "./PageLayout/Layout";
 import * as api from "../api/ApiRequests";
+import moment from "moment";
+import "moment-timezone";
 
 function SubmitRequest() {
   // Retrieve user ID from localStorage
@@ -41,12 +43,13 @@ function SubmitRequest() {
       api.createHolidayRequest(
         requestData,
         (data) => {
-          console.log("Holiday request submitted successfully");
           // Clear form fields
-          setStartDate(null);
-          setEndDate(null);
-          setTotalDays(null);
-          setConfirmationMessage("Holiday request submitted successfully");
+          setConfirmationMessage(data);
+          if (data === "Holiday Request successfully created") {
+            setStartDate(null);
+            setEndDate(null);
+            setTotalDays(null);
+          }
         },
         (error) => {
           console.error("Error submitting holiday request:", error);
@@ -59,18 +62,28 @@ function SubmitRequest() {
     }
   };
 
+  const setOtherZone = (date) => {
+    //moment.tz.setDefault('America/Los_Angeles');
+    const dateWithoutZone = moment(date).format("YYYY-MM-DDTHH:mm:ss.SSS");
+    const otherZone = moment.tz(date, "UTC").format("Z");
+    const dateWithOtherZone = [dateWithoutZone, otherZone].join("");
+    return new Date(dateWithOtherZone);
+  };
+
   // Function to handle date selection for start date
   const handleStartDateChange = (date) => {
-    console.log("Selected Start Date:", date);
-    setStartDate(date);
-    calculateTotalDays(date, endDate);
+    let utcDate = setOtherZone(date); //moment(date).utc().toDate();
+    console.log("Selected Start Date:", utcDate);
+    setStartDate(utcDate);
+    calculateTotalDays(utcDate, endDate);
   };
 
   // Function to handle date selection for end date
   const handleEndDateChange = (date) => {
-    console.log("Selected End Date:", date);
-    setEndDate(date);
-    calculateTotalDays(startDate, date);
+    let utcDate = setOtherZone(date); //moment(date).utc().toDate();
+    console.log("Selected End Date:", utcDate);
+    setEndDate(utcDate);
+    calculateTotalDays(startDate, utcDate);
   };
 
   const calculateTotalDays = (start, end) => {
@@ -107,8 +120,10 @@ function SubmitRequest() {
             onChange={handleStartDateChange}
             startDate={startDate}
             endDate={endDate}
+            minDate={moment.utc().toDate()}
             placeholderText="dd/mm/yyyy"
             dateFormat="dd/MM/yyyy"
+            timeZone="UTC"
           />
         </div>
         {/* Input for selecting end date */}
@@ -121,9 +136,10 @@ function SubmitRequest() {
             onChange={handleEndDateChange}
             startDate={startDate}
             endDate={endDate}
-            minDate={startDate}
+            minDate={moment.utc().toDate()}
             placeholderText="dd/mm/yyyy"
             dateFormat="dd/MM/yyyy"
+            timeZone="UTC"
           />
         </div>
 

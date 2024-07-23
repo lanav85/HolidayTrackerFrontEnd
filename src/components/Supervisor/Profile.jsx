@@ -19,6 +19,7 @@ function Profile() {
   const [isLoggedInUser, setIsLoggedInUser] = useState(null);
   const [managerName, setManagerName] = useState("");
   const [roleName, setRoleName] = useState("");
+  const [userName, setUserName] = useState("");
   const [departmentName, setDepartmentName] = useState("");
   const [departments, setDepartments] = useState([]); // for storing list of departments
   const roles = [
@@ -64,6 +65,7 @@ function Profile() {
     api.getRole(userJson.roleID, (result) => {
       setRoleName(result.roleDescription);
     });
+    setUserName(userData ? userData.name : "");
   }
 
   function handleSave(event) {
@@ -94,7 +96,7 @@ function Profile() {
         if (httpCode === 200) {
           window.location.reload(); //Refresh the page when the user is saved
         }
-        alert(result);
+        //alert(result);
       });
       if (isLoggedInUser) {
         // Save changes to logged in user in cache
@@ -142,7 +144,8 @@ function Profile() {
                 <Form.Control
                   type="text"
                   name="username"
-                  value={userData ? userData.name : ""}
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)} //dropdown menu
                 />
               </Col>
             </Form.Group>
@@ -192,6 +195,7 @@ function Profile() {
                 <Form.Select
                   value={roleName}
                   name="role"
+                  disabled={userJson && userJson.roleID >= 3}
                   onChange={(e) => setRoleName(e.target.value)} //dropdown menu
                 >
                   {roles.map((role) => (
@@ -214,6 +218,7 @@ function Profile() {
                 <Form.Select
                   value={departmentName}
                   name="department"
+                  disabled={userJson && userJson.roleID >= 3}
                   onChange={(e) => setDepartmentName(e.target.value)} // dropdpwn menu: Update the state when a new department is selected
                 >
                   {departments.map((department) => (
