@@ -71,6 +71,12 @@ export function login(loginRequest, onSuccess, onError) {
     .then((result) => onSuccess(result))
     .catch((error) => console.error("Failed to login:", error));
 }
+export function getAllUsers(onSuccess, onError) {
+  fetch(`/api/users`)
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => console.error("Failed to get user:", error));
+}
 
 export function getUser(userId, onSuccess) {
   fetch(`/api/users?userId=${userId}`)
@@ -177,7 +183,23 @@ export function getApprovedHolidayRequests(onSuccess) {
       console.error("Failed to fetch approved holiday requests:", error)
     );
 }
-
+export function getApprovedHolidayRequestsByDepartmentId(
+  departmentID,
+  onSuccess
+) {
+  fetch(`/api/holidayRequests?status=Approved&departmentId=${departmentID}`)
+    .then((response) => {
+      if (!response.ok)
+        throw new Error(
+          "Failed to fetch approved holiday requests by departmentID"
+        );
+      return response.json();
+    })
+    .then((data) => onSuccess(data))
+    .catch((error) =>
+      console.error("Failed to fetch approved holiday requests:", error)
+    );
+}
 export function getHolidayRequestsByDepartmentId(departmentID, onSuccess) {
   fetch(`/api/holidayRequests?departmentId=${departmentID}`)
     .then((response) => {
@@ -190,12 +212,22 @@ export function getHolidayRequestsByDepartmentId(departmentID, onSuccess) {
       console.error("Failed to fetch holiday requests by department Id", error)
     );
 }
-
+export function getAllPendingHolidayRequests(onSuccess, onError) {
+  fetch(`/api/holidayRequests/pending`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch pending holiday requests");
+      }
+      return response.json();
+    })
+    .then((data) => onSuccess(data))
+    .catch((error) => onError(error));
+}
 export function getPendingHolidayRequestsByDepartmentId(
   departmentID,
   onSuccess
 ) {
-  fetch(`/api/holidayRequests?departmentId=${departmentID}&status=Pending`)
+  fetch(`/api/holidayRequests?departmentId=${departmentID}&status=pending`)
     .then((response) => {
       if (!response.ok)
         throw new Error(

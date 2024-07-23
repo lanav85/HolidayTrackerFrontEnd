@@ -1,23 +1,61 @@
 .custom-card {
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 18px 8px rgba(0, 0, 0, 1);
+  height: 300px;
+  margin: 10px; /* Adjust the spacing around each card */
+  flex: 1 1 calc(25% - 20px); /* Flex-grow, flex-shrink, flex-basis, considering gap */
+  min-width: 250px; /* Minimum width to prevent cards from getting too small */
+}
+
+.corner-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50px;
+  padding: 10px;
+  font-size: 1.5rem;
+  border-bottom-left-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ea08fa;
+}
+
+.card-title {
+  font-size: 1.75rem;
+  text-align: left;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.171);
+}
+
+.card-text {
+  font-size: 1rem;
+  text-align: left;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.171);
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Ensure even spacing between cards */
+  gap: 20px; /* Add gap between cards */
+}
+
+@media (max-width: 1200px) {
+  .custom-card {
+    flex: 1 1 calc(33.333% - 20px); /* 3 cards per row */
   }
-  
-  .corner-icon {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 10px;
-    font-size: 1.5rem;
-    border-bottom-left-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  .custom-card {
+    flex: 1 1 calc(50% - 20px); /* 2 cards per row */
   }
-  
-  .card-title {
-    font-size: 1.5rem;
-    font-weight: bold;
+}
+
+@media (max-width: 576px) {
+  .custom-card {
+    flex: 1 1 calc(100% - 20px); /* 1 card per row */
   }
-  
-  .card-text {
-    font-size: 1.25rem;
-  }
-  
+}
