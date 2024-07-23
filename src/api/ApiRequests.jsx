@@ -10,14 +10,10 @@ async function handlePostRequest(url, data, onError, responseFormat) {
       },
       body: JSON.stringify(data),
     });
-    if (response.ok) {
-      if (responseFormat && responseFormat === "text") {
-        return await response.text();
-      } else {
-        return await response.json();
-      }
+    if (responseFormat && responseFormat === "text") {
+      return await response.text();
     } else {
-      onError(response);
+      return await response.json();
     }
   } catch (error) {
     onError(error);
@@ -25,7 +21,7 @@ async function handlePostRequest(url, data, onError, responseFormat) {
 }
 
 // Function to handle PUT request
-async function handlePutRequest(url, data) {
+async function handlePutRequest(url, data, responseFormat) {
   try {
     const response = await fetch(url, {
       method: "PUT",
@@ -35,8 +31,11 @@ async function handlePutRequest(url, data) {
       body: JSON.stringify(data),
     });
     if (response.ok) {
-      const result = await response.json();
-      return result;
+      if (responseFormat && responseFormat === "text") {
+        return await response.text();
+      } else {
+        return await response.json();
+      }
     } else {
       throw new Error(response.statusText);
     }
@@ -87,7 +86,7 @@ export function deleteUser(userId, onSuccess) {
 }
 
 export function putUser(userId, user, onResult) {
-  handlePostRequest(`/api/users/${userId}`, user)
+  handlePutRequest(`/api/users/${userId}`, user)
     .then((result) => onResult(result))
     .catch((error) => console.error("Failed to update user:", error));
 }
@@ -152,7 +151,14 @@ export function deleteDepartment(departmentID, onSuccess) {
 }
 
 export function createDepartment(department, onSuccess) {
-  handlePostRequest(`/api/CreateNewDepartment`, department)
+  handlePostRequest(
+    `/api/CreateNewDepartment`,
+    department,
+    (err) => {
+      console.error("Failed to create department:", error);
+    },
+    "text"
+  )
     .then((result) => onSuccess(result))
     .catch((error) => console.error("Failed to create department:", error));
 }
@@ -223,7 +229,7 @@ export function getPendingHolidayRequestsByUserId(userId, onSuccess) {
 }
 
 export function createHolidayRequest(requestData, onSuccess, onError) {
-  handlePostRequest(`/api/HolidayRequest`, requestData)
+  handlePostRequest(`/api/HolidayRequest`, requestData, onError, "text")
     .then((result) => onSuccess(result))
     .catch((error) => onError(error));
 }
@@ -234,7 +240,7 @@ export function updateHolidayRequest(
   onSuccess,
   onError
 ) {
-  handlePutRequest(`/api/HolidayRequest/${requestID}`, requestData)
+  handlePutRequest(`/api/HolidayRequest/${requestId}`, requestData, "text")
     .then((result) => onSuccess(result))
     .catch((error) => onError(error));
 }

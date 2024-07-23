@@ -10,6 +10,9 @@ function ReviewRequests() {
   const [nameFilter, setNameFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("Pending");
   const [yearFilter, setYearFilter] = useState(new Date().getFullYear());
+  const [mapRequestIdOriginalStatus, setMapRequestIdOriginalStatus] = useState(
+    {}
+  );
 
   useEffect(() => {
     let urlParams = window.location.pathname.split("/");
@@ -17,6 +20,10 @@ function ReviewRequests() {
     setDepartmentID(deptID);
     api.getHolidayRequestsByDepartmentId(deptID, (data) => {
       setHolidayRequests(data);
+      data.forEach((req) => {
+        mapRequestIdOriginalStatus[req.requestID] = req.status;
+        setMapRequestIdOriginalStatus(mapRequestIdOriginalStatus);
+      });
     });
   }, []);
 
@@ -65,6 +72,10 @@ function ReviewRequests() {
           console.log(`Request with ID ${requestID} submitted`);
           api.getHolidayRequestsByDepartmentId(departmentID, (data) => {
             setHolidayRequests(data);
+            data.forEach((req) => {
+              mapRequestIdOriginalStatus[req.requestID] = req.status;
+              setMapRequestIdOriginalStatus(mapRequestIdOriginalStatus);
+            });
           });
         },
         () => {
@@ -81,9 +92,10 @@ function ReviewRequests() {
   };
 
   const getStatusOptions = (currentStatus, requestID) => {
-    if (currentStatus === "Rejected") {
+    let originalStatus = mapRequestIdOriginalStatus[requestID];
+    if (originalStatus === "Rejected") {
       return "Rejected";
-    } else if (currentStatus === "Approved") {
+    } else if (originalStatus === "Approved") {
       return (
         <select
           value={currentStatus}
@@ -105,6 +117,25 @@ function ReviewRequests() {
         </select>
       );
     }
+  };
+
+  const renderHolidayRequestRow = (request) => {
+    return (
+      <tr key={request.requestID}>
+        <td>{request.userName}</td>
+        <td>{request.requestFrom}</td>
+        <td>{request.requestTo}</td>
+        <td>{getStatusOptions(request.status, request.requestID)}</td>
+        <td>
+          <Button
+            variant="primary"
+            onClick={() => handleSubmit(request.requestID, request.status)}
+          >
+            Submit
+          </Button>
+        </td>
+      </tr>
+    );
   };
 
   return (
@@ -176,26 +207,9 @@ function ReviewRequests() {
             </tr>
           </thead>
           <tbody>
-            {filteredHolidayRequests.map((request) => (
-              <tr key={request.requestID}>
-                <td>{request.userName}</td>
-                <td>{request.requestFrom}</td>
-                <td>{request.requestTo}</td>
-                <td>{getStatusOptions(request.status, request.requestID)}</td>
-                <td>
-                  {request.status !== "Rejected" && (
-                    <Button
-                      variant="primary"
-                      onClick={() =>
-                        handleSubmit(request.requestID, request.status)
-                      }
-                    >
-                      Submit
-                    </Button>
-                  )}
-                </td>
-              </tr>
-            ))}
+            {filteredHolidayRequests.map((request) =>
+              renderHolidayRequestRow(request)
+            )}
           </tbody>
         </Table>
       )}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import * as api from "../../api/ApiRequests";
+import "../../css/Dashboard.css";
 
 function Dashboard() {
   const [userData, setUserData] = useState(null);
@@ -33,7 +34,8 @@ function Dashboard() {
       console.error("Failed to fetch holiday entitlement:", error);
     }
   }
-  //Getting pending requests from the department
+
+  // Getting pending requests from the department
   async function getPendingHolidays(departmentId) {
     try {
       api.getPendingHolidayRequestsByDepartmentId(
@@ -48,7 +50,7 @@ function Dashboard() {
     }
   }
 
-  //Getting pending requests from the user
+  // Getting pending requests from the user
   async function getUserPendingHolidays(userId) {
     try {
       api.getPendingHolidayRequestsByUserId(userId, (pendingRequests) => {
@@ -65,46 +67,56 @@ function Dashboard() {
       <div style={{ marginTop: "100px", padding: "20px" }}>
         {userData && <h1>Hello, {userData.name}!</h1>}
       </div>
-      <Card style={{ width: "40rem" }}>
-        <Card.Header
-          style={{
-            backgroundColor: "purple",
-            fontWeight: "bold",
-            color: "white",
-          }}
-        >
-          Notifications
-        </Card.Header>
-
-        <Card.Body>
-          You have{" "}
-          <span style={{ color: "red", fontWeight: "bold" }}>
-            {holidayEntitlement}
-          </span>{" "}
-          vacation days left.
-        </Card.Body>
-
-        <Card.Body>
-          You have{" "}
-          <span style={{ color: "red", fontWeight: "bold" }}>
-            {pendingRequests}
-          </span>{" "}
-          pending vacation request{pendingRequests !== 1 ? "s" : ""} awaiting
-          for your approval.
-        </Card.Body>
-
-        <Card.Body>
-          You have{" "}
-          <span style={{ color: "red", fontWeight: "bold" }}>
-            {userPendingRequests}
-          </span>{" "}
-          vacation request{userPendingRequests !== 1 ? "s" : ""} awaiting for
-          your supervisor approval.
-        </Card.Body>
-      </Card>
+      <div className="container mt-4">
+        <div className="row">
+          <div className="col-md-3">
+            <Card className="text-center custom-card">
+              <div className="corner-icon bg-dark text-white">
+                <i className="fas fa-users"></i>
+              </div>
+              <Card.Body>
+                <Card.Title>Total Staffs</Card.Title>
+                <Card.Text>{/* Insert total staffs count here */}</Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+          <div className="col-md-3">
+            <Card className="text-center custom-card">
+              <div className="corner-icon bg-dark text-white">
+                <i className="fas fa-check"></i>
+              </div>
+              <Card.Body>
+                <Card.Title>Approved Leave</Card.Title>
+                <Card.Text>{/* Insert approved leave count here */}</Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+          <div className="col-md-3">
+            <Card className="text-center custom-card">
+              <div className="corner-icon bg-dark text-white">
+                <i className="fas fa-clock"></i>
+              </div>
+              <Card.Body>
+                <Card.Title>Pending Leave</Card.Title>
+                <Card.Text>{pendingRequests}</Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+          <div className="col-md-3">
+            <Card className="text-center custom-card">
+              <div className="corner-icon bg-dark text-white">
+                <i className="fas fa-times"></i>
+              </div>
+              <Card.Body>
+                <Card.Title>Rejected Leave</Card.Title>
+                <Card.Text>{/* Insert rejected leave count here */}</Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
-//
 
 export default Dashboard;
