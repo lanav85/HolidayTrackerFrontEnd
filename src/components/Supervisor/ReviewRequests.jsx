@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import * as api from "../../api/ApiRequests";
+import "../../css/ReviewRequests.css";
 
 function ReviewRequests() {
   const [departmentID, setDepartmentID] = useState(null);
@@ -126,9 +127,11 @@ function ReviewRequests() {
         <td>{request.requestFrom}</td>
         <td>{request.requestTo}</td>
         <td>{getStatusOptions(request.status, request.requestID)}</td>
-        <td>
+        <td className="table-cell-center">
           <Button
-            variant="primary"
+            type="submit"
+            className="btn btn-success btn-lg submit-button"
+            style={{ fontSize: "18px" }}
             onClick={() => handleSubmit(request.requestID, request.status)}
           >
             Submit
@@ -150,8 +153,8 @@ function ReviewRequests() {
       }}
     >
       <h2>Holiday Requests</h2>
-      <div>
-        <label htmlFor="nameFilter">Filter by Name:</label>
+      <div className="label-container">
+        <label htmlFor="nameFilter">Filter by Name: </label>
         <input
           type="text"
           id="nameFilter"
@@ -159,8 +162,8 @@ function ReviewRequests() {
           onChange={(e) => setNameFilter(e.target.value)}
         />
       </div>
-      <div>
-        <label htmlFor="statusFilter">Filter by Status:</label>
+      <div className="label-container">
+        <label htmlFor="statusFilter">Filter by Status: </label>
         <select
           id="statusFilter"
           value={statusFilter}
@@ -172,7 +175,7 @@ function ReviewRequests() {
           <option value="All">All</option>
         </select>
       </div>
-      <div>
+      <div className="label-container">
         <label htmlFor="yearFilter">Filter by Year:</label>
         <select
           id="yearFilter"
@@ -196,7 +199,7 @@ function ReviewRequests() {
         <p>There are no Holiday Requests to review</p>
       )}
       {filteredHolidayRequests.length > 0 && (
-        <Table striped bordered hover>
+        <Table className="table" striped bordered hover>
           <thead>
             <tr>
               <th>Name</th>

@@ -1,0 +1,15 @@
+.label-container {
+    padding: 5px; 
+
+  }
+  
+  .submit-button {
+    margin: 0 auto;
+  }
+  
+
+  .table-cell-center {
+    text-align: center;
+    vertical-align: top; /* Ensures vertical alignment at the top */
+  }
+  

@@ -1,6 +1,6 @@
 .button-container {
     display: flex;
-    padding-top: 20px; 
+    padding-top: 30px; 
     
  }
   
@@ -18,4 +18,7 @@
   .button-container .btn:last-child {
     margin-right: 0;
   }
-  
+  .table {
+    width: 100%;
+    text-align: center; /* Center-aligns text and inline elements */
+  }
