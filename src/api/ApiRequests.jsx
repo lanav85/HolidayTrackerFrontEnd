@@ -183,6 +183,20 @@ export function getApprovedHolidayRequests(onSuccess) {
       console.error("Failed to fetch approved holiday requests:", error)
     );
 }
+
+export function getApprovedHolidayRequestsByUserId(userId, onSuccess) {
+  fetch(`/api/holidayRequests?status=Approved&userId=${userId}`)
+    .then((response) => {
+      if (!response.ok)
+        throw new Error("Failed to fetch approved holiday requests by userId");
+      return response.json();
+    })
+    .then((data) => onSuccess(data))
+    .catch((error) =>
+      console.error("Failed to fetch approved holiday requests:", error)
+    );
+}
+
 export function getApprovedHolidayRequestsByDepartmentId(
   departmentID,
   onSuccess
