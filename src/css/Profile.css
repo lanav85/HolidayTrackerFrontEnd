@@ -1,12 +1,14 @@
 .button-container {
     display: flex;
     padding-top: 20px; 
+    
  }
   
   .button-container .btn {
     flex: 1;
-    max-width: 170px;
+    max-width: 150px;
     margin: 0 20px; 
+    font-size: 18px; 
   }
   
   .button-container .btn:first-child {
