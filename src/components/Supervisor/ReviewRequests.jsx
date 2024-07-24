@@ -154,7 +154,9 @@ function ReviewRequests() {
     >
       <h2>Holiday Requests</h2>
       <div className="label-container">
-        <label htmlFor="nameFilter">Filter by Name: </label>
+        <label style={{ padding: "5px" }} htmlFor="nameFilter">
+          Filter by Name:{" "}
+        </label>
         <input
           type="text"
           id="nameFilter"
@@ -163,7 +165,9 @@ function ReviewRequests() {
         />
       </div>
       <div className="label-container">
-        <label htmlFor="statusFilter">Filter by Status: </label>
+        <label style={{ padding: "5px" }} htmlFor="statusFilter">
+          Filter by Status:{" "}
+        </label>
         <select
           id="statusFilter"
           value={statusFilter}
@@ -176,7 +180,9 @@ function ReviewRequests() {
         </select>
       </div>
       <div className="label-container">
-        <label htmlFor="yearFilter">Filter by Year:</label>
+        <label style={{ padding: "5px" }} htmlFor="yearFilter">
+          Filter by Year:
+        </label>
         <select
           id="yearFilter"
           value={yearFilter}
