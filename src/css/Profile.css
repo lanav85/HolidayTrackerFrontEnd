@@ -1,0 +1,19 @@
+.button-container {
+    display: flex;
+    padding-top: 20px; 
+ }
+  
+  .button-container .btn {
+    flex: 1;
+    max-width: 170px;
+    margin: 0 20px; 
+  }
+  
+  .button-container .btn:first-child {
+    margin-left: 0;
+  }
+  
+  .button-container .btn:last-child {
+    margin-right: 0;
+  }
+  

@@ -9,6 +9,7 @@ import * as api from "../../api/ApiRequests";
 import isEqual from "lodash.isequal";
 import cloneDeep from "lodash/cloneDeep";
 import { useNavigate } from "react-router-dom";
+import "../../css/Profile.css";
 
 function Profile() {
   const navigate = useNavigate();
@@ -145,7 +146,7 @@ function Profile() {
                   type="text"
                   name="username"
                   value={userName}
-                  onChange={(e) => setUserName(e.target.value)} //dropdown menu
+                  onChange={(e) => setUserName(e.target.value)}
                 />
               </Col>
             </Form.Group>
@@ -196,7 +197,7 @@ function Profile() {
                   value={roleName}
                   name="role"
                   disabled={userJson && userJson.roleID >= 3}
-                  onChange={(e) => setRoleName(e.target.value)} //dropdown menu
+                  onChange={(e) => setRoleName(e.target.value)}
                 >
                   {roles.map((role) => (
                     <option key={role.roleid} value={role.roledescription}>
@@ -219,41 +220,41 @@ function Profile() {
                   value={departmentName}
                   name="department"
                   disabled={userJson && userJson.roleID >= 3}
-                  onChange={(e) => setDepartmentName(e.target.value)} // dropdpwn menu: Update the state when a new department is selected
+                  onChange={(e) => setDepartmentName(e.target.value)}
                 >
                   {departments.map((department) => (
-                    // Map over the list of departments and create an option for each one
                     <option
-                      key={department.departmentID} // Unique key for each department option
-                      value={department.departmentName} // Set the value of the option to the department name
+                      key={department.departmentID}
+                      value={department.departmentName}
                     >
                       {department.departmentName}
-                    </option> // Display the department name as the option text
+                    </option>
                   ))}
                 </Form.Select>
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-3">
-              <Col sm={{ span: 10, offset: 3 }}>
-                <Button
-                  type="submit"
-                  className="btn btn-success btn-lg submit-button"
-                >
-                  Save Changes
-                </Button>
+              <Col sm={{ span: 12 }}>
+                <div className="button-container">
+                  <Button
+                    type="submit"
+                    className="btn btn-success btn-lg submit-button"
+                  >
+                    Save Changes
+                  </Button>
+                  <Button
+                    onClick={handleDelete}
+                    className="btn btn-danger btn-lg delete-button"
+                  >
+                    Delete User
+                  </Button>
+                </div>
               </Col>
             </Form.Group>
           </Form>
-          <Button
-            onClick={handleDelete}
-            className="btn btn-danger btn-lg delete-button"
-          >
-            Delete User
-          </Button>
         </div>
       </div>
     </Layout>
   );
 }
-
 export default Profile;
