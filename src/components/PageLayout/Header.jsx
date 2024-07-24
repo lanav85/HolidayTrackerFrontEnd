@@ -10,9 +10,13 @@ function Header() {
 
   useEffect(() => {
     const userString = localStorage.getItem("holiday-tracker-user");
-    const userJson = JSON.parse(userString);
-    setUserData(JSON.parse(userJson.data));
-  });
+    if (userString) {
+      const userJson = JSON.parse(userString);
+      if (userJson && userJson.data) {
+        setUserData(JSON.parse(userJson.data));
+      }
+    }
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("holiday-tracker-user");
@@ -20,16 +24,9 @@ function Header() {
 
   return (
     <Navbar className="bg-body-tertiary fixed-top">
-      <Container
-        style={{
-          fontSize: "20px",
-        }}
-      >
+      <Container style={{ fontSize: "20px" }}>
         <Nav className="ms-auto">
-          <NavDropdown
-            title={userData && userData.name ? userData.name : "User"}
-            id="basic-nav-dropdown"
-          >
+          <NavDropdown title={userData?.name || "User"} id="basic-nav-dropdown">
             <Link to="/" onClick={handleLogout}>
               Logout
             </Link>

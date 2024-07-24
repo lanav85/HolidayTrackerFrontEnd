@@ -213,7 +213,7 @@ export function getHolidayRequestsByDepartmentId(departmentID, onSuccess) {
     );
 }
 export function getAllPendingHolidayRequests(onSuccess, onError) {
-  fetch(`/api/holidayRequests/pending`)
+  fetch(`/api/holidayRequests?status=pending`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Failed to fetch pending holiday requests");
