@@ -23,6 +23,7 @@ function Profile() {
   const [userName, setUserName] = useState("");
   const [departmentName, setDepartmentName] = useState("");
   const [departments, setDepartments] = useState([]); // for storing list of departments
+  const [loggedInUserRole, setLoggedInUserRole] = useState(null);
   const roles = [
     { roleid: 1, roledescription: "Manager" },
     { roleid: 2, roledescription: "Supervisor" },
@@ -36,6 +37,9 @@ function Profile() {
     // Retrieve user data from localStorage
     const userString = localStorage.getItem("holiday-tracker-user");
     const userJson = JSON.parse(userString);
+
+    setLoggedInUserRole(userJson.roleID); //get userRole of the logged user to define what is going to be displayed
+
     setIsLoggedInUser(userJson.userID === profileUserId);
     if (isLoggedInUser) {
       // Logged in user, cached data is used
@@ -46,12 +50,10 @@ function Profile() {
         loadUser(result);
       });
     }
-
     api.getAllDepartments((data) => {
       setDepartments(data);
     });
   }, [isLoggedInUser]);
-
   function loadUser(userJson) {
     const userData = JSON.parse(userJson.data);
     userJson.data = JSON.stringify(userData);
@@ -68,7 +70,6 @@ function Profile() {
     });
     setUserName(userData ? userData.name : "");
   }
-
   function handleSave(event) {
     event.preventDefault();
 
@@ -108,7 +109,6 @@ function Profile() {
       }
     }
   }
-
   function handleDelete() {
     if (window.confirm("Are you sure you want to delete this user?")) {
       const profileUserId = userJson.userID;
@@ -127,12 +127,14 @@ function Profile() {
       });
     }
   }
+  const isLoggedInUserRole3 = loggedInUserRole === 3; // Check if logged-in user is an employee
 
   return (
     <Layout>
       <div className="moveToRight-container">
-        <div style={{ marginTop: "50px", padding: "2vw" }}>
+        <div style={{ marginTop: "150px", padding: "2vw" }}>
           <Form onSubmit={handleSave}>
+            {/*------------  Name Field ------------ */}
             <Form.Group
               as={Row}
               className="mb-3"
@@ -150,6 +152,7 @@ function Profile() {
                 />
               </Col>
             </Form.Group>
+            {/*------------  Email Field ------------ */}
             <Form.Group
               as={Row}
               className="mb-3"
@@ -167,6 +170,7 @@ function Profile() {
                 />
               </Col>
             </Form.Group>
+            {/*------------  Supervisor Field------------  */}
             <Form.Group
               as={Row}
               className="mb-3"
@@ -184,6 +188,7 @@ function Profile() {
                 />
               </Col>
             </Form.Group>
+            {/* ------------ Role Field ------------ */}
             <Form.Group
               as={Row}
               className="mb-3"
@@ -196,7 +201,7 @@ function Profile() {
                 <Form.Select
                   value={roleName}
                   name="role"
-                  disabled={userJson && userJson.roleID >= 3}
+                  disabled={isLoggedInUserRole3} // Disabled if logged-in user role is 3
                   onChange={(e) => setRoleName(e.target.value)}
                 >
                   {roles.map((role) => (
@@ -207,6 +212,7 @@ function Profile() {
                 </Form.Select>
               </Col>
             </Form.Group>
+            {/* ------------ Department Field------------  */}
             <Form.Group
               as={Row}
               className="mb-3"
@@ -219,7 +225,7 @@ function Profile() {
                 <Form.Select
                   value={departmentName}
                   name="department"
-                  disabled={userJson && userJson.roleID >= 3}
+                  disabled={isLoggedInUserRole3} // Disabled if logged-in user role is 3
                   onChange={(e) => setDepartmentName(e.target.value)}
                 >
                   {departments.map((department) => (
@@ -233,6 +239,7 @@ function Profile() {
                 </Form.Select>
               </Col>
             </Form.Group>
+            {/*------------ Save and Delete Buttons ------------ */}
             <Form.Group as={Row} className="mb-3">
               <Col sm={{ span: 12 }}>
                 <div className="button-container">
@@ -242,12 +249,16 @@ function Profile() {
                   >
                     Save Changes
                   </Button>
-                  <Button
-                    onClick={handleDelete}
-                    className="btn btn-danger btn-lg delete-button"
-                  >
-                    Delete User
-                  </Button>
+
+                  {/* Delete Button (only visible if logged-in user role is not 3) */}
+                  {!isLoggedInUserRole3 && (
+                    <Button
+                      onClick={handleDelete}
+                      className="btn btn-danger btn-lg delete-button"
+                    >
+                      Delete User
+                    </Button>
+                  )}
                 </div>
               </Col>
             </Form.Group>
@@ -257,4 +268,5 @@ function Profile() {
     </Layout>
   );
 }
+
 export default Profile;
