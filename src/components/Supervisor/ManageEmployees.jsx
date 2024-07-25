@@ -4,6 +4,7 @@ import "@/App.css";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import * as api from "../../api/ApiRequests";
+import { Card } from "react-bootstrap";
 
 function ManageEmployees() {
   const [sortBy, setSortBy] = useState(null); // State to track the currently selected sort option
@@ -46,34 +47,53 @@ function ManageEmployees() {
   });
 
   return (
-    <Table
-      striped
-      className="moveToRight-container"
-      style={{
-        width: "calc(60%)",
-      }}
-    >
-      <thead>
-        <tr>
-          <th>#</th>
-          <th onClick={() => handleSort("name")}>Name</th>
-          <th>Email</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {sortedData.map((row, index) => (
-          <tr>
-            <td>{index + 1}</td>
-            <td>{row.name}</td>
-            <td>{row.email}</td>
-            <td>
-              <Link to={"/profile/" + row.userID}>View</Link>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
+    <div className="moveToRight-container">
+      <div style={{ marginTop: "50px", padding: "2vw" }}>
+        <h2
+          style={{
+            marginBottom: "25px",
+            textAlign: "center",
+          }}
+        >
+          Employee
+        </h2>
+        <div className="shadow p-3 mb-5 bg-white rounded">
+          <Table
+            striped
+            className="table-full-width"
+            style={{
+              width: "100%" /* Ensure the table takes up all available space */,
+            }}
+          >
+            <thead>
+              <tr>
+                <th className="table-cell-center">#</th>
+                <th
+                  className="table-cell-center"
+                  onClick={() => handleSort("name")}
+                >
+                  Name
+                </th>
+                <th className="table-cell-center">Email</th>
+                <th className="table-cell-center"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {sortedData.map((row, index) => (
+                <tr key={row.userID}>
+                  <td className="table-cell-center">{index + 1}</td>
+                  <td className="table-cell-center">{row.name}</td>
+                  <td className="table-cell-center">{row.email}</td>
+                  <td className="table-cell-center">
+                    <Link to={"/profile/" + row.userID}>View</Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+      </div>
+    </div>
   );
 }
 

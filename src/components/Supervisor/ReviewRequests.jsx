@@ -3,6 +3,7 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import * as api from "../../api/ApiRequests";
 import "../../css/ReviewRequests.css";
+import { Card } from "react-bootstrap";
 
 function ReviewRequests() {
   const [departmentID, setDepartmentID] = useState(null);
@@ -142,86 +143,92 @@ function ReviewRequests() {
   };
 
   return (
-    <div
-      style={{
-        fontSize: "18px",
-        marginTop: "150px",
-        marginLeft: "280px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <h2>Holiday Requests</h2>
-      <div className="label-container">
-        <label style={{ padding: "5px" }} htmlFor="nameFilter">
-          Filter by Name:{" "}
-        </label>
-        <input
-          type="text"
-          id="nameFilter"
-          value={nameFilter}
-          onChange={(e) => setNameFilter(e.target.value)}
-        />
-      </div>
-      <div className="label-container">
-        <label style={{ padding: "5px" }} htmlFor="statusFilter">
-          Filter by Status:{" "}
-        </label>
-        <select
-          id="statusFilter"
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
+    <div className="moveToRight-container">
+      <div style={{ marginTop: "50px", padding: "2vw" }}>
+        <h2
+          style={{
+            marginBottom: "25px",
+            textAlign: "center",
+          }}
         >
-          <option value="Pending">Pending</option>
-          <option value="Approved">Approved</option>
-          <option value="Rejected">Rejected</option>
-          <option value="All">All</option>
-        </select>
+          Holiday Requests
+        </h2>
+        <div className="shadow p-3 mb-5 bg-white rounded">
+          <Card>
+            <Card.Body>
+              <div className="label-container">
+                <label style={{ padding: "5px" }} htmlFor="nameFilter">
+                  Filter by Name:{" "}
+                </label>
+                <input
+                  type="text"
+                  id="nameFilter"
+                  value={nameFilter}
+                  onChange={(e) => setNameFilter(e.target.value)}
+                />
+              </div>
+              <div className="label-container">
+                <label style={{ padding: "5px" }} htmlFor="statusFilter">
+                  Filter by Status:{" "}
+                </label>
+                <select
+                  id="statusFilter"
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                >
+                  <option value="Pending">Pending</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Rejected">Rejected</option>
+                  <option value="All">All</option>
+                </select>
+              </div>
+              <div className="label-container">
+                <label style={{ padding: "5px" }} htmlFor="yearFilter">
+                  Filter by Year:
+                </label>
+                <select
+                  id="yearFilter"
+                  value={yearFilter}
+                  onChange={(e) => setYearFilter(parseInt(e.target.value))}
+                >
+                  {[
+                    ...new Set(
+                      holidayRequests.map((request) =>
+                        new Date(request.requestFrom).getFullYear()
+                      )
+                    ),
+                  ].map((year) => (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {filteredHolidayRequests.length === 0 && (
+                <p>There are no Holiday Requests to review</p>
+              )}
+              {filteredHolidayRequests.length > 0 && (
+                <Table className="table" striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Request From</th>
+                      <th>Request To</th>
+                      <th>Status</th>
+                      <th>Submit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredHolidayRequests.map((request) =>
+                      renderHolidayRequestRow(request)
+                    )}
+                  </tbody>
+                </Table>
+              )}
+            </Card.Body>
+          </Card>
+        </div>
       </div>
-      <div className="label-container">
-        <label style={{ padding: "5px" }} htmlFor="yearFilter">
-          Filter by Year:
-        </label>
-        <select
-          id="yearFilter"
-          value={yearFilter}
-          onChange={(e) => setYearFilter(parseInt(e.target.value))}
-        >
-          {[
-            ...new Set(
-              holidayRequests.map((request) =>
-                new Date(request.requestFrom).getFullYear()
-              )
-            ),
-          ].map((year) => (
-            <option key={year} value={year}>
-              {year}
-            </option>
-          ))}
-        </select>
-      </div>
-      {filteredHolidayRequests.length === 0 && (
-        <p>There are no Holiday Requests to review</p>
-      )}
-      {filteredHolidayRequests.length > 0 && (
-        <Table className="table" striped bordered hover>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Request From</th>
-              <th>Request To</th>
-              <th>Status</th>
-              <th>Submit</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredHolidayRequests.map((request) =>
-              renderHolidayRequestRow(request)
-            )}
-          </tbody>
-        </Table>
-      )}
     </div>
   );
 }

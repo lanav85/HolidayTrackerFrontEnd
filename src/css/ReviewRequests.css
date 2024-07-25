@@ -1,15 +1,18 @@
-.label-container {
-    padding: 5px; 
 
-  }
   
-  .submit-button {
-    margin: 0 auto;
-  }
-  
+/* Ensures that the table takes up the full width of its container */
+.table-full-width {
+  width: 100%;
+  table-layout: fixed; /* Ensures columns are evenly distributed */
+}
 
-  .table-cell-center {
-    text-align: center;
-    vertical-align: top; 
-  }
-  
+/* Center text in table cells and align vertically to the top */
+.table-cell-center {
+  text-align: center;
+  vertical-align: top;
+}
+
+/* Optional: Make sure the card body does not add unnecessary padding */
+.card-body {
+  padding: 0; /* Remove padding if needed to make the table fit better */
+}
