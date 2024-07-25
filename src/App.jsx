@@ -16,7 +16,11 @@ import ViewHolidayRequests from "./components/ManagerAdmin/ViewHolidayRequests.j
 
 function App() {
   return (
-    <div>
+    <div
+      style={{
+        backgroundColor: "#F5F5F5",
+      }}
+    >
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
@@ -28,6 +32,7 @@ function App() {
               </Layout>
             }
           />
+
           <Route
             path="/profile/:user_id"
             element={
@@ -52,6 +57,7 @@ function App() {
               </Layout>
             }
           />
+
           <Route
             path="/manage-employees/*"
             element={

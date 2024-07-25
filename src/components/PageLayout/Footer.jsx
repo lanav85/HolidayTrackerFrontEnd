@@ -8,7 +8,7 @@ function Footer() {
         width: "calc(100% - 250px)", //it will take all the horizontal space of the conteiner minus the 250px from the sidebar
         textAlign: "center",
         fontSize: "10px",
-        backgroundColor: "white",
+        backgroundColor: "#F5F5F5",
         zIndex: 999, // specifies the stack order of an element. This ensures that the footer appears above other elements on the page.
       }}
     >
