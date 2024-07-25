@@ -187,6 +187,17 @@ function CreateUser() {
 
   return (
     <div className="moveToRight-container">
+      <h2
+        style={{
+          display: "flex",
+          marginTop: "100px",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        Register New User
+      </h2>
       <div style={{ marginTop: "50px", padding: "2vw" }}>
         <Form onSubmit={handleSave}>
           <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
@@ -262,6 +273,7 @@ function CreateUser() {
           <Form.Group as={Row} className="mb-3">
             <Col sm={{ span: 10, offset: 3 }}>
               <Button
+                style={{ marginTop: "30px" }}
                 type="submit"
                 className="btn btn-success btn-lg submit-button"
               >
