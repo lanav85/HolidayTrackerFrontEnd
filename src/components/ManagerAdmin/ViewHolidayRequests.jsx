@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import XLSX from "xlsx/dist/xlsx.full.min"; // Import specific functions or objects from XLSX library
 import "@/App.css";
+import Button from "react-bootstrap/Button";
+
 import * as api from "../../api/ApiRequests";
+import { Card } from "react-bootstrap";
 
 function ViewHolidayRequests() {
   const [holidayRequests, setHolidayRequests] = useState([]);
@@ -35,8 +38,28 @@ function ViewHolidayRequests() {
 
   return (
     <div className="moveToRight-container">
-      <h1>Approved Holiday Requests</h1>
-      <button onClick={downloadExcelFile}>Download Report</button>
+      <div style={{ padding: "200px" }}>
+        <div className="shadow p-3 mb-5 bg-white rounded">
+          <Card>
+            <Card.Body>
+              <h2
+                style={{
+                  marginBottom: "45px",
+                  marginTop: "25px",
+                }}
+              >
+                Approved Holiday Requests
+              </h2>
+              <button
+                className="btn btn-success btn-lg submit-button"
+                onClick={downloadExcelFile}
+              >
+                Download Report
+              </button>
+            </Card.Body>{" "}
+          </Card>{" "}
+        </div>
+      </div>{" "}
     </div>
   );
 }
