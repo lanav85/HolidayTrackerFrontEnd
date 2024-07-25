@@ -5,6 +5,7 @@ import Layout from "./PageLayout/Layout";
 import * as api from "../api/ApiRequests";
 import moment from "moment";
 import "moment-timezone";
+import { Card } from "react-bootstrap";
 
 function SubmitRequest() {
   // Retrieve user ID from localStorage
@@ -98,76 +99,98 @@ function SubmitRequest() {
 
   return (
     // Form for submitting request
-    <Layout>
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          fontSize: "18px",
-          marginTop: "150px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <h2 style={{ padding: "25px" }}>Holiday Request</h2>
-        {/* Input for selecting start date */}
-        <div style={{ marginBottom: "30px" }}>
-          <label style={{ padding: "15px" }}>Select Start Date:</label>
-          <DatePicker
-            id="startDate"
-            selectsStart
-            selected={startDate}
-            onChange={handleStartDateChange}
-            startDate={startDate}
-            endDate={endDate}
-            minDate={moment.utc().toDate()}
-            placeholderText="dd/mm/yyyy"
-            dateFormat="dd/MM/yyyy"
-            timeZone="UTC"
-          />
-        </div>
-        {/* Input for selecting end date */}
-        <div style={{ marginBottom: "20px" }}>
-          <label style={{ padding: "15px" }}>Select End Date:</label>
-          <DatePicker
-            id="endDate"
-            selectsEnd
-            selected={endDate}
-            onChange={handleEndDateChange}
-            startDate={startDate}
-            endDate={endDate}
-            minDate={moment.utc().toDate()}
-            placeholderText="dd/mm/yyyy"
-            dateFormat="dd/MM/yyyy"
-            timeZone="UTC"
-          />
-        </div>
+    <div className="moveToRight-container">
+      <div style={{ marginTop: "50px", padding: "2vw" }}>
+        <h2
+          style={{
+            marginBottom: "25px",
+            textAlign: "center",
+          }}
+        >
+          Holiday Request
+        </h2>
 
-        {/* Total days display */}
-        <div style={{ marginBottom: "20px" }}>
-          <label style={{ padding: "15px" }}>Total Days:</label>
-          <input
-            type="text"
-            value={totalDays !== null ? totalDays : ""}
-            readOnly
-            style={{
-              padding: "10px",
-              borderRadius: "4px",
-              border: "1px solid #ccc",
-              width: "100px",
-              textAlign: "center",
-            }}
-          />
-        </div>
+        <div className="shadow p-3 mb-5 bg-white rounded">
+          <Card>
+            <Card.Body>
+              <Layout>
+                <form
+                  onSubmit={handleSubmit}
+                  style={{
+                    fontSize: "18px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  {/* Input for selecting start date */}
+                  <div style={{ marginBottom: "30px" }}>
+                    <label style={{ padding: "15px" }}>
+                      Select Start Date:
+                    </label>
+                    <DatePicker
+                      id="startDate"
+                      selectsStart
+                      selected={startDate}
+                      onChange={handleStartDateChange}
+                      startDate={startDate}
+                      endDate={endDate}
+                      minDate={moment.utc().toDate()}
+                      placeholderText="dd/mm/yyyy"
+                      dateFormat="dd/MM/yyyy"
+                      timeZone="UTC"
+                    />
+                  </div>
+                  {/* Input for selecting end date */}
+                  <div style={{ marginBottom: "20px" }}>
+                    <label style={{ padding: "15px" }}>Select End Date:</label>
+                    <DatePicker
+                      id="endDate"
+                      selectsEnd
+                      selected={endDate}
+                      onChange={handleEndDateChange}
+                      startDate={startDate}
+                      endDate={endDate}
+                      minDate={moment.utc().toDate()}
+                      placeholderText="dd/mm/yyyy"
+                      dateFormat="dd/MM/yyyy"
+                      timeZone="UTC"
+                    />
+                  </div>
 
-        {/* Submit button for form submission */}
-        <button type="submit" className="btn btn-success btn-lg submit-button">
-          Submit
-        </button>
-        {/* Confirmation message */}
-        {confirmationMessage && <p>{confirmationMessage}</p>}
-      </form>
-    </Layout>
+                  {/* Total days display */}
+                  <div style={{ marginBottom: "20px" }}>
+                    <label style={{ padding: "15px" }}>Total Days:</label>
+                    <input
+                      type="text"
+                      value={totalDays !== null ? totalDays : ""}
+                      readOnly
+                      style={{
+                        padding: "10px",
+                        borderRadius: "4px",
+                        border: "1px solid #ccc",
+                        width: "100px",
+                        textAlign: "center",
+                      }}
+                    />
+                  </div>
+
+                  {/* Submit button for form submission */}
+                  <button
+                    type="submit"
+                    className="btn btn-success btn-lg submit-button"
+                  >
+                    Submit
+                  </button>
+                  {/* Confirmation message */}
+                  {confirmationMessage && <p>{confirmationMessage}</p>}
+                </form>
+              </Layout>
+            </Card.Body>
+          </Card>{" "}
+        </div>
+      </div>{" "}
+    </div>
   );
 }
 
