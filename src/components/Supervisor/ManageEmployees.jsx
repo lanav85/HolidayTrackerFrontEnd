@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import "@/App.css";
-import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import * as api from "../../api/ApiRequests";
-import { Card } from "react-bootstrap";
 
 function ManageEmployees() {
   const [sortBy, setSortBy] = useState(null); // State to track the currently selected sort option
