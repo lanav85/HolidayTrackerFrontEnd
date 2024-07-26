@@ -66,7 +66,8 @@ export default function Sidebar() {
               </CDBSidebarMenuItem>
             </NavLink>
 
-            {getLoggedInUserRoleId() < 3 ? (
+            {getLoggedInUserRoleId() < 3 ? <></> : <div />}
+            {getLoggedInUserRoleId() === 2 ? (
               <>
                 <NavLink
                   exact
@@ -91,7 +92,6 @@ export default function Sidebar() {
             ) : (
               <div />
             )}
-
             {getLoggedInUserRoleId() < 2 ? (
               <>
                 <NavLink exact to="/manage-departments">
