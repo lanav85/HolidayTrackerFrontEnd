@@ -47,8 +47,8 @@ function Dashboard() {
     }
   }, []);
 
-  function getApprovedRequestsByUserId(userId) {
-    api.getApprovedHolidayRequestsByUserId(
+  function getHolidayRequestsByUserId(userId) {
+    api.getHolidayRequestsByUserId(
       userId,
       (approvedRequests) => {
         setApprovedRequestsCountbyUserId(approvedRequests.length);

@@ -13,7 +13,7 @@ import ViewDepartment from "./components/ManagerAdmin/ViewDepartment.jsx";
 import CreateDepartment from "./components/ManagerAdmin/CreateDepartment";
 import CreateUser from "./components/ManagerAdmin/CreateUser.jsx";
 import ViewHolidayRequests from "./components/ManagerAdmin/ViewHolidayRequests.jsx";
-
+import EmployeeRequests from "./components/Employee/EmployeeRequests.jsx";
 function App() {
   return (
     <div
@@ -103,6 +103,14 @@ function App() {
             element={
               <Layout>
                 <ViewHolidayRequests />
+              </Layout>
+            }
+          />
+          <Route
+            path="/user-holiday-requests/:user_id"
+            element={
+              <Layout>
+                <EmployeeRequests />
               </Layout>
             }
           />

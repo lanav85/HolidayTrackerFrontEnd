@@ -206,7 +206,16 @@ export function getApprovedHolidayRequestsByUserId(userId, onSuccess) {
       console.error("Failed to fetch approved holiday requests:", error)
     );
 }
-
+export function getHolidayRequestsByUserId(userId, onSuccess, onError) {
+  fetch(`/api/holidayRequests?userId=${userId}`)
+    .then((response) => {
+      if (!response.ok)
+        throw new Error("Failed to fetch holiday requests by userId");
+      return response.json();
+    })
+    .then((data) => onSuccess(data))
+    .catch((error) => onError(error)); // Call onError if there is an issue
+}
 export function getApprovedHolidayRequestsByDepartmentId(
   departmentID,
   onSuccess
@@ -224,6 +233,7 @@ export function getApprovedHolidayRequestsByDepartmentId(
       console.error("Failed to fetch approved holiday requests:", error)
     );
 }
+
 export function getHolidayRequestsByDepartmentId(departmentID, onSuccess) {
   fetch(`/api/holidayRequests?departmentId=${departmentID}`)
     .then((response) => {

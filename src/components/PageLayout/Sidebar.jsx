@@ -57,6 +57,14 @@ export default function Sidebar() {
                 Submit Holiday Request{" "}
               </CDBSidebarMenuItem>
             </NavLink>
+            <NavLink exact to={"/user-holiday-requests/" + getLoggedInUserId()}>
+              <CDBSidebarMenuItem
+                icon="calendar-plus"
+                className="sidebar-menu-item"
+              >
+                My Holiday Requests{" "}
+              </CDBSidebarMenuItem>
+            </NavLink>
 
             {getLoggedInUserRoleId() < 3 ? (
               <>
