@@ -170,7 +170,17 @@ export function createDepartment(department, onSuccess) {
 }
 
 //HOLIDAY REQUESTS
-
+export function getAllHolidayRequests(onSuccess) {
+  fetch(`/api/holidayRequests`)
+    .then((response) => {
+      if (!response.ok) throw new Error("Failed to fetch holiday requests ");
+      return response.json();
+    })
+    .then((data) => onSuccess(data))
+    .catch((error) =>
+      console.error("Failed to fetch holiday requests ", error)
+    );
+}
 export function getApprovedHolidayRequests(onSuccess) {
   fetch(`/api/holidayRequests?status=Approved`)
     .then((response) => {
