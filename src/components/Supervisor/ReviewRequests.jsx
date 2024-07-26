@@ -132,7 +132,7 @@ function ReviewRequests() {
           <Button
             type="submit"
             className="btn btn-success btn-lg submit-button"
-            style={{ fontSize: "18px" }}
+            style={{ fontSize: "15px", marginTop: "0" }}
             onClick={() => handleSubmit(request.requestID, request.status)}
           >
             Submit

@@ -54,51 +54,54 @@ function ViewDepartment() {
 
   return (
     <div className="moveToRight-container">
-      <div>
-        <p>
-          <strong>Department :</strong> {departmentName}
-        </p>
-        <p>
-          <strong>Supervisor :</strong> {managerName}
-        </p>
-      </div>
-      <div>
-        <h3>Users in Department</h3>
-        <Table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((row) => (
-              <tr key={row.userID}>
-                <td>{row.name}</td>
-                <td>{row.email}</td>
-                <td>{row.roleDescription}</td>
-                <td>
-                  <Link to={"/profile/" + row.userID}>View</Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </div>
-      <div>
-        {departmentID && (
-          <>
-            <Button variant="danger" onClick={handleDeleteDepartment}>
-              Delete Department
-            </Button>{" "}
-            {/* Add a button to delete the department */}
-            <Link to={`/reviewRequests/${departmentID}`}>
-              <Button variant="primary">See Holiday Requests</Button>
-            </Link>
-          </>
-        )}
-      </div>
+      <div style={{ marginTop: "50px", padding: "2vw" }}>
+        <div className="shadow p-3 mb-5 bg-white rounded">
+          <p>
+            <strong>Department :</strong> {departmentName}
+          </p>
+          <p>
+            <strong>Supervisor :</strong> {managerName}
+          </p>
+
+          <div>
+            <h3>Users in Department</h3>
+            <Table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Role Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((row) => (
+                  <tr key={row.userID}>
+                    <td>{row.name}</td>
+                    <td>{row.email}</td>
+                    <td>{row.roleDescription}</td>
+                    <td>
+                      <Link to={"/profile/" + row.userID}>View</Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+          <div>
+            {departmentID && (
+              <>
+                <Button variant="danger" onClick={handleDeleteDepartment}>
+                  Delete Department
+                </Button>{" "}
+                {/* Add a button to delete the department */}
+                <Link to={`/reviewRequests/${departmentID}`}>
+                  <Button variant="primary">See Holiday Requests</Button>
+                </Link>
+              </>
+            )}
+          </div>
+        </div>{" "}
+      </div>{" "}
     </div>
   );
 }
