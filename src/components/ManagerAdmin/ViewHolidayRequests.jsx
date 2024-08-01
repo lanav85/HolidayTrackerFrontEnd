@@ -37,31 +37,35 @@ function ViewHolidayRequests() {
   };
 
   return (
-    <div className="moveToRight-container">
-      <div style={{ padding: "200px" }}>
-        <div className="shadow p-3 mb-5 bg-white rounded">
-          <Card>
-            <Card.Body>
-              <h2
-                style={{
-                  marginBottom: "45px",
-                  marginTop: "25px",
-                }}
-              >
-                Approved Holiday Requests
-              </h2>
-              <button
-                className="btn btn-success btn-lg submit-button"
-                onClick={downloadExcelFile}
-              >
-                Download Report
-              </button>
-            </Card.Body>{" "}
-          </Card>{" "}
+    <div className="moveToRight-container" style={{ marginTop: "7.125rem" }}>
+      <div
+        className="shadow p-3 mb-5 bg-white rounded"
+        style={{ padding: "1.25rem" }}
+      >
+        <h2
+          style={{
+            marginBottom: "2.8125rem",
+            marginTop: "1.5625rem",
+            textAlign: "center",
+          }}
+        >
+          Approved Holiday Requests
+        </h2>
+        <div style={{ textAlign: "center" }}>
+          {" "}
+          {/* Center the button */}
+          <Button
+            variant="success"
+            size="lg"
+            className="submit-button"
+            onClick={downloadExcelFile}
+            style={{ marginTop: "1.875rem" }} // Add top margin to button
+          >
+            Download Report
+          </Button>
         </div>
-      </div>{" "}
+      </div>
     </div>
   );
 }
-
 export default ViewHolidayRequests;

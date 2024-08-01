@@ -1,5 +1,3 @@
-
-  
 .table-full-width {
   width: 100%;
   table-layout: fixed; /* Ensures columns are evenly distributed */
@@ -9,5 +7,25 @@
   text-align: center;
   vertical-align: top;
 }
+h2 {
+  margin-bottom: 1.5625rem; /* 25px / 16 = 1.5625rem */
+  text-align: center;
+}
+/* Adjustments for smaller screens */
+@media (max-width:  320px) {
 
 
+  .table-full-width {
+    font-size: 0.675rem; /
+  }
+}
+
+@media (max-width: 768px) { 
+  h2 {
+    font-size: 1rem
+  }
+}
+
+@media (min-width: 1200px) { 
+  
+}

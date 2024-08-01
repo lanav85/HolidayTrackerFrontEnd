@@ -144,20 +144,13 @@ function ReviewRequests() {
 
   return (
     <div className="moveToRight-container">
-      <div style={{ marginTop: "50px", padding: "2vw" }}>
-        <h2
-          style={{
-            marginBottom: "25px",
-            textAlign: "center",
-          }}
-        >
-          Holiday Requests
-        </h2>
+      <div style={{ marginTop: "3.125rem", padding: "1.25rem" }}>
+        <h2>Holiday Requests</h2>
         <div className="shadow p-3 mb-5 bg-white rounded">
           <Card>
             <Card.Body>
               <div className="label-container">
-                <label style={{ padding: "5px" }} htmlFor="nameFilter">
+                <label style={{ padding: "0.3125rem" }} htmlFor="nameFilter">
                   Filter by Name:{" "}
                 </label>
                 <input
@@ -168,7 +161,7 @@ function ReviewRequests() {
                 />
               </div>
               <div className="label-container">
-                <label style={{ padding: "5px" }} htmlFor="statusFilter">
+                <label style={{ padding: "0.3125rem" }} htmlFor="statusFilter">
                   Filter by Status:{" "}
                 </label>
                 <select
@@ -183,7 +176,7 @@ function ReviewRequests() {
                 </select>
               </div>
               <div className="label-container">
-                <label style={{ padding: "5px" }} htmlFor="yearFilter">
+                <label style={{ padding: "0.3125rem" }} htmlFor="yearFilter">
                   Filter by Year:
                 </label>
                 <select
