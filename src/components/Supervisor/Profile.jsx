@@ -144,143 +144,136 @@ function Profile() {
             User Profile
           </h2>
           <div className="shadow p-3 mb-5 bg-white rounded">
-            <Card>
-              <Card.Body>
-                <Form onSubmit={handleSave}>
-                  {/*------------  Name Field ------------ */}
-                  <Form.Group
-                    as={Row}
-                    className="mt-5 mb-3"
-                    controlId="formHorizontalName"
+            <Form onSubmit={handleSave}>
+              {/*------------  Name Field ------------ */}
+              <Form.Group
+                as={Row}
+                className="mt-5 mb-3"
+                controlId="formHorizontalName"
+              >
+                <Form.Label column sm={3}>
+                  Name
+                </Form.Label>
+                <Col sm={8}>
+                  <Form.Control
+                    type="text"
+                    name="username"
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value)}
+                  />
+                </Col>
+              </Form.Group>
+              {/*------------  Email Field ------------ */}
+              <Form.Group
+                as={Row}
+                className="mb-3"
+                controlId="formHorizontalEmail"
+              >
+                <Form.Label column sm={3}>
+                  Email
+                </Form.Label>
+                <Col sm={8}>
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    value={userJson ? userJson.email : ""}
+                    readOnly
+                  />
+                </Col>
+              </Form.Group>
+              {/*------------  Supervisor Field------------  */}
+              <Form.Group
+                as={Row}
+                className="mb-3"
+                controlId="formHorizontalManager"
+              >
+                <Form.Label column sm={3}>
+                  Supervisor
+                </Form.Label>
+                <Col sm={8}>
+                  <Form.Control
+                    type="text"
+                    name="manager"
+                    value={managerName}
+                    readOnly
+                  />
+                </Col>
+              </Form.Group>
+              {/* ------------ Role Field ------------ */}
+              <Form.Group
+                as={Row}
+                className="mb-3"
+                controlId="formHorizontalRole"
+              >
+                <Form.Label column sm={3}>
+                  Role
+                </Form.Label>
+                <Col sm={8}>
+                  <Form.Select
+                    value={roleName}
+                    name="role"
+                    disabled={isLoggedInUserRole3} // Disabled if logged-in user role is 3
+                    onChange={(e) => setRoleName(e.target.value)}
                   >
-                    <Form.Label column sm={3}>
-                      Name
-                    </Form.Label>
-                    <Col sm={8}>
-                      <Form.Control
-                        type="text"
-                        name="username"
-                        value={userName}
-                        onChange={(e) => setUserName(e.target.value)}
-                      />
-                    </Col>
-                  </Form.Group>
-                  {/*------------  Email Field ------------ */}
-                  <Form.Group
-                    as={Row}
-                    className="mb-3"
-                    controlId="formHorizontalEmail"
+                    {roles.map((role) => (
+                      <option key={role.roleid} value={role.roledescription}>
+                        {role.roledescription}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Col>
+              </Form.Group>
+              {/* ------------ Department Field------------  */}
+              <Form.Group
+                as={Row}
+                className="mb-3"
+                controlId="formHorizontalDepartment"
+              >
+                <Form.Label column sm={3}>
+                  Department
+                </Form.Label>
+                <Col sm={8}>
+                  <Form.Select
+                    value={departmentName}
+                    name="department"
+                    disabled={isLoggedInUserRole3} // Disabled if logged-in user role is 3
+                    onChange={(e) => setDepartmentName(e.target.value)}
                   >
-                    <Form.Label column sm={3}>
-                      Email
-                    </Form.Label>
-                    <Col sm={8}>
-                      <Form.Control
-                        type="email"
-                        name="email"
-                        value={userJson ? userJson.email : ""}
-                        readOnly
-                      />
-                    </Col>
-                  </Form.Group>
-                  {/*------------  Supervisor Field------------  */}
-                  <Form.Group
-                    as={Row}
-                    className="mb-3"
-                    controlId="formHorizontalManager"
-                  >
-                    <Form.Label column sm={3}>
-                      Supervisor
-                    </Form.Label>
-                    <Col sm={8}>
-                      <Form.Control
-                        type="text"
-                        name="manager"
-                        value={managerName}
-                        readOnly
-                      />
-                    </Col>
-                  </Form.Group>
-                  {/* ------------ Role Field ------------ */}
-                  <Form.Group
-                    as={Row}
-                    className="mb-3"
-                    controlId="formHorizontalRole"
-                  >
-                    <Form.Label column sm={3}>
-                      Role
-                    </Form.Label>
-                    <Col sm={8}>
-                      <Form.Select
-                        value={roleName}
-                        name="role"
-                        disabled={isLoggedInUserRole3} // Disabled if logged-in user role is 3
-                        onChange={(e) => setRoleName(e.target.value)}
+                    {departments.map((department) => (
+                      <option
+                        key={department.departmentID}
+                        value={department.departmentName}
                       >
-                        {roles.map((role) => (
-                          <option
-                            key={role.roleid}
-                            value={role.roledescription}
-                          >
-                            {role.roledescription}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </Col>
-                  </Form.Group>
-                  {/* ------------ Department Field------------  */}
-                  <Form.Group
-                    as={Row}
-                    className="mb-3"
-                    controlId="formHorizontalDepartment"
-                  >
-                    <Form.Label column sm={3}>
-                      Department
-                    </Form.Label>
-                    <Col sm={8}>
-                      <Form.Select
-                        value={departmentName}
-                        name="department"
-                        disabled={isLoggedInUserRole3} // Disabled if logged-in user role is 3
-                        onChange={(e) => setDepartmentName(e.target.value)}
-                      >
-                        {departments.map((department) => (
-                          <option
-                            key={department.departmentID}
-                            value={department.departmentName}
-                          >
-                            {department.departmentName}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </Col>
-                  </Form.Group>
-                  {/*------------ Save and Delete Buttons ------------ */}
-                  <Form.Group as={Row} className="mb-3">
-                    <Col sm={{ span: 12 }}>
-                      <div className="button-container">
-                        <Button
-                          type="submit"
-                          className="btn btn-success btn-lg submit-button"
-                        >
-                          Save Changes
-                        </Button>
+                        {department.departmentName}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Col>
+              </Form.Group>
+              {/*------------ Save and Delete Buttons ------------ */}
+              <Form.Group as={Row} className="mb-3">
+                <Col sm={{ span: 12 }}>
+                  <div className="button-container">
+                    <Button
+                      type="submit"
+                      className="btn btn-success btn-lg submit-button"
+                    >
+                      Save Changes
+                    </Button>
 
-                        {/* Delete Button (only visible if logged-in user role is not 3) */}
-                        {!isLoggedInUserRole3 && (
-                          <Button
-                            onClick={handleDelete}
-                            className="btn btn-danger btn-lg delete-button"
-                          >
-                            Delete User
-                          </Button>
-                        )}
-                      </div>
-                    </Col>
-                  </Form.Group>
-                </Form>
-              </Card.Body>
-            </Card>
+                    {/* Delete Button (only visible if logged-in user role is not 3) */}
+                    {!isLoggedInUserRole3 && (
+                      <Button
+                        onClick={handleDelete}
+                        className="btn btn-danger btn-lg delete-button"
+                      >
+                        Delete User
+                      </Button>
+                    )}
+                  </div>
+                </Col>
+              </Form.Group>
+            </Form>
           </div>
         </div>
       </div>

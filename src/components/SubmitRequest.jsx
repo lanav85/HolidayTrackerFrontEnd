@@ -111,83 +111,77 @@ function SubmitRequest() {
         </h2>
 
         <div className="shadow p-3 mb-5 bg-white rounded">
-          <Card>
-            <Card.Body>
-              <Layout>
-                <form
-                  onSubmit={handleSubmit}
+          <Layout>
+            <form
+              onSubmit={handleSubmit}
+              style={{
+                fontSize: "18px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              {/* Input for selecting start date */}
+              <div style={{ marginBottom: "30px" }}>
+                <label style={{ padding: "15px" }}>Select Start Date:</label>
+                <DatePicker
+                  id="startDate"
+                  selectsStart
+                  selected={startDate}
+                  onChange={handleStartDateChange}
+                  startDate={startDate}
+                  endDate={endDate}
+                  minDate={moment.utc().toDate()}
+                  placeholderText="dd/mm/yyyy"
+                  dateFormat="dd/MM/yyyy"
+                  timeZone="UTC"
+                />
+              </div>
+              {/* Input for selecting end date */}
+              <div style={{ marginBottom: "20px" }}>
+                <label style={{ padding: "15px" }}>Select End Date:</label>
+                <DatePicker
+                  id="endDate"
+                  selectsEnd
+                  selected={endDate}
+                  onChange={handleEndDateChange}
+                  startDate={startDate}
+                  endDate={endDate}
+                  minDate={moment.utc().toDate()}
+                  placeholderText="dd/mm/yyyy"
+                  dateFormat="dd/MM/yyyy"
+                  timeZone="UTC"
+                />
+              </div>
+
+              {/* Total days display */}
+              <div style={{ marginBottom: "20px" }}>
+                <label style={{ padding: "15px" }}>Total Days:</label>
+                <input
+                  type="text"
+                  value={totalDays !== null ? totalDays : ""}
+                  readOnly
                   style={{
-                    fontSize: "18px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
+                    padding: "10px",
+                    borderRadius: "4px",
+                    border: "1px solid #ccc",
+                    width: "100px",
+                    textAlign: "center",
                   }}
-                >
-                  {/* Input for selecting start date */}
-                  <div style={{ marginBottom: "30px" }}>
-                    <label style={{ padding: "15px" }}>
-                      Select Start Date:
-                    </label>
-                    <DatePicker
-                      id="startDate"
-                      selectsStart
-                      selected={startDate}
-                      onChange={handleStartDateChange}
-                      startDate={startDate}
-                      endDate={endDate}
-                      minDate={moment.utc().toDate()}
-                      placeholderText="dd/mm/yyyy"
-                      dateFormat="dd/MM/yyyy"
-                      timeZone="UTC"
-                    />
-                  </div>
-                  {/* Input for selecting end date */}
-                  <div style={{ marginBottom: "20px" }}>
-                    <label style={{ padding: "15px" }}>Select End Date:</label>
-                    <DatePicker
-                      id="endDate"
-                      selectsEnd
-                      selected={endDate}
-                      onChange={handleEndDateChange}
-                      startDate={startDate}
-                      endDate={endDate}
-                      minDate={moment.utc().toDate()}
-                      placeholderText="dd/mm/yyyy"
-                      dateFormat="dd/MM/yyyy"
-                      timeZone="UTC"
-                    />
-                  </div>
+                />
+              </div>
 
-                  {/* Total days display */}
-                  <div style={{ marginBottom: "20px" }}>
-                    <label style={{ padding: "15px" }}>Total Days:</label>
-                    <input
-                      type="text"
-                      value={totalDays !== null ? totalDays : ""}
-                      readOnly
-                      style={{
-                        padding: "10px",
-                        borderRadius: "4px",
-                        border: "1px solid #ccc",
-                        width: "100px",
-                        textAlign: "center",
-                      }}
-                    />
-                  </div>
-
-                  {/* Submit button for form submission */}
-                  <button
-                    type="submit"
-                    className="btn btn-success btn-lg submit-button"
-                  >
-                    Submit
-                  </button>
-                  {/* Confirmation message */}
-                  {confirmationMessage && <p>{confirmationMessage}</p>}
-                </form>
-              </Layout>
-            </Card.Body>
-          </Card>{" "}
+              {/* Submit button for form submission */}
+              <button
+                type="submit"
+                className="btn btn-success btn-lg submit-button"
+              >
+                Submit
+              </button>
+              {/* Confirmation message */}
+              {confirmationMessage && <p>{confirmationMessage}</p>}
+            </form>
+          </Layout>
         </div>
       </div>{" "}
     </div>

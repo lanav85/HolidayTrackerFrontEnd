@@ -198,105 +198,101 @@ function CreateUser() {
           Register New User
         </h2>
         <div className="shadow p-3 mb-5 bg-white rounded">
-          <Card>
-            <Card.Body>
-              <Form onSubmit={handleSave}>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formHorizontalName"
-                  style={{ marginTop: "3.125rem" }}
+          <Form onSubmit={handleSave}>
+            <Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="formHorizontalName"
+              style={{ marginTop: "3.125rem" }}
+            >
+              <Form.Label column sm={3}>
+                Name
+              </Form.Label>
+              <Col sm={8}>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  placeholder="Enter name"
+                  required
+                />
+              </Col>
+            </Form.Group>
+            <Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="formHorizontalEmail"
+            >
+              <Form.Label column sm={3}>
+                Email
+              </Form.Label>
+              <Col sm={8}>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  placeholder="Enter email"
+                  required
+                />
+              </Col>
+            </Form.Group>
+            <Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="formHorizontalRole"
+            >
+              <Form.Label column sm={3}>
+                Role
+              </Form.Label>
+              <Col sm={8}>
+                <Form.Select
+                  value={roleName}
+                  name="role"
+                  onChange={(e) => setRoleName(e.target.value)} // dropdown menu
                 >
-                  <Form.Label column sm={3}>
-                    Name
-                  </Form.Label>
-                  <Col sm={8}>
-                    <Form.Control
-                      type="text"
-                      name="name"
-                      placeholder="Enter name"
-                      required
-                    />
-                  </Col>
-                </Form.Group>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formHorizontalEmail"
+                  {roles.map((role) => (
+                    <option key={role.roleid} value={role.roledescription}>
+                      {role.roledescription}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Col>
+            </Form.Group>
+            <Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="formHorizontalDepartment"
+            >
+              <Form.Label column sm={3}>
+                Department
+              </Form.Label>
+              <Col sm={8}>
+                <Form.Select
+                  value={departmentName}
+                  name="department"
+                  onChange={(e) => setDepartmentName(e.target.value)} // dropdown menu
                 >
-                  <Form.Label column sm={3}>
-                    Email
-                  </Form.Label>
-                  <Col sm={8}>
-                    <Form.Control
-                      type="email"
-                      name="email"
-                      placeholder="Enter email"
-                      required
-                    />
-                  </Col>
-                </Form.Group>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formHorizontalRole"
-                >
-                  <Form.Label column sm={3}>
-                    Role
-                  </Form.Label>
-                  <Col sm={8}>
-                    <Form.Select
-                      value={roleName}
-                      name="role"
-                      onChange={(e) => setRoleName(e.target.value)} // dropdown menu
+                  {departments.map((department) => (
+                    <option
+                      key={department.departmentID}
+                      value={department.departmentName}
                     >
-                      {roles.map((role) => (
-                        <option key={role.roleid} value={role.roledescription}>
-                          {role.roledescription}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  </Col>
-                </Form.Group>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formHorizontalDepartment"
+                      {department.departmentName}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Col>
+            </Form.Group>
+            <Form.Group as={Row} className="mb-3">
+              <Col sm={{ span: 10, offset: 3 }}>
+                <Button
+                  style={{ marginTop: "1.875rem" }}
+                  type="submit"
+                  className="btn btn-success btn-lg submit-button"
                 >
-                  <Form.Label column sm={3}>
-                    Department
-                  </Form.Label>
-                  <Col sm={8}>
-                    <Form.Select
-                      value={departmentName}
-                      name="department"
-                      onChange={(e) => setDepartmentName(e.target.value)} // dropdown menu
-                    >
-                      {departments.map((department) => (
-                        <option
-                          key={department.departmentID}
-                          value={department.departmentName}
-                        >
-                          {department.departmentName}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  </Col>
-                </Form.Group>
-                <Form.Group as={Row} className="mb-3">
-                  <Col sm={{ span: 10, offset: 3 }}>
-                    <Button
-                      style={{ marginTop: "1.875rem" }}
-                      type="submit"
-                      className="btn btn-success btn-lg submit-button"
-                    >
-                      Add User
-                    </Button>
-                  </Col>
-                </Form.Group>
-              </Form>
-            </Card.Body>
-          </Card>
+                  Add User
+                </Button>
+              </Col>
+            </Form.Group>
+          </Form>
         </div>
       </div>
     </div>

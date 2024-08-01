@@ -147,79 +147,75 @@ function ReviewRequests() {
       <div style={{ marginTop: "3.125rem", padding: "1.25rem" }}>
         <h2>Holiday Requests</h2>
         <div className="shadow p-3 mb-5 bg-white rounded">
-          <Card>
-            <Card.Body>
-              <div className="label-container">
-                <label style={{ padding: "0.3125rem" }} htmlFor="nameFilter">
-                  Filter by Name:{" "}
-                </label>
-                <input
-                  type="text"
-                  id="nameFilter"
-                  value={nameFilter}
-                  onChange={(e) => setNameFilter(e.target.value)}
-                />
-              </div>
-              <div className="label-container">
-                <label style={{ padding: "0.3125rem" }} htmlFor="statusFilter">
-                  Filter by Status:{" "}
-                </label>
-                <select
-                  id="statusFilter"
-                  value={statusFilter}
-                  onChange={(e) => setStatusFilter(e.target.value)}
-                >
-                  <option value="Pending">Pending</option>
-                  <option value="Approved">Approved</option>
-                  <option value="Rejected">Rejected</option>
-                  <option value="All">All</option>
-                </select>
-              </div>
-              <div className="label-container">
-                <label style={{ padding: "0.3125rem" }} htmlFor="yearFilter">
-                  Filter by Year:
-                </label>
-                <select
-                  id="yearFilter"
-                  value={yearFilter}
-                  onChange={(e) => setYearFilter(parseInt(e.target.value))}
-                >
-                  {[
-                    ...new Set(
-                      holidayRequests.map((request) =>
-                        new Date(request.requestFrom).getFullYear()
-                      )
-                    ),
-                  ].map((year) => (
-                    <option key={year} value={year}>
-                      {year}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              {filteredHolidayRequests.length === 0 && (
-                <p>There are no Holiday Requests to review</p>
-              )}
-              {filteredHolidayRequests.length > 0 && (
-                <Table className="table" striped bordered hover>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Request From</th>
-                      <th>Request To</th>
-                      <th>Status</th>
-                      <th>Submit</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredHolidayRequests.map((request) =>
-                      renderHolidayRequestRow(request)
-                    )}
-                  </tbody>
-                </Table>
-              )}
-            </Card.Body>
-          </Card>
+          <div className="label-container">
+            <label style={{ padding: "0.3125rem" }} htmlFor="nameFilter">
+              Filter by Name:{" "}
+            </label>
+            <input
+              type="text"
+              id="nameFilter"
+              value={nameFilter}
+              onChange={(e) => setNameFilter(e.target.value)}
+            />
+          </div>
+          <div className="label-container">
+            <label style={{ padding: "0.3125rem" }} htmlFor="statusFilter">
+              Filter by Status:{" "}
+            </label>
+            <select
+              id="statusFilter"
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+            >
+              <option value="Pending">Pending</option>
+              <option value="Approved">Approved</option>
+              <option value="Rejected">Rejected</option>
+              <option value="All">All</option>
+            </select>
+          </div>
+          <div className="label-container">
+            <label style={{ padding: "0.3125rem" }} htmlFor="yearFilter">
+              Filter by Year:
+            </label>
+            <select
+              id="yearFilter"
+              value={yearFilter}
+              onChange={(e) => setYearFilter(parseInt(e.target.value))}
+            >
+              {[
+                ...new Set(
+                  holidayRequests.map((request) =>
+                    new Date(request.requestFrom).getFullYear()
+                  )
+                ),
+              ].map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+          </div>
+          {filteredHolidayRequests.length === 0 && (
+            <p>There are no Holiday Requests to review</p>
+          )}
+          {filteredHolidayRequests.length > 0 && (
+            <Table className="table" striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Request From</th>
+                  <th>Request To</th>
+                  <th>Status</th>
+                  <th>Submit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredHolidayRequests.map((request) =>
+                  renderHolidayRequestRow(request)
+                )}
+              </tbody>
+            </Table>
+          )}
         </div>
       </div>
     </div>

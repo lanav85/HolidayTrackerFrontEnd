@@ -38,10 +38,7 @@ function ViewHolidayRequests() {
 
   return (
     <div className="moveToRight-container" style={{ marginTop: "7.125rem" }}>
-      <div
-        className="shadow p-3 mb-5 bg-white rounded"
-        style={{ padding: "1.25rem" }}
-      >
+      <div className="shadow p-3 mb-5 bg-white rounded">
         <h2
           style={{
             marginBottom: "2.8125rem",
