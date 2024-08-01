@@ -14,7 +14,7 @@
 }
 
 /* Adjust margins for the first and last buttons on larger screens */
-@media (min-width: 62rem) { /* 992px */
+@media (min-width:1200px) {
   .button-container .btn:first-child {
     margin-left: 21.875rem; /* 350px */
   }
@@ -25,11 +25,12 @@
 }
 
 /* Ensure full width buttons on smaller screens */
-@media (max-width: 48rem) { /* 768px */
+@media (max-width:768px) { 
   .button-container .btn {
-    flex: 1 1 100%; /* Each button takes full width */
-    max-width: none; /* Remove max-width */
+    padding: 1rem;
+    flex: 1 1 50%; /* Each button takes full width */
     margin: 0.625rem 0; /* 10px vertical margin between buttons */
+    font-size: 0.9rem; /* 14px */
   }
 }
 

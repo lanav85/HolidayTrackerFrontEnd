@@ -134,7 +134,7 @@ function Profile() {
   return (
     <Layout>
       <div className="moveToRight-container">
-        <div style={{ marginTop: "50px", padding: "2vw" }}>
+        <div style={{ padding: "1rem" }}>
           <h2
             style={{
               marginBottom: "25px",
