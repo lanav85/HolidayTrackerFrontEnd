@@ -197,7 +197,7 @@ function CreateUser() {
         >
           Register New User
         </h2>
-        <div className="shadow p-3 mb-5 bg-white rounded">
+        <div className="shadow p-5 bg-white rounded">
           <Form onSubmit={handleSave}>
             <Form.Group
               as={Row}

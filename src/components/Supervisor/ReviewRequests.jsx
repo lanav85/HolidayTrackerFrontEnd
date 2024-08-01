@@ -144,7 +144,7 @@ function ReviewRequests() {
 
   return (
     <div className="moveToRight-container">
-      <div style={{ marginTop: "3.125rem", padding: "1.25rem" }}>
+      <div style={{ marginTop: "3.125rem" }}>
         <h2>Holiday Requests</h2>
         <div className="shadow p-3 mb-5 bg-white rounded">
           <div className="label-container">

@@ -1,31 +1,99 @@
-.table-full-width {
-  width: 100%;
-  table-layout: fixed; /* Ensures columns are evenly distributed */
+/* Container Styles */
+.shadow {
+  padding: 1.25rem; 
+  overflow: auto; /* Add horizontal scrolling if needed */
 }
 
-.table-cell-center {
-  text-align: center;
-  vertical-align: top;
+/* Table Styles */
+.table-full-width {
+  width: 100%;
+  table-layout: fixed; /*  columns are evenly distributed */
+  overflow-x: auto; /* Add horizontal scrolling if needed */
+  display: block; /* Make table scrollable */
 }
 h2 {
-  margin-bottom: 1.5625rem; /* 25px / 16 = 1.5625rem */
   text-align: center;
+  padding: 1.25rem; 
+
+  margin-bottom: 1.5625rem; 
 }
+/* Adjustments for very small screens */
+@media (max-width: 320px) {
+  h2 {
+    font-size: 1rem; /* Smaller font size for very small screens */
+  }
+
+  .label-container {
+    flex-direction: column;
+  }
+
+  .label-container label,
+  .label-container input,
+  .label-container select {
+    font-size: 0.75rem; /* Smaller font size for labels and inputs */
+  }
+
+  .table-full-width {
+    font-size: 0.675rem; /* Smaller font size for the table */
+  }
+
+  .table {
+    font-size: 0.675rem; /* Adjust table font size for very small screens */
+  }
+}
+
+/* Adjustments for tablets and small screens */
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.25rem; /* Smaller font size for tablets */
+  }
+
+  .label-container {
+    flex-direction: column;
+  }
+
+  .label-container label,
+  .label-container input,
+  .label-container select {
+    font-size: 0.875rem; /* Adjust font size for labels and inputs */
+  }
+
+  .table-full-width {
+    font-size: 0.875rem; /* Adjust font size for the table */
+  }
+
+  .table {
+    font-size: 0.875rem; /* Adjust table font size for tablets */
+  }
+}
+
+/* Adjustments for larger screens (if needed) */
+@media (min-width: 1200px) {
+  h2 {
+    font-size: 1.5rem; /* Larger font size for larger screens */
+  }
+
+  .table-full-width {
+    font-size: 1rem; /* Larger font size for larger screens */
+  }
+}
+
+
 /* Adjustments for smaller screens */
 @media (max-width:  320px) {
 
 
   .table-full-width {
-    font-size: 0.675rem; /
+    font-size: 0.675rem; 
   }
 }
 
 @media (max-width: 768px) { 
-  h2 {
-    font-size: 1rem
-  }
+ 
 }
 
 @media (min-width: 1200px) { 
-  
+  .table-full-width {
+    font-size: 0.675rem; 
+  }
 }

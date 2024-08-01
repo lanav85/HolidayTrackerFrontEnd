@@ -137,13 +137,13 @@ function Profile() {
         <div style={{ padding: "1rem" }}>
           <h2
             style={{
-              marginBottom: "25px",
+              marginBottom: "1.5625rem", // 25px to rem
               textAlign: "center",
             }}
           >
             User Profile
           </h2>
-          <div className="shadow p-3 mb-5 bg-white rounded">
+          <div className="shadow p-5  bg-white rounded">
             <Form onSubmit={handleSave}>
               {/*------------  Name Field ------------ */}
               <Form.Group
@@ -151,7 +151,7 @@ function Profile() {
                 className="mt-5 mb-3"
                 controlId="formHorizontalName"
               >
-                <Form.Label column sm={3}>
+                <Form.Label column sm={3} className="form-label-padding">
                   Name
                 </Form.Label>
                 <Col sm={8}>
@@ -169,7 +169,7 @@ function Profile() {
                 className="mb-3"
                 controlId="formHorizontalEmail"
               >
-                <Form.Label column sm={3}>
+                <Form.Label column sm={3} className="form-label-padding">
                   Email
                 </Form.Label>
                 <Col sm={8}>
@@ -187,7 +187,7 @@ function Profile() {
                 className="mb-3"
                 controlId="formHorizontalManager"
               >
-                <Form.Label column sm={3}>
+                <Form.Label column sm={3} className="form-label-padding">
                   Supervisor
                 </Form.Label>
                 <Col sm={8}>
@@ -205,7 +205,7 @@ function Profile() {
                 className="mb-3"
                 controlId="formHorizontalRole"
               >
-                <Form.Label column sm={3}>
+                <Form.Label column sm={3} className="form-label-padding">
                   Role
                 </Form.Label>
                 <Col sm={8}>
@@ -229,7 +229,7 @@ function Profile() {
                 className="mb-3"
                 controlId="formHorizontalDepartment"
               >
-                <Form.Label column sm={3}>
+                <Form.Label column sm={3} className="form-label-padding">
                   Department
                 </Form.Label>
                 <Col sm={8}>
@@ -253,10 +253,14 @@ function Profile() {
               {/*------------ Save and Delete Buttons ------------ */}
               <Form.Group as={Row} className="mb-3">
                 <Col sm={{ span: 12 }}>
-                  <div className="button-container">
+                  <div
+                    className="button-container"
+                    style={{ textAlign: "center" }}
+                  >
                     <Button
                       type="submit"
                       className="btn btn-success btn-lg submit-button"
+                      style={{ marginRight: "0.625rem" }} // Add some space between buttons if needed
                     >
                       Save Changes
                     </Button>

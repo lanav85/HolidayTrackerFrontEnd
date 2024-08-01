@@ -12,7 +12,7 @@
   margin: 0 1.25rem; /* 20px */
   font-size: 1.125rem; /* 18px */
 }
-
+ 
 /* Adjust margins for the first and last buttons on larger screens */
 @media (min-width:1200px) {
   .button-container .btn:first-child {
