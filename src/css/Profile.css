@@ -1,24 +1,39 @@
 .button-container {
-    display: flex;
-    padding-top: 30px; 
-    
- }
-  
-  .button-container .btn {
-    flex: 1;
-    max-width: 150px;
-    margin: 0 20px; 
-    font-size: 18px; 
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 1.875rem; /* 30px */
+  justify-content: center; /* Center the buttons horizontally */
+  gap: 1.25rem; /* 20px */
+}
+
+.button-container .btn {
+  flex: 1;
+  max-width: 9.375rem; /* 150px */
+  margin: 0 1.25rem; /* 20px */
+  font-size: 1.125rem; /* 18px */
+}
+
+/* Adjust margins for the first and last buttons on larger screens */
+@media (min-width: 62rem) { /* 992px */
   .button-container .btn:first-child {
-    margin-left: 350px;
+    margin-left: 21.875rem; /* 350px */
   }
-  
+
   .button-container .btn:last-child {
     margin-right: 0;
   }
-  .table {
-    width: 100%;
-    text-align: center; /* Center-aligns text and inline elements */
+}
+
+/* Ensure full width buttons on smaller screens */
+@media (max-width: 48rem) { /* 768px */
+  .button-container .btn {
+    flex: 1 1 100%; /* Each button takes full width */
+    max-width: none; /* Remove max-width */
+    margin: 0.625rem 0; /* 10px vertical margin between buttons */
   }
+}
+
+.table {
+  width: 100%;
+  text-align: center;
+}

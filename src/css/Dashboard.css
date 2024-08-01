@@ -69,24 +69,8 @@ h1 {
   }
 }
 
-@media (max-width: 576px) {
-  h1 {
-    font-size: 1.5rem;
-  }
-  .custom-card {
-    flex: 1 1 calc(100% - 1.25rem); /* 1 card per row */
-  }
 
-  .card-title {
-    font-size: 1rem; 
-  }
-
-  .card-text {
-    font-size: 0.75rem; 
-  }
-}
-
-@media (max-width: 400px) {
+@media (max-width: 320px) {
   h1 {
     font-size: 1.2rem; 
   }
