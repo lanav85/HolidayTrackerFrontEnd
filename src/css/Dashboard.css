@@ -1,11 +1,17 @@
+
+h1 {
+  font-size: 2.5rem; 
+  text-align: center;
+  margin: 1rem 0;
+}
 .custom-card {
   position: relative;
   overflow: hidden;
-  box-shadow: 0 18px 8px rgba(0, 0, 0, 1);
-  height: 300px;
-  margin: 10px; /* Adjust the spacing around each card */
-  flex: 1 1 calc(25% - 20px); /* Flex-grow, flex-shrink, flex-basis, considering gap */
-  min-width: 250px; /* Minimum width to prevent cards from getting too small */
+  box-shadow: 0 1.125rem 0.5rem rgba(0, 0, 0, 1);
+  height: 18.75rem; /* 300px */
+  margin: 0.625rem; /* 10px */
+  flex: 1 1 calc(25% - 1.25rem); /* 25% width minus the total horizontal margin */
+  min-width: 15.625rem; /* 250px */
 }
 
 .corner-icon {
@@ -13,8 +19,8 @@
   top: 0;
   right: 0;
   bottom: 0;
-  width: 50px;
-  padding: 10px;
+  width: 3.125rem; /* 50px */
+  padding: 0.625rem; /* 10px */
   font-size: 1.5rem;
   border-bottom-left-radius: 5px;
   display: flex;
@@ -39,23 +45,67 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between; /* Ensure even spacing between cards */
-  gap: 20px; /* Add gap between cards */
+  gap: 1.25rem; /* 20px */
 }
 
 @media (max-width: 1200px) {
   .custom-card {
-    flex: 1 1 calc(33.333% - 20px); /* 3 cards per row */
+    flex: 1 1 calc(33.333% - 1.25rem); /* 3 cards per row */
   }
 }
 
 @media (max-width: 768px) {
+  h1 {
+    font-size: 2rem; 
+  }
   .custom-card {
-    flex: 1 1 calc(50% - 20px); /* 2 cards per row */
+    flex: 1 1 calc(50% - 1.25rem); /* 2 cards per row */
+  }
+  .card-title {
+    font-size: 1.25rem; 
+  }
+
+  .card-text {
+    font-size: 0.75rem; 
   }
 }
 
 @media (max-width: 576px) {
+  h1 {
+    font-size: 1.5rem;
+  }
   .custom-card {
-    flex: 1 1 calc(100% - 20px); /* 1 card per row */
+    flex: 1 1 calc(100% - 1.25rem); /* 1 card per row */
+  }
+
+  .card-title {
+    font-size: 1.5rem; 
+
+  .card-text {
+    font-size: 0.875rem; 
+}
+
+/* Additional media query for smart phones screens  */
+@media (max-width: 400px) {
+  h1 {
+    font-size: 1.2rem; 
+  }
+  .custom-card {
+    margin: 0.2rem; /* Reduce margin */
+    height: 16rem; /* Adjust height for smaller screens */
+  }
+
+  .corner-icon {
+    width: 2.5rem; 
+    padding: 0.1rem; 
+  }
+
+  .card-title {
+    font-size: 0.2rem; 
+  }
+
+  .card-text {
+    font-size: 0.1rem; 
   }
 }
+  }}
