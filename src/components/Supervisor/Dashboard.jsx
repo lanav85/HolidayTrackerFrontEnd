@@ -133,7 +133,7 @@ function Dashboard() {
   }
   return (
     <div className="moveToRight-container" style={{ paddingBottom: "5rem" }}>
-      <div style={{ marginTop: "10rem", padding: "1rem" }}>
+      <div style={{ padding: "1rem" }}>
         {userData && <h1>Hello, {userData.name}!</h1>}
       </div>
       <div className="container mt-4">

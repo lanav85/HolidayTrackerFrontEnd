@@ -19,3 +19,23 @@ body {
   color: green;
   margin-top: 10px;
 }
+@media (max-width: 1200px) {
+  .moveToRight-container {
+    margin-left: 35%;
+    margin-right: 0%;
+  }}
+@media (max-width: 768px) {
+    .moveToRight-container {
+      margin-left: 25%;
+      margin-right: 5%;
+    }}
+@media (max-width: 576px) {
+      .moveToRight-container {
+        margin-left: 16%;
+        margin-right: 1%;
+      }}
+@media (max-width: 400px) {
+        .moveToRight-container {
+          margin-left: 15%;
+          margin-right: 0%;
+        }}
