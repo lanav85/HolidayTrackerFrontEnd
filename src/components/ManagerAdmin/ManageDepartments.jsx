@@ -16,10 +16,9 @@ function ManageDepartments() {
 
   return (
     <div className="moveToRight-container">
-      <div style={{ marginTop: "3.125rem", padding: "1.25rem" }}>
+      <div>
         <h2
           style={{
-            marginBottom: "1.5625rem",
             textAlign: "center",
           }}
         >
@@ -48,7 +47,7 @@ function ManageDepartments() {
           </Table>
           <Link to="/create-department">
             <Button
-              style={{ marginTop: "1.875rem" }}
+              style={{ marginTop: "1.875rem", fontSize: "1rem" }}
               type="submit"
               className="btn btn-success btn-lg submit-button"
             >

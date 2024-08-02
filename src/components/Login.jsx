@@ -84,9 +84,19 @@ const Login = () => {
       .catch((err) => alert(err));
   };
 
-  const handleClear = () => {
-    setEmail("");
-    setPassword("");
+  const showAlert = () => {
+    alert(`Login credentials:
+    Supervisor:
+    Email: holidaytrackerproject1@gmail.com
+    Password: hgzRGIal
+
+    Manager:
+    Email: holidaytrackerproject2@gmail.com
+    Password: tIDkBTst
+
+    Employee:
+    Email: jcolladocabeza@gmail.com
+    Password: GIWDWG3y`);
   };
 
   return (
@@ -129,13 +139,14 @@ const Login = () => {
             Login
           </Button>
 
-          <button
-            type="button"
-            onClick={() => handleClear()}
+          <Button
+            type="submit"
+            className="btn btn-success btn-lg btn-login"
+            onClick={showAlert}
             style={{ marginRight: "10px" }}
           >
-            Clear
-          </button>
+            Get Login Credentials
+          </Button>
         </div>
       </Form>
     </div>

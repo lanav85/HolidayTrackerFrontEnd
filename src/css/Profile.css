@@ -1,22 +1,21 @@
 .button-container {
   display: flex;
   flex-wrap: wrap;
-  padding-top: 1.875rem; /* 30px */
-  justify-content: center; /* Center the buttons horizontally */
-  gap: 1.25rem; /* 20px */
+  padding-top: 1.875rem; 
+  justify-content: center; 
+  gap: 1.25rem; 
 }
 
 .button-container .btn {
   flex: 1;
-  max-width: 9.375rem; /* 150px */
-  margin: 0 1.25rem; /* 20px */
-  font-size: 1.125rem; /* 18px */
+  max-width: 9.375rem; 
+  margin: 0 1.25rem; 
+  font-size: 1.125rem; 
 }
  
-/* Adjust margins for the first and last buttons on larger screens */
 @media (min-width:1200px) {
   .button-container .btn:first-child {
-    margin-left: 21.875rem; /* 350px */
+    margin-left: 14rem; 
   }
 
   .button-container .btn:last-child {
@@ -29,8 +28,8 @@
   .button-container .btn {
     padding: 1rem;
     flex: 1 1 50%; /* Each button takes full width */
-    margin: 0.625rem 0; /* 10px vertical margin between buttons */
-    font-size: 0.9rem; /* 14px */
+    margin: 0.625rem 0; 
+    font-size: 0.9rem; 
   }
 }
 

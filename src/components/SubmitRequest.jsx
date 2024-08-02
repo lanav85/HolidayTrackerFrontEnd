@@ -100,10 +100,9 @@ function SubmitRequest() {
   return (
     // Form for submitting request
     <div className="moveToRight-container">
-      <div style={{ marginTop: "50px", padding: "2vw" }}>
+      <div>
         <h2
           style={{
-            marginBottom: "25px",
             textAlign: "center",
           }}
         >

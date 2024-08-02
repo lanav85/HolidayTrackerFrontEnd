@@ -133,12 +133,12 @@ function Dashboard() {
   }
   return (
     <div className="moveToRight-container" style={{ paddingBottom: "5rem" }}>
-      <div style={{ padding: "1rem" }}>
-        {userData && <h1>Hello, {userData.name}!</h1>}
-      </div>
+      <div>{userData && <h1>Hello, {userData.name}!</h1>}</div>
       <div className="container mt-4">
         {(roleID === 1 || roleID === 2) && (
-          <Card className="p-4 shadow-sm">
+          <Card className="p-2 shadow-sm main-card">
+            {" "}
+            {/* Added main-card class */}
             <Card.Body>
               <h3>{departmentName} Overview</h3>
               <div className="card-container">
@@ -175,9 +175,11 @@ function Dashboard() {
         )}
       </div>
       <div className="container mt-4">
-        <Card className="p-4 shadow-sm">
+        <Card className="p-4 shadow-sm main-card">
+          {" "}
+          {/* Added main-card class */}
           <Card.Body>
-            <h3> My Overview</h3>
+            <h3>My Overview</h3>
             <div className="card-container">
               <Card className="text-center custom-card shadow-sm">
                 <div className="corner-icon bg-dark text-purple">
