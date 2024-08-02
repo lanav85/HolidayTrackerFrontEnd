@@ -1,37 +1,60 @@
 .background {
-    background-size: cover;
-    background-repeat: no-repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.form {
+  font-size: 16px;
+  align-items: center;
+  color: white;
+}
+
+.logo {
+  display: block;
+  margin: 0 auto;
+  width: 100px;
+  height: auto;
+}
+
+.title {
+  font-weight: bold;
   
-  .form {
-    font-size: 16px;
-    align-items: center;
-    color: white;
+}
+
+.section {
+  padding: 20px;
+}
+
+.btn-login {
+  background-color: purple;
+  padding: 10px 50px;
+  height: auto;
+}
+
+@media (max-width: 768px) { 
+  .form {align-items: center;
+    font-size: 0.875rem; 
+    padding: 0.625rem; 
   }
-  
-  .logo {
-    display: block;
-    margin: 0 auto;
-    width: 100px;
-    height: auto;
-  }
-  
+
+ 
   .title {
-    font-weight: bold;
-    
+    font-size: 1.5rem; 
   }
-  
+
   .section {
-    padding: 20px;
+    padding: 0.625rem; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
   }
-  
   .btn-login {
     background-color: purple;
     padding: 10px 50px;
-    height: auto;
   }
   
+      }

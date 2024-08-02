@@ -1,5 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Card from "react-bootstrap/Card";
 import logo from "img/logo.png";
 import background from "img/background.png";
 import "css/Login.css";
@@ -12,10 +13,11 @@ import userpool from "../userpool";
 import * as api from "../api/ApiRequests";
 
 const Login = () => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showCredentials, setShowCredentials] = useState(false);
 
   const formInputChange = (formField, value) => {
     if (formField === "email") {
@@ -68,7 +70,7 @@ const Login = () => {
                     "holiday-tracker-user",
                     JSON.stringify(data)
                   );
-                  Navigate("/dashboard");
+                  navigate("/dashboard");
                 } else {
                   alert("error logging in!");
                 }
@@ -84,19 +86,10 @@ const Login = () => {
       .catch((err) => alert(err));
   };
 
-  const showAlert = () => {
-    alert(`Login credentials:
-    Supervisor:
-    Email: holidaytrackerproject1@gmail.com
-    Password: hgzRGIal
-
-    Manager:
-    Email: holidaytrackerproject2@gmail.com
-    Password: tIDkBTst
-
-    Employee:
-    Email: jcolladocabeza@gmail.com
-    Password: GIWDWG3y`);
+  const toggleCredentials = () => {
+    //toggleCredentials is a function that toggles the value of showCredentials.
+    // When called, it changes showCredentials from false to true or from true to false.
+    setShowCredentials(!showCredentials); //showCredentials is initialized with false, meaning the card is hidden by default.
   };
 
   return (
@@ -135,20 +128,54 @@ const Login = () => {
         </Form.Group>
 
         <div className="section">
-          <Button type="submit" className="btn btn-success btn-lg btn-login">
-            Login
-          </Button>
-
           <Button
             type="submit"
             className="btn btn-success btn-lg btn-login"
-            onClick={showAlert}
-            style={{ marginRight: "10px" }}
+            style={{ marginRight: "20px" }}
           >
-            Get Login Credentials
+            Login
           </Button>
+
+          <button
+            type="button"
+            onClick={toggleCredentials}
+            className="btn btn-info btn-lg"
+          >
+            Sample login credentials
+          </button>
         </div>
       </Form>
+
+      {/* Conditionally render the credentials card . && operator is used for conditional rendering.*/}
+      {/* showCredentials is the condition. If it is true, the content after && will be rendered*/}
+      {showCredentials && (
+        <Card style={{ marginLeft: "60px" }}>
+          <Card.Body>
+            <Card.Title>Login Credentials</Card.Title>
+            <Card.Text>
+              <strong>Supervisor</strong>
+              <br />
+              holidaytrackerproject1@gmail.com
+              <br />
+              Password: hgzRGIal
+              <br />
+              <br />
+              <strong>Manager</strong>
+              <br />
+              holidaytrackerproject2@gmail.com
+              <br />
+              Password: tIDkBTst
+              <br />
+              <br />
+              <strong>Employee</strong>
+              <br />
+              jcolladocabeza@gmail.com
+              <br />
+              Password: GIWDWG3y
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      )}
     </div>
   );
 };
