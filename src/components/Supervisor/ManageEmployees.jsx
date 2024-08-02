@@ -3,11 +3,13 @@ import Table from "react-bootstrap/Table";
 import "@/App.css";
 import { Link } from "react-router-dom";
 import * as api from "../../api/ApiRequests";
+import "../../css/ManageEmployee.css";
 
 function ManageEmployees() {
   const [sortBy, setSortBy] = useState(null); // State to track the currently selected sort option
   const [sortDirection, setSortDirection] = useState("asc"); // State to track the sort direction
   const [users, setUsers] = useState([]);
+  const [nameFilter, setNameFilter] = useState("");
 
   useEffect(() => {
     const userString = localStorage.getItem("holiday-tracker-user");
@@ -35,60 +37,63 @@ function ManageEmployees() {
   };
 
   // Function to sort the data based on the currently selected sort option and direction
-  const sortedData = users.sort((a, b) => {
-    if (!sortBy) return 0; // If no sort option is selected, maintain the original order
-    if (sortDirection === "asc") {
-      return a[sortBy].localeCompare(b[sortBy]);
-    } else {
-      return b[sortBy].localeCompare(a[sortBy]);
-    }
-  });
+  const sortedData = users
+    .filter((user) =>
+      user.name.toLowerCase().includes(nameFilter.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (!sortBy) return 0; // If no sort option is selected, maintain the original order
+      if (sortDirection === "asc") {
+        return a[sortBy].localeCompare(b[sortBy]);
+      } else {
+        return b[sortBy].localeCompare(a[sortBy]);
+      }
+    });
+
+  const renderEmployeeRow = (request) => {
+    return (
+      <tr key={request.userID}>
+        <td>{request.name}</td>
+        <td>{request.email}</td>
+        <td>
+          <Link to={"/profile/" + request.userID}>View</Link>
+        </td>
+      </tr>
+    );
+  };
 
   return (
     <div className="moveToRight-container">
-      <div style={{ marginTop: "50px", padding: "2vw" }}>
-        <h2
-          style={{
-            marginBottom: "25px",
-            textAlign: "center",
-          }}
-        >
-          Employee
-        </h2>
+      <div style={{ marginTop: "3.125rem" }}>
+        <h2>Manage Employees</h2>
         <div className="shadow p-3 mb-5 bg-white rounded">
-          <Table
-            striped
-            className="table-full-width"
-            style={{
-              width: "100%" /* Ensure the table takes up all available space */,
-            }}
-          >
-            <thead>
-              <tr>
-                <th className="table-cell-center">#</th>
-                <th
-                  className="table-cell-center"
-                  onClick={() => handleSort("name")}
-                >
-                  Name
-                </th>
-                <th className="table-cell-center">Email</th>
-                <th className="table-cell-center"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedData.map((row, index) => (
-                <tr key={row.userID}>
-                  <td className="table-cell-center">{index + 1}</td>
-                  <td className="table-cell-center">{row.name}</td>
-                  <td className="table-cell-center">{row.email}</td>
-                  <td className="table-cell-center">
-                    <Link to={"/profile/" + row.userID}>View</Link>
-                  </td>
+          <div className="label-container">
+            <label style={{ padding: "0.8125rem" }} htmlFor="nameFilter">
+              Filter by Name:{" "}
+            </label>
+            <input
+              type="text"
+              id="nameFilter"
+              value={nameFilter}
+              onChange={(e) => setNameFilter(e.target.value)}
+            />
+          </div>
+
+          {sortedData.length === 0 && <p>There are no employees to display</p>}
+          {sortedData.length > 0 && (
+            <Table className="table" striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th></th>
                 </tr>
-              ))}
-            </tbody>
-          </Table>
+              </thead>
+              <tbody>
+                {sortedData.map((request) => renderEmployeeRow(request))}
+              </tbody>
+            </Table>
+          )}
         </div>
       </div>
     </div>
